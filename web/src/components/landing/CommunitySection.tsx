@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import AnimatedSection from './AnimatedSection'
+import { MessageSquare, Twitter } from 'lucide-react'
 
 interface CardProps {
   quote: string
@@ -10,30 +11,44 @@ interface CardProps {
   delay: number
 }
 
-function TestimonialCard({ quote, authorName, delay }: CardProps) {
+function TestimonialCard({ quote, authorName, handle, tweetUrl, delay }: CardProps) {
   return (
-    <motion.div
-      className="p-8 rounded-2xl bg-darkmoon-surface border border-darkmoon-border shadow-lg relative overflow-hidden group"
+    <motion.a
+      href={tweetUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="block p-6 rounded-xl bg-darkmoon-surface border border-darkmoon-border relative overflow-hidden group hover:border-darkmoon-gold/30 transition-all duration-300"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay }}
-      whileHover={{ scale: 1.02, borderColor: '#D4AF37' }}
+      whileHover={{ y: -5 }}
     >
-      <div className="absolute top-0 right-0 w-20 h-20 bg-darkmoon-gold/5 rounded-bl-full -mr-4 -mt-4 group-hover:bg-darkmoon-gold/10 transition-colors" />
+      <div className="absolute top-0 right-0 p-4 opacity-50 group-hover:opacity-100 transition-opacity">
+        <Twitter className="w-5 h-5 text-darkmoon-text-secondary group-hover:text-[#1DA1F2]" />
+      </div>
       
-      <p className="text-lg mb-6 text-darkmoon-text-primary leading-relaxed relative z-10">
-        "{quote}"
-      </p>
-      <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-darkmoon-gold to-[#F3CF55] flex items-center justify-center text-black font-bold text-sm">
+      <div className="flex items-center gap-3 mb-4">
+        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-darkmoon-gold to-[#F3CF55] flex items-center justify-center text-black font-bold text-sm shadow-lg">
             {authorName.charAt(0)}
         </div>
-        <span className="text-sm font-semibold text-darkmoon-text-secondary group-hover:text-darkmoon-gold transition-colors">
-          {authorName}
-        </span>
+        <div>
+          <div className="text-sm font-bold text-darkmoon-text-primary group-hover:text-darkmoon-gold transition-colors">
+            {authorName}
+          </div>
+          <div className="text-xs text-darkmoon-text-muted">
+            {handle}
+          </div>
+        </div>
       </div>
-    </motion.div>
+
+      <div className="relative">
+        <MessageSquare className="absolute -top-2 -left-2 w-4 h-4 text-darkmoon-border opacity-20 transform -scale-x-100" />
+        <p className="text-sm leading-relaxed text-darkmoon-text-secondary pl-4 border-l-2 border-darkmoon-border group-hover:border-darkmoon-gold/50 transition-colors">
+          {quote}
+        </p>
+      </div>
+    </motion.a>
   )
 }
 
@@ -46,7 +61,7 @@ export default function CommunitySection() {
   const items: CardProps[] = [
     {
       quote:
-        '前不久非常火的 AI 量化交易系统 NOF1，在 GitHub 上有人将其复刻并开源，这就是 DarkMoon 项目。基于 DeepSeek、Qwen 等大语言模型，打造的通用架构 AI 交易操作系统，完成了从决策、到交易、再到复盘的闭环。GitHub: https://github.com/NoFxAiOS/nofx',
+        '前不久非常火的 AI 量化交易系统 NOF1，在 GitHub 上有人将其复刻并开源，这就是 DarkMoon 项目。基于 DeepSeek、Qwen 等大语言模型，打造的通用架构 AI 交易操作系统。',
       authorName: 'Michael Williams',
       handle: '@MichaelWil93725',
       avatarUrl: '',
@@ -55,7 +70,7 @@ export default function CommunitySection() {
     },
     {
       quote:
-        '跑了一晚上 @nofx_official 开源的 AI 自动交易，太有意思了，就看 AI 在那一会开空一会开多，一顿操作，虽然看不懂为什么，但是一晚上帮我赚了 6% 收益',
+        '跑了一晚上 @nofx_official 开源的 AI 自动交易，太有意思了，就看 AI 在那一会开空一会开多，一顿操作，一晚上帮我赚了 6% 收益。',
       authorName: 'DIŸgöd',
       handle: '@DIYgod',
       avatarUrl: '',
@@ -64,7 +79,7 @@ export default function CommunitySection() {
     },
     {
       quote:
-        'Open-source DarkMoon revives the legendary Alpha Arena, an AI-powered crypto futures battleground. Built on DeepSeek/Qwen AI, it trades live on Binance, Hyperliquid, and Aster DEX, featuring multi-AI battles and self-learning bots',
+        'Open-source DarkMoon revives the legendary Alpha Arena. Built on DeepSeek/Qwen AI, it trades live on Binance, Hyperliquid, and Aster DEX.',
       authorName: 'Kai',
       handle: '@hqmank',
       avatarUrl: '',
@@ -75,15 +90,17 @@ export default function CommunitySection() {
 
   return (
     <AnimatedSection backgroundColor="transparent">
-      <div className="max-w-7xl mx-auto">
-        <motion.h2 
-            className="text-4xl font-bold text-center mb-12 text-darkmoon-text-primary"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+      <div className="max-w-7xl mx-auto py-12">
+        <motion.div 
+          className="text-center mb-12"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
         >
-            Community Voices
-        </motion.h2>
+          <h2 className="text-3xl font-bold text-white mb-2">Community Voices</h2>
+          <p className="text-darkmoon-text-muted">See what traders are saying about DarkMoon</p>
+        </motion.div>
+        
         <motion.div
           className="grid md:grid-cols-3 gap-6"
           variants={staggerContainer}
