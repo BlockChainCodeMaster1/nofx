@@ -13,6 +13,13 @@ export default {
           surface_light: '#15151E', // Highlight surface
           border: '#2A2A35',    // Subtle border
           
+          // Text Colors
+          text: {
+            primary: '#F3F4F6',   // Matches --dm-text-primary
+            secondary: '#9CA3AF', // Matches --dm-text-secondary
+            muted: '#6B7280',     // Matches --dm-text-muted
+          },
+
           // Brand Colors
           gold: '#D4AF37',      // Classic Metallic Gold
           gold_light: '#F3CF55',
