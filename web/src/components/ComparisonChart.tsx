@@ -141,7 +141,7 @@ export function ComparisonChart({ traders }: ComparisonChartProps) {
 
   if (isLoading) {
     return (
-      <div className="text-center py-16" style={{ color: '#848E9C' }}>
+      <div className="text-center py-16 text-darkmoon-text-secondary">
         <div className="spinner mx-auto mb-4"></div>
         <div className="text-sm font-semibold">Loading comparison data...</div>
       </div>
@@ -150,7 +150,7 @@ export function ComparisonChart({ traders }: ComparisonChartProps) {
 
   if (combinedData.length === 0) {
     return (
-      <div className="text-center py-16" style={{ color: '#848E9C' }}>
+      <div className="text-center py-16 text-darkmoon-text-secondary">
         <BarChart3 className="w-12 h-12 mx-auto mb-4 opacity-60" />
         <div className="text-lg font-semibold mb-2">
           {t('noHistoricalData', language)}
@@ -197,11 +197,8 @@ export function ComparisonChart({ traders }: ComparisonChartProps) {
     if (active && payload && payload.length) {
       const data = payload[0].payload
       return (
-        <div
-          className="rounded p-3 shadow-xl"
-          style={{ background: '#1E2329', border: '1px solid #2B3139' }}
-        >
-          <div className="text-xs mb-2" style={{ color: '#848E9C' }}>
+        <div className="rounded p-3 shadow-xl bg-darkmoon-surface border border-darkmoon-border">
+          <div className="text-xs mb-2 text-darkmoon-text-secondary">
             {data.time} - #{data.index}
           </div>
           {traders.map((trader) => {
@@ -218,15 +215,13 @@ export function ComparisonChart({ traders }: ComparisonChartProps) {
                   {trader.trader_name}
                 </div>
                 <div
-                  className="text-sm mono font-bold"
-                  style={{ color: pnlPct >= 0 ? '#0ECB81' : '#F6465D' }}
+                  className={`text-sm mono font-bold ${
+                    pnlPct >= 0 ? 'text-emerald-500' : 'text-red-500'
+                  }`}
                 >
                   {pnlPct >= 0 ? '+' : ''}
                   {pnlPct.toFixed(2)}%
-                  <span
-                    className="text-xs ml-2 font-normal"
-                    style={{ color: '#848E9C' }}
-                  >
+                  <span className="text-xs ml-2 font-normal text-darkmoon-text-secondary">
                     ({equity?.toFixed(2)} USDT)
                   </span>
                 </div>
@@ -253,27 +248,9 @@ export function ComparisonChart({ traders }: ComparisonChartProps) {
 
   return (
     <div>
-      <div
-        style={{
-          borderRadius: '8px',
-          overflow: 'hidden',
-          position: 'relative',
-        }}
-      >
+      <div className="rounded-lg overflow-hidden relative">
         {/* NOFX Watermark */}
-        <div
-          style={{
-            position: 'absolute',
-            top: '20px',
-            right: '20px',
-            fontSize: '24px',
-            fontWeight: 'bold',
-            color: 'rgba(240, 185, 11, 0.15)',
-            zIndex: 10,
-            pointerEvents: 'none',
-            fontFamily: 'monospace',
-          }}
-        >
+        <div className="absolute top-5 right-5 text-2xl font-bold text-darkmoon-gold/15 z-10 pointer-events-none font-mono">
           NOFX
         </div>
         <ResponsiveContainer width="100%" height={520}>
@@ -305,13 +282,13 @@ export function ComparisonChart({ traders }: ComparisonChartProps) {
               ))}
             </defs>
 
-            <CartesianGrid strokeDasharray="3 3" stroke="#2B3139" />
+            <CartesianGrid strokeDasharray="3 3" stroke="#2A2A35" />
 
             <XAxis
               dataKey="time"
               stroke="#5E6673"
-              tick={{ fill: '#848E9C', fontSize: 11 }}
-              tickLine={{ stroke: '#2B3139' }}
+              tick={{ fill: '#94A3B8', fontSize: 11 }}
+              tickLine={{ stroke: '#2A2A35' }}
               interval={Math.floor(displayData.length / 12)}
               angle={-15}
               textAnchor="end"
@@ -320,8 +297,8 @@ export function ComparisonChart({ traders }: ComparisonChartProps) {
 
             <YAxis
               stroke="#5E6673"
-              tick={{ fill: '#848E9C', fontSize: 12 }}
-              tickLine={{ stroke: '#2B3139' }}
+              tick={{ fill: '#94A3B8', fontSize: 12 }}
+              tickLine={{ stroke: '#2A2A35' }}
               domain={calculateYDomain()}
               tickFormatter={(value) => `${value.toFixed(1)}%`}
               width={60}
@@ -336,7 +313,7 @@ export function ComparisonChart({ traders }: ComparisonChartProps) {
               strokeWidth={1.5}
               label={{
                 value: 'Break Even',
-                fill: '#848E9C',
+                fill: '#94A3B8',
                 fontSize: 11,
                 position: 'right',
               }}
@@ -391,75 +368,40 @@ export function ComparisonChart({ traders }: ComparisonChartProps) {
       </div>
 
       {/* Stats */}
-      <div
-        className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 pt-5"
-        style={{ borderTop: '1px solid #2B3139' }}
-      >
-        <div
-          className="p-2 md:p-3 rounded transition-all hover:bg-opacity-50"
-          style={{ background: 'rgba(240, 185, 11, 0.05)' }}
-        >
-          <div
-            className="text-xs mb-1 uppercase tracking-wider"
-            style={{ color: '#848E9C' }}
-          >
+      <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 pt-5 border-t border-darkmoon-border">
+        <div className="p-2 md:p-3 rounded transition-all hover:bg-opacity-50 bg-darkmoon-gold/5">
+          <div className="text-xs mb-1 uppercase tracking-wider text-darkmoon-text-secondary">
             {t('comparisonMode', language)}
           </div>
-          <div
-            className="text-sm md:text-base font-bold"
-            style={{ color: '#EAECEF' }}
-          >
+          <div className="text-sm md:text-base font-bold text-darkmoon-text-primary">
             PnL %
           </div>
         </div>
-        <div
-          className="p-2 md:p-3 rounded transition-all hover:bg-opacity-50"
-          style={{ background: 'rgba(240, 185, 11, 0.05)' }}
-        >
-          <div
-            className="text-xs mb-1 uppercase tracking-wider"
-            style={{ color: '#848E9C' }}
-          >
+        <div className="p-2 md:p-3 rounded transition-all hover:bg-opacity-50 bg-darkmoon-gold/5">
+          <div className="text-xs mb-1 uppercase tracking-wider text-darkmoon-text-secondary">
             {t('dataPoints', language)}
           </div>
-          <div
-            className="text-sm md:text-base font-bold mono"
-            style={{ color: '#EAECEF' }}
-          >
+          <div className="text-sm md:text-base font-bold mono text-darkmoon-text-primary">
             {t('count', language, { count: combinedData.length })}
           </div>
         </div>
-        <div
-          className="p-2 md:p-3 rounded transition-all hover:bg-opacity-50"
-          style={{ background: 'rgba(240, 185, 11, 0.05)' }}
-        >
-          <div
-            className="text-xs mb-1 uppercase tracking-wider"
-            style={{ color: '#848E9C' }}
-          >
+        <div className="p-2 md:p-3 rounded transition-all hover:bg-opacity-50 bg-darkmoon-gold/5">
+          <div className="text-xs mb-1 uppercase tracking-wider text-darkmoon-text-secondary">
             {t('currentGap', language)}
           </div>
           <div
-            className="text-sm md:text-base font-bold mono"
-            style={{ color: currentGap > 1 ? '#F0B90B' : '#EAECEF' }}
+            className={`text-sm md:text-base font-bold mono ${
+              currentGap > 1 ? 'text-darkmoon-gold' : 'text-darkmoon-text-primary'
+            }`}
           >
             {currentGap.toFixed(2)}%
           </div>
         </div>
-        <div
-          className="p-2 md:p-3 rounded transition-all hover:bg-opacity-50"
-          style={{ background: 'rgba(240, 185, 11, 0.05)' }}
-        >
-          <div
-            className="text-xs mb-1 uppercase tracking-wider"
-            style={{ color: '#848E9C' }}
-          >
+        <div className="p-2 md:p-3 rounded transition-all hover:bg-opacity-50 bg-darkmoon-gold/5">
+          <div className="text-xs mb-1 uppercase tracking-wider text-darkmoon-text-secondary">
             {t('displayRange', language)}
           </div>
-          <div
-            className="text-sm md:text-base font-bold mono"
-            style={{ color: '#EAECEF' }}
-          >
+          <div className="text-sm md:text-base font-bold mono text-darkmoon-text-primary">
             {combinedData.length > MAX_DISPLAY_POINTS
               ? `${t('recent', language)} ${MAX_DISPLAY_POINTS}`
               : t('allData', language)}

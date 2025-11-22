@@ -10,7 +10,7 @@ interface FeaturesSectionProps {
 
 export default function FeaturesSection({ language }: FeaturesSectionProps) {
   return (
-    <AnimatedSection id="features">
+    <AnimatedSection id="features" backgroundColor="transparent">
       <div className="max-w-7xl mx-auto">
         <motion.div
           className="text-center mb-16"
@@ -19,38 +19,25 @@ export default function FeaturesSection({ language }: FeaturesSectionProps) {
           viewport={{ once: true }}
         >
           <motion.div
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6"
-            style={{
-              background: 'rgba(240, 185, 11, 0.1)',
-              border: '1px solid rgba(240, 185, 11, 0.2)',
-            }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6 bg-darkmoon-surface border border-darkmoon-gold/20"
             whileHover={{ scale: 1.05 }}
           >
-            <Rocket
-              className="w-4 h-4"
-              style={{ color: 'var(--brand-yellow)' }}
-            />
-            <span
-              className="text-sm font-semibold"
-              style={{ color: 'var(--brand-yellow)' }}
-            >
+            <Rocket className="w-4 h-4 text-darkmoon-gold" />
+            <span className="text-sm font-semibold text-darkmoon-gold">
               {t('coreFeatures', language)}
             </span>
           </motion.div>
-          <h2
-            className="text-4xl font-bold mb-4"
-            style={{ color: 'var(--brand-light-gray)' }}
-          >
+          <h2 className="text-4xl font-bold mb-4 text-darkmoon-text-primary">
             {t('whyChooseNofx', language)}
           </h2>
-          <p className="text-lg" style={{ color: 'var(--text-secondary)' }}>
+          <p className="text-lg text-darkmoon-text-secondary">
             {t('openCommunityDriven', language)}
           </p>
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           <CryptoFeatureCard
-            icon={<Code className="w-8 h-8" />}
+            icon={<Code className="w-8 h-8 text-darkmoon-gold" />}
             title={t('openSourceSelfHosted', language)}
             description={t('openSourceDesc', language)}
             features={[
@@ -62,7 +49,7 @@ export default function FeaturesSection({ language }: FeaturesSectionProps) {
             delay={0}
           />
           <CryptoFeatureCard
-            icon={<Cpu className="w-8 h-8" />}
+            icon={<Cpu className="w-8 h-8 text-darkmoon-gold" />}
             title={t('multiAgentCompetition', language)}
             description={t('multiAgentDesc', language)}
             features={[
@@ -74,7 +61,7 @@ export default function FeaturesSection({ language }: FeaturesSectionProps) {
             delay={0.1}
           />
           <CryptoFeatureCard
-            icon={<Lock className="w-8 h-8" />}
+            icon={<Lock className="w-8 h-8 text-darkmoon-gold" />}
             title={t('secureReliableTrading', language)}
             description={t('secureDesc', language)}
             features={[

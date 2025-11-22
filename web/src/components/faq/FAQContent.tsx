@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { t, type Language } from '../../i18n/translations'
 import type { FAQCategory } from '../../data/faqData'
-// RoadmapWidget 移除动态嵌入，按需仅展示外部链接
 
 interface FAQContentProps {
   categories: FAQCategory[]
@@ -59,11 +58,10 @@ export function FAQContent({
         <div key={category.id}>
           {/* Category Header */}
           <div
-            className="flex items-center gap-3 mb-6 pb-3"
-            style={{ borderBottom: '2px solid #2B3139' }}
+            className="flex items-center gap-3 mb-6 pb-3 border-b-2 border-darkmoon-border"
           >
-            <category.icon className="w-7 h-7" style={{ color: '#F0B90B' }} />
-            <h2 className="text-2xl font-bold" style={{ color: '#EAECEF' }}>
+            <category.icon className="w-7 h-7 text-darkmoon-gold" />
+            <h2 className="text-2xl font-bold text-darkmoon-text-primary">
               {t(category.titleKey, language)}
             </h2>
           </div>
@@ -80,19 +78,14 @@ export function FAQContent({
               >
                 {/* Question */}
                 <h3
-                  className="text-xl font-semibold mb-3"
-                  style={{ color: '#EAECEF' }}
+                  className="text-xl font-semibold mb-3 text-darkmoon-text-primary"
                 >
                   {t(item.questionKey, language)}
                 </h3>
 
                 {/* Answer */}
                 <div
-                  className="prose prose-invert max-w-none"
-                  style={{
-                    color: '#B7BDC6',
-                    lineHeight: '1.7',
-                  }}
+                  className="prose prose-invert max-w-none text-darkmoon-text-secondary leading-relaxed"
                 >
                   {item.id === 'github-projects-tasks' ? (
                     <div className="space-y-3">
@@ -102,7 +95,7 @@ export function FAQContent({
                           href="https://github.com/orgs/NoFxAiOS/projects/3"
                           target="_blank"
                           rel="noreferrer"
-                          style={{ color: '#F0B90B' }}
+                          className="text-darkmoon-gold hover:underline"
                         >
                           {language === 'zh' ? '路线图' : 'Roadmap'}
                         </a>
@@ -111,7 +104,7 @@ export function FAQContent({
                           href="https://github.com/orgs/NoFxAiOS/projects/5"
                           target="_blank"
                           rel="noreferrer"
-                          style={{ color: '#F0B90B' }}
+                          className="text-darkmoon-gold hover:underline"
                         >
                           {language === 'zh' ? '任务看板' : 'Task Dashboard'}
                         </a>
@@ -132,28 +125,28 @@ export function FAQContent({
                             <li>
                               同步你的 fork 的 <code>dev</code>{' '}
                               分支与上游保持一致：
-                              <code className="ml-2">
+                              <code className="ml-2 bg-darkmoon-surface px-1 rounded">
                                 git remote add upstream
                                 https://github.com/NoFxAiOS/nofx.git
                               </code>
                               <br />
-                              <code>git fetch upstream</code>
+                              <code className="bg-darkmoon-surface px-1 rounded">git fetch upstream</code>
                               <br />
-                              <code>git checkout dev</code>
+                              <code className="bg-darkmoon-surface px-1 rounded">git checkout dev</code>
                               <br />
-                              <code>git rebase upstream/dev</code>
+                              <code className="bg-darkmoon-surface px-1 rounded">git rebase upstream/dev</code>
                               <br />
-                              <code>git push origin dev</code>
+                              <code className="bg-darkmoon-surface px-1 rounded">git push origin dev</code>
                             </li>
                             <li>
                               从你的 fork 的 <code>dev</code> 建立特性分支：
-                              <code className="ml-2">
+                              <code className="ml-2 bg-darkmoon-surface px-1 rounded">
                                 git checkout -b feat/your-topic
                               </code>
                             </li>
                             <li>
                               推送到你的 fork：
-                              <code className="ml-2">
+                              <code className="ml-2 bg-darkmoon-surface px-1 rounded">
                                 git push origin feat/your-topic
                               </code>
                             </li>
@@ -164,7 +157,7 @@ export function FAQContent({
                             </li>
                             <li>
                               在 PR 中关联 Issue（示例：
-                              <code className="ml-1">Closes #123</code>
+                              <code className="ml-1 bg-darkmoon-surface px-1 rounded">Closes #123</code>
                               ），选择正确 PR 模板；必要时与{' '}
                               <code>upstream/dev</code>{' '}
                               同步（rebase）后继续推送。
@@ -186,29 +179,29 @@ export function FAQContent({
                             <li>Fork the repository to your GitHub account.</li>
                             <li>
                               Sync your fork's <code>dev</code> with upstream:
-                              <code className="ml-2">
+                              <code className="ml-2 bg-darkmoon-surface px-1 rounded">
                                 git remote add upstream
                                 https://github.com/NoFxAiOS/nofx.git
                               </code>
                               <br />
-                              <code>git fetch upstream</code>
+                              <code className="bg-darkmoon-surface px-1 rounded">git fetch upstream</code>
                               <br />
-                              <code>git checkout dev</code>
+                              <code className="bg-darkmoon-surface px-1 rounded">git checkout dev</code>
                               <br />
-                              <code>git rebase upstream/dev</code>
+                              <code className="bg-darkmoon-surface px-1 rounded">git rebase upstream/dev</code>
                               <br />
-                              <code>git push origin dev</code>
+                              <code className="bg-darkmoon-surface px-1 rounded">git push origin dev</code>
                             </li>
                             <li>
                               Create a feature branch from your fork's{' '}
                               <code>dev</code>:
-                              <code className="ml-2">
+                              <code className="ml-2 bg-darkmoon-surface px-1 rounded">
                                 git checkout -b feat/your-topic
                               </code>
                             </li>
                             <li>
                               Push to your fork:
-                              <code className="ml-2">
+                              <code className="ml-2 bg-darkmoon-surface px-1 rounded">
                                 git push origin feat/your-topic
                               </code>
                             </li>
@@ -219,7 +212,7 @@ export function FAQContent({
                             </li>
                             <li>
                               In PR, reference the Issue (e.g.,{' '}
-                              <code className="ml-1">Closes #123</code>) and
+                              <code className="ml-1 bg-darkmoon-surface px-1 rounded">Closes #123</code>) and
                               choose the proper PR template; rebase onto{' '}
                               <code>upstream/dev</code> as needed.
                             </li>
@@ -228,15 +221,11 @@ export function FAQContent({
                       </ol>
 
                       <div
-                        className="rounded p-3 mt-3"
-                        style={{
-                          background: 'rgba(240, 185, 11, 0.08)',
-                          border: '1px solid rgba(240, 185, 11, 0.25)',
-                        }}
+                        className="rounded p-3 mt-3 bg-darkmoon-gold/10 border border-darkmoon-gold/20"
                       >
                         {language === 'zh' ? (
                           <div className="text-sm">
-                            <strong style={{ color: '#F0B90B' }}>提示：</strong>{' '}
+                            <strong className="text-darkmoon-gold">提示：</strong>{' '}
                             参与贡献将享有激励制度（如
                             Bounty/奖金、荣誉徽章与鸣谢、优先
                             Review/合并与内测资格 等）。 可在任务中优先选择带
@@ -244,7 +233,7 @@ export function FAQContent({
                               href="https://github.com/NoFxAiOS/nofx/labels/bounty"
                               target="_blank"
                               rel="noreferrer"
-                              style={{ color: '#F0B90B' }}
+                              className="text-darkmoon-gold hover:underline mx-1"
                             >
                               bounty 标签
                             </a>
@@ -253,7 +242,7 @@ export function FAQContent({
                               href="https://github.com/NoFxAiOS/nofx/blob/dev/.github/ISSUE_TEMPLATE/bounty_claim.md"
                               target="_blank"
                               rel="noreferrer"
-                              style={{ color: '#F0B90B' }}
+                              className="text-darkmoon-gold hover:underline mx-1"
                             >
                               Bounty Claim
                             </a>
@@ -261,7 +250,7 @@ export function FAQContent({
                           </div>
                         ) : (
                           <div className="text-sm">
-                            <strong style={{ color: '#F0B90B' }}>Note:</strong>{' '}
+                            <strong className="text-darkmoon-gold">Note:</strong>{' '}
                             Contribution incentives are available (e.g., cash
                             bounties, badges & shout-outs, priority
                             review/merge, beta access). Prefer tasks with
@@ -269,7 +258,7 @@ export function FAQContent({
                               href="https://github.com/NoFxAiOS/nofx/labels/bounty"
                               target="_blank"
                               rel="noreferrer"
-                              style={{ color: '#F0B90B' }}
+                              className="text-darkmoon-gold hover:underline mx-1"
                             >
                               bounty label
                             </a>
@@ -278,7 +267,7 @@ export function FAQContent({
                               href="https://github.com/NoFxAiOS/nofx/blob/dev/.github/ISSUE_TEMPLATE/bounty_claim.md"
                               target="_blank"
                               rel="noreferrer"
-                              style={{ color: '#F0B90B' }}
+                              className="text-darkmoon-gold hover:underline mx-1"
                             >
                               Bounty Claim
                             </a>
@@ -295,7 +284,7 @@ export function FAQContent({
                           href="https://github.com/NoFxAiOS/nofx/blob/dev/CONTRIBUTING.md"
                           target="_blank"
                           rel="noreferrer"
-                          style={{ color: '#F0B90B' }}
+                          className="text-darkmoon-gold hover:underline"
                         >
                           CONTRIBUTING.md
                         </a>
@@ -304,7 +293,7 @@ export function FAQContent({
                           href="https://github.com/NoFxAiOS/nofx/blob/dev/.github/PR_TITLE_GUIDE.md"
                           target="_blank"
                           rel="noreferrer"
-                          style={{ color: '#F0B90B' }}
+                          className="text-darkmoon-gold hover:underline"
                         >
                           PR_TITLE_GUIDE.md
                         </a>
@@ -323,7 +312,7 @@ export function FAQContent({
                             </li>
                             <li>
                               提交前运行检查：
-                              <code className="ml-2">
+                              <code className="ml-2 bg-darkmoon-surface px-1 rounded">
                                 npm --prefix web run lint && npm --prefix web
                                 run build
                               </code>
@@ -335,7 +324,7 @@ export function FAQContent({
                             </li>
                             <li>
                               在 PR 中关联 Issue（示例：
-                              <code className="ml-1">Closes #123</code>），PR
+                              <code className="ml-1 bg-darkmoon-surface px-1 rounded">Closes #123</code>），PR
                               目标选择 <code>NoFxAiOS/nofx:dev</code>。
                             </li>
                             <li>
@@ -357,7 +346,7 @@ export function FAQContent({
                             </li>
                             <li>
                               Run checks before PR:
-                              <code className="ml-2">
+                              <code className="ml-2 bg-darkmoon-surface px-1 rounded">
                                 npm --prefix web run lint && npm --prefix web
                                 run build
                               </code>
@@ -372,7 +361,7 @@ export function FAQContent({
                             </li>
                             <li>
                               Link the Issue in PR (e.g.,{' '}
-                              <code className="ml-1">Closes #123</code>) and
+                              <code className="ml-1 bg-darkmoon-surface px-1 rounded">Closes #123</code>) and
                               target <code>NoFxAiOS/nofx:dev</code>.
                             </li>
                             <li>
@@ -384,22 +373,18 @@ export function FAQContent({
                       </ol>
 
                       <div
-                        className="rounded p-3 mt-3"
-                        style={{
-                          background: 'rgba(240, 185, 11, 0.08)',
-                          border: '1px solid rgba(240, 185, 11, 0.25)',
-                        }}
+                        className="rounded p-3 mt-3 bg-darkmoon-gold/10 border border-darkmoon-gold/20"
                       >
                         {language === 'zh' ? (
                           <div className="text-sm">
-                            <strong style={{ color: '#F0B90B' }}>提示：</strong>{' '}
+                            <strong className="text-darkmoon-gold">提示：</strong>{' '}
                             我们为高质量贡献提供激励（Bounty/奖金、荣誉徽章与鸣谢、优先
                             Review/合并与内测资格 等）。 详情可关注带
                             <a
                               href="https://github.com/NoFxAiOS/nofx/labels/bounty"
                               target="_blank"
                               rel="noreferrer"
-                              style={{ color: '#F0B90B' }}
+                              className="text-darkmoon-gold hover:underline mx-1"
                             >
                               bounty 标签
                             </a>
@@ -408,7 +393,7 @@ export function FAQContent({
                               href="https://github.com/NoFxAiOS/nofx/blob/dev/.github/ISSUE_TEMPLATE/bounty_claim.md"
                               target="_blank"
                               rel="noreferrer"
-                              style={{ color: '#F0B90B' }}
+                              className="text-darkmoon-gold hover:underline mx-1"
                             >
                               Bounty Claim 模板
                             </a>
@@ -416,7 +401,7 @@ export function FAQContent({
                           </div>
                         ) : (
                           <div className="text-sm">
-                            <strong style={{ color: '#F0B90B' }}>Note:</strong>{' '}
+                            <strong className="text-darkmoon-gold">Note:</strong>{' '}
                             We offer contribution incentives (bounties, badges,
                             shout-outs, priority review/merge, beta access).
                             Look for tasks with
@@ -424,7 +409,7 @@ export function FAQContent({
                               href="https://github.com/NoFxAiOS/nofx/labels/bounty"
                               target="_blank"
                               rel="noreferrer"
-                              style={{ color: '#F0B90B' }}
+                              className="text-darkmoon-gold hover:underline mx-1"
                             >
                               bounty label
                             </a>
@@ -433,7 +418,7 @@ export function FAQContent({
                               href="https://github.com/NoFxAiOS/nofx/blob/dev/.github/ISSUE_TEMPLATE/bounty_claim.md"
                               target="_blank"
                               rel="noreferrer"
-                              style={{ color: '#F0B90B' }}
+                              className="text-darkmoon-gold hover:underline mx-1"
                             >
                               Bounty Claim
                             </a>
@@ -448,7 +433,7 @@ export function FAQContent({
                 </div>
 
                 {/* Divider */}
-                <div className="mt-6 h-px" style={{ background: '#2B3139' }} />
+                <div className="mt-6 h-px bg-darkmoon-border" />
               </section>
             ))}
           </div>

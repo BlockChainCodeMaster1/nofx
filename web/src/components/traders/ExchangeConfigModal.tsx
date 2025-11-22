@@ -274,19 +274,17 @@ export function ExchangeConfigModal({
   const availableExchanges = allExchanges || []
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 overflow-y-auto">
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 overflow-y-auto">
       <div
-        className="bg-gray-800 rounded-lg w-full max-w-lg relative my-8"
+        className="bg-darkmoon-surface rounded-xl w-full max-w-lg relative my-8 border border-darkmoon-border shadow-2xl"
         style={{
-          background: '#1E2329',
           maxHeight: 'calc(100vh - 4rem)',
         }}
       >
         <div
-          className="flex items-center justify-between p-6 pb-4 sticky top-0 z-10"
-          style={{ background: '#1E2329' }}
+          className="flex items-center justify-between p-6 pb-4 sticky top-0 z-10 bg-darkmoon-surface rounded-t-xl border-b border-darkmoon-border"
         >
-          <h3 className="text-xl font-bold" style={{ color: '#EAECEF' }}>
+          <h3 className="text-xl font-bold text-darkmoon-text-primary">
             {editingExchangeId
               ? t('editExchange', language)
               : t('addExchange', language)}
@@ -296,11 +294,7 @@ export function ExchangeConfigModal({
               <button
                 type="button"
                 onClick={() => setShowGuide(true)}
-                className="px-3 py-2 rounded text-sm font-semibold transition-all hover:scale-105 flex items-center gap-2"
-                style={{
-                  background: 'rgba(240, 185, 11, 0.1)',
-                  color: '#F0B90B',
-                }}
+                className="px-3 py-2 rounded text-sm font-semibold transition-all hover:scale-105 flex items-center gap-2 bg-darkmoon-gold/10 text-darkmoon-gold hover:bg-darkmoon-gold/20"
               >
                 <BookOpen className="w-4 h-4" />
                 {t('viewGuide', language)}
@@ -310,11 +304,7 @@ export function ExchangeConfigModal({
               <button
                 type="button"
                 onClick={() => onDelete(editingExchangeId)}
-                className="p-2 rounded hover:bg-red-100 transition-colors"
-                style={{
-                  background: 'rgba(246, 70, 93, 0.1)',
-                  color: '#F6465D',
-                }}
+                className="p-2 rounded hover:bg-red-500/20 transition-colors bg-red-500/10 text-red-500"
                 title={t('delete', language)}
               >
                 <Trash2 className="w-4 h-4" />
@@ -323,17 +313,16 @@ export function ExchangeConfigModal({
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="px-6 pb-6">
+        <form onSubmit={handleSubmit} className="px-6 pb-6 pt-4">
           <div
-            className="space-y-4 overflow-y-auto"
+            className="space-y-4 overflow-y-auto custom-scrollbar pr-2"
             style={{ maxHeight: 'calc(100vh - 16rem)' }}
           >
             {!editingExchangeId && (
               <div className="space-y-3">
                 <div className="space-y-2">
                   <div
-                    className="text-xs font-semibold uppercase tracking-wide"
-                    style={{ color: '#F0B90B' }}
+                    className="text-xs font-semibold uppercase tracking-wide text-darkmoon-gold"
                   >
                     {t('environmentSteps.checkTitle', language)}
                   </div>
@@ -345,20 +334,14 @@ export function ExchangeConfigModal({
                 </div>
                 <div className="space-y-2">
                   <div
-                    className="text-xs font-semibold uppercase tracking-wide"
-                    style={{ color: '#F0B90B' }}
+                    className="text-xs font-semibold uppercase tracking-wide text-darkmoon-gold"
                   >
                     {t('environmentSteps.selectTitle', language)}
                   </div>
                   <select
                     value={selectedExchangeId}
                     onChange={(e) => setSelectedExchangeId(e.target.value)}
-                    className="w-full px-3 py-2 rounded"
-                    style={{
-                      background: '#0B0E11',
-                      border: '1px solid #2B3139',
-                      color: '#EAECEF',
-                    }}
+                    className="w-full px-3 py-2 rounded bg-darkmoon-surface-light border border-darkmoon-border text-darkmoon-text-primary focus:border-darkmoon-gold focus:outline-none"
                     aria-label={t('selectExchange', language)}
                     disabled={webCryptoStatus !== 'secure'}
                     required
@@ -379,21 +362,20 @@ export function ExchangeConfigModal({
 
             {selectedExchange && (
               <div
-                className="p-4 rounded"
-                style={{ background: '#0B0E11', border: '1px solid #2B3139' }}
+                className="p-4 rounded bg-darkmoon-surface-light border border-darkmoon-border"
               >
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="w-8 h-8 flex items-center justify-center">
+                  <div className="w-8 h-8 flex items-center justify-center text-darkmoon-text-primary">
                     {getExchangeIcon(selectedExchange.id, {
                       width: 32,
                       height: 32,
                     })}
                   </div>
                   <div>
-                    <div className="font-semibold" style={{ color: '#EAECEF' }}>
+                    <div className="font-semibold text-darkmoon-text-primary">
                       {getShortName(selectedExchange.name)}
                     </div>
-                    <div className="text-xs" style={{ color: '#848E9C' }}>
+                    <div className="text-xs text-darkmoon-text-secondary">
                       {selectedExchange.type.toUpperCase()} •{' '}
                       {selectedExchange.id}
                     </div>
@@ -413,26 +395,21 @@ export function ExchangeConfigModal({
                       {/* 币安用户配置提示 (D1 方案) */}
                       {selectedExchange.id === 'binance' && (
                         <div
-                          className="mb-4 p-3 rounded cursor-pointer transition-colors"
-                          style={{
-                            background: '#1a3a52',
-                            border: '1px solid #2b5278',
-                          }}
+                          className="mb-4 p-3 rounded cursor-pointer transition-colors bg-[#1a3a52] border border-[#2b5278]"
                           onClick={() => setShowBinanceGuide(!showBinanceGuide)}
                         >
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2">
-                              <span style={{ color: '#58a6ff' }}>ℹ️</span>
+                              <span className="text-[#58a6ff]">ℹ️</span>
                               <span
-                                className="text-sm font-medium"
-                                style={{ color: '#EAECEF' }}
+                                className="text-sm font-medium text-darkmoon-text-primary"
                               >
                                 <strong>币安用户必读：</strong>
                                 使用「现货与合约交易」API，不要用「统一账户
                                 API」
                               </span>
                             </div>
-                            <span style={{ color: '#8b949e' }}>
+                            <span className="text-[#8b949e]">
                               {showBinanceGuide ? '▲' : '▼'}
                             </span>
                           </div>
@@ -440,28 +417,21 @@ export function ExchangeConfigModal({
                           {/* 展开的详细说明 */}
                           {showBinanceGuide && (
                             <div
-                              className="mt-3 pt-3"
-                              style={{
-                                borderTop: '1px solid #2b5278',
-                                fontSize: '0.875rem',
-                                color: '#c9d1d9',
-                              }}
+                              className="mt-3 pt-3 text-sm text-[#c9d1d9] border-t border-[#2b5278]"
                               onClick={(e) => e.stopPropagation()}
                             >
-                              <p className="mb-2" style={{ color: '#8b949e' }}>
+                              <p className="mb-2 text-[#8b949e]">
                                 <strong>原因：</strong>统一账户 API
                                 权限结构不同，会导致订单提交失败
                               </p>
 
                               <p
-                                className="font-semibold mb-1"
-                                style={{ color: '#EAECEF' }}
+                                className="font-semibold mb-1 text-darkmoon-text-primary"
                               >
                                 正确配置步骤：
                               </p>
                               <ol
-                                className="list-decimal list-inside space-y-1 mb-3"
-                                style={{ paddingLeft: '0.5rem' }}
+                                className="list-decimal list-inside space-y-1 mb-3 pl-2"
                               >
                                 <li>
                                   登录币安 → 个人中心 →{' '}
@@ -473,7 +443,7 @@ export function ExchangeConfigModal({
                                 </li>
                                 <li>
                                   勾选「<strong>现货与合约交易</strong>」（
-                                  <span style={{ color: '#f85149' }}>
+                                  <span className="text-red-400">
                                     不选统一账户
                                   </span>
                                   ）
@@ -485,11 +455,7 @@ export function ExchangeConfigModal({
                               </ol>
 
                               <p
-                                className="mb-2 p-2 rounded"
-                                style={{
-                                  background: '#3d2a00',
-                                  border: '1px solid #9e6a03',
-                                }}
+                                className="mb-2 p-2 rounded bg-[#3d2a00] border border-[#9e6a03]"
                               >
                                 💡 <strong>多资产模式用户注意：</strong>
                                 如果您开启了多资产模式，将强制使用全仓模式。建议关闭多资产模式以支持逐仓交易。
@@ -499,8 +465,7 @@ export function ExchangeConfigModal({
                                 href="https://www.binance.com/zh-CN/support/faq/how-to-create-api-keys-on-binance-360002502072"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-block text-sm hover:underline"
-                                style={{ color: '#58a6ff' }}
+                                className="inline-block text-sm hover:underline text-[#58a6ff]"
                               >
                                 📖 查看币安官方教程 ↗
                               </a>
@@ -511,8 +476,7 @@ export function ExchangeConfigModal({
 
                       <div>
                         <label
-                          className="block text-sm font-semibold mb-2"
-                          style={{ color: '#EAECEF' }}
+                          className="block text-sm font-semibold mb-2 text-darkmoon-text-primary"
                         >
                           {t('apiKey', language)}
                         </label>
@@ -521,20 +485,14 @@ export function ExchangeConfigModal({
                           value={apiKey}
                           onChange={(e) => setApiKey(e.target.value)}
                           placeholder={t('enterAPIKey', language)}
-                          className="w-full px-3 py-2 rounded"
-                          style={{
-                            background: '#0B0E11',
-                            border: '1px solid #2B3139',
-                            color: '#EAECEF',
-                          }}
+                          className="w-full px-3 py-2 rounded bg-darkmoon-surface-light border border-darkmoon-border text-darkmoon-text-primary focus:border-darkmoon-gold focus:outline-none placeholder-gray-600"
                           required
                         />
                       </div>
 
                       <div>
                         <label
-                          className="block text-sm font-semibold mb-2"
-                          style={{ color: '#EAECEF' }}
+                          className="block text-sm font-semibold mb-2 text-darkmoon-text-primary"
                         >
                           {t('secretKey', language)}
                         </label>
@@ -543,12 +501,7 @@ export function ExchangeConfigModal({
                           value={secretKey}
                           onChange={(e) => setSecretKey(e.target.value)}
                           placeholder={t('enterSecretKey', language)}
-                          className="w-full px-3 py-2 rounded"
-                          style={{
-                            background: '#0B0E11',
-                            border: '1px solid #2B3139',
-                            color: '#EAECEF',
-                          }}
+                          className="w-full px-3 py-2 rounded bg-darkmoon-surface-light border border-darkmoon-border text-darkmoon-text-primary focus:border-darkmoon-gold focus:outline-none placeholder-gray-600"
                           required
                         />
                       </div>
@@ -556,8 +509,7 @@ export function ExchangeConfigModal({
                       {selectedExchange.id === 'okx' && (
                         <div>
                           <label
-                            className="block text-sm font-semibold mb-2"
-                            style={{ color: '#EAECEF' }}
+                            className="block text-sm font-semibold mb-2 text-darkmoon-text-primary"
                           >
                             {t('passphrase', language)}
                           </label>
@@ -566,12 +518,7 @@ export function ExchangeConfigModal({
                             value={passphrase}
                             onChange={(e) => setPassphrase(e.target.value)}
                             placeholder={t('enterPassphrase', language)}
-                            className="w-full px-3 py-2 rounded"
-                            style={{
-                              background: '#0B0E11',
-                              border: '1px solid #2B3139',
-                              color: '#EAECEF',
-                            }}
+                            className="w-full px-3 py-2 rounded bg-darkmoon-surface-light border border-darkmoon-border text-darkmoon-text-primary focus:border-darkmoon-gold focus:outline-none placeholder-gray-600"
                             required
                           />
                         </div>
@@ -580,51 +527,38 @@ export function ExchangeConfigModal({
                       {/* Binance 白名单IP提示 */}
                       {selectedExchange.id === 'binance' && (
                         <div
-                          className="p-4 rounded"
-                          style={{
-                            background: 'rgba(240, 185, 11, 0.1)',
-                            border: '1px solid rgba(240, 185, 11, 0.2)',
-                          }}
+                          className="p-4 rounded bg-darkmoon-gold/10 border border-darkmoon-gold/20"
                         >
                           <div
-                            className="text-sm font-semibold mb-2"
-                            style={{ color: '#F0B90B' }}
+                            className="text-sm font-semibold mb-2 text-darkmoon-gold"
                           >
                             {t('whitelistIP', language)}
                           </div>
                           <div
-                            className="text-xs mb-3"
-                            style={{ color: '#848E9C' }}
+                            className="text-xs mb-3 text-darkmoon-text-secondary"
                           >
                             {t('whitelistIPDesc', language)}
                           </div>
 
                           {loadingIP ? (
                             <div
-                              className="text-xs"
-                              style={{ color: '#848E9C' }}
+                              className="text-xs text-darkmoon-text-secondary"
                             >
                               {t('loadingServerIP', language)}
                             </div>
                           ) : serverIP && serverIP.public_ip ? (
                             <div
-                              className="flex items-center gap-2 p-2 rounded"
-                              style={{ background: '#0B0E11' }}
+                              className="flex items-center gap-2 p-2 rounded bg-darkmoon-surface"
                             >
                               <code
-                                className="flex-1 text-sm font-mono"
-                                style={{ color: '#F0B90B' }}
+                                className="flex-1 text-sm font-mono text-darkmoon-gold"
                               >
                                 {serverIP.public_ip}
                               </code>
                               <button
                                 type="button"
                                 onClick={() => handleCopyIP(serverIP.public_ip)}
-                                className="px-3 py-1 rounded text-xs font-semibold transition-all hover:scale-105"
-                                style={{
-                                  background: 'rgba(240, 185, 11, 0.2)',
-                                  color: '#F0B90B',
-                                }}
+                                className="px-3 py-1 rounded text-xs font-semibold transition-all hover:scale-105 bg-darkmoon-gold/20 text-darkmoon-gold hover:bg-darkmoon-gold/30"
                               >
                                 {copiedIP
                                   ? t('ipCopied', language)
@@ -642,14 +576,12 @@ export function ExchangeConfigModal({
                   <>
                     <div>
                       <label
-                        className="block text-sm font-semibold mb-2 flex items-center gap-2"
-                        style={{ color: '#EAECEF' }}
+                        className="block text-sm font-semibold mb-2 flex items-center gap-2 text-darkmoon-text-primary"
                       >
                         {t('user', language)}
                         <Tooltip content={t('asterUserDesc', language)}>
                           <HelpCircle
-                            className="w-4 h-4 cursor-help"
-                            style={{ color: '#F0B90B' }}
+                            className="w-4 h-4 cursor-help text-darkmoon-gold"
                           />
                         </Tooltip>
                       </label>
@@ -658,26 +590,19 @@ export function ExchangeConfigModal({
                         value={asterUser}
                         onChange={(e) => setAsterUser(e.target.value)}
                         placeholder={t('enterUser', language)}
-                        className="w-full px-3 py-2 rounded"
-                        style={{
-                          background: '#0B0E11',
-                          border: '1px solid #2B3139',
-                          color: '#EAECEF',
-                        }}
+                        className="w-full px-3 py-2 rounded bg-darkmoon-surface-light border border-darkmoon-border text-darkmoon-text-primary focus:border-darkmoon-gold focus:outline-none placeholder-gray-600"
                         required
                       />
                     </div>
 
                     <div>
                       <label
-                        className="block text-sm font-semibold mb-2 flex items-center gap-2"
-                        style={{ color: '#EAECEF' }}
+                        className="block text-sm font-semibold mb-2 flex items-center gap-2 text-darkmoon-text-primary"
                       >
                         {t('signer', language)}
                         <Tooltip content={t('asterSignerDesc', language)}>
                           <HelpCircle
-                            className="w-4 h-4 cursor-help"
-                            style={{ color: '#F0B90B' }}
+                            className="w-4 h-4 cursor-help text-darkmoon-gold"
                           />
                         </Tooltip>
                       </label>
@@ -686,26 +611,19 @@ export function ExchangeConfigModal({
                         value={asterSigner}
                         onChange={(e) => setAsterSigner(e.target.value)}
                         placeholder={t('enterSigner', language)}
-                        className="w-full px-3 py-2 rounded"
-                        style={{
-                          background: '#0B0E11',
-                          border: '1px solid #2B3139',
-                          color: '#EAECEF',
-                        }}
+                        className="w-full px-3 py-2 rounded bg-darkmoon-surface-light border border-darkmoon-border text-darkmoon-text-primary focus:border-darkmoon-gold focus:outline-none placeholder-gray-600"
                         required
                       />
                     </div>
 
                     <div>
                       <label
-                        className="block text-sm font-semibold mb-2 flex items-center gap-2"
-                        style={{ color: '#EAECEF' }}
+                        className="block text-sm font-semibold mb-2 flex items-center gap-2 text-darkmoon-text-primary"
                       >
                         {t('privateKey', language)}
                         <Tooltip content={t('asterPrivateKeyDesc', language)}>
                           <HelpCircle
-                            className="w-4 h-4 cursor-help"
-                            style={{ color: '#F0B90B' }}
+                            className="w-4 h-4 cursor-help text-darkmoon-gold"
                           />
                         </Tooltip>
                       </label>
@@ -714,12 +632,7 @@ export function ExchangeConfigModal({
                         value={asterPrivateKey}
                         onChange={(e) => setAsterPrivateKey(e.target.value)}
                         placeholder={t('enterPrivateKey', language)}
-                        className="w-full px-3 py-2 rounded"
-                        style={{
-                          background: '#0B0E11',
-                          border: '1px solid #2B3139',
-                          color: '#EAECEF',
-                        }}
+                        className="w-full px-3 py-2 rounded bg-darkmoon-surface-light border border-darkmoon-border text-darkmoon-text-primary focus:border-darkmoon-gold focus:outline-none placeholder-gray-600"
                         required
                       />
                     </div>
@@ -731,26 +644,20 @@ export function ExchangeConfigModal({
                   <>
                     {/* 安全提示 banner */}
                     <div
-                      className="p-3 rounded mb-4"
-                      style={{
-                        background: 'rgba(240, 185, 11, 0.1)',
-                        border: '1px solid rgba(240, 185, 11, 0.3)',
-                      }}
+                      className="p-3 rounded mb-4 bg-darkmoon-gold/10 border border-darkmoon-gold/30"
                     >
                       <div className="flex items-start gap-2">
-                        <span style={{ color: '#F0B90B', fontSize: '16px' }}>
+                        <span className="text-darkmoon-gold text-base">
                           🔐
                         </span>
                         <div className="flex-1">
                           <div
-                            className="text-sm font-semibold mb-1"
-                            style={{ color: '#F0B90B' }}
+                            className="text-sm font-semibold mb-1 text-darkmoon-gold"
                           >
                             {t('hyperliquidAgentWalletTitle', language)}
                           </div>
                           <div
-                            className="text-xs"
-                            style={{ color: '#848E9C', lineHeight: '1.5' }}
+                            className="text-xs text-darkmoon-text-secondary leading-relaxed"
                           >
                             {t('hyperliquidAgentWalletDesc', language)}
                           </div>
@@ -761,8 +668,7 @@ export function ExchangeConfigModal({
                     {/* Agent Private Key 字段 */}
                     <div>
                       <label
-                        className="block text-sm font-semibold mb-2"
-                        style={{ color: '#EAECEF' }}
+                        className="block text-sm font-semibold mb-2 text-darkmoon-text-primary"
                       >
                         {t('hyperliquidAgentPrivateKey', language)}
                       </label>
@@ -776,22 +682,12 @@ export function ExchangeConfigModal({
                               'enterHyperliquidAgentPrivateKey',
                               language
                             )}
-                            className="w-full px-3 py-2 rounded"
-                            style={{
-                              background: '#0B0E11',
-                              border: '1px solid #2B3139',
-                              color: '#EAECEF',
-                            }}
+                            className="w-full px-3 py-2 rounded bg-darkmoon-surface-light border border-darkmoon-border text-darkmoon-text-primary focus:border-darkmoon-gold focus:outline-none placeholder-gray-600"
                           />
                           <button
                             type="button"
                             onClick={() => setSecureInputTarget('hyperliquid')}
-                            className="px-3 py-2 rounded text-xs font-semibold transition-all hover:scale-105"
-                            style={{
-                              background: '#F0B90B',
-                              color: '#000',
-                              whiteSpace: 'nowrap',
-                            }}
+                            className="px-3 py-2 rounded text-xs font-semibold transition-all hover:scale-105 bg-darkmoon-gold text-black whitespace-nowrap"
                           >
                             {apiKey
                               ? t('secureInputReenter', language)
@@ -801,26 +697,20 @@ export function ExchangeConfigModal({
                             <button
                               type="button"
                               onClick={() => setApiKey('')}
-                              className="px-3 py-2 rounded text-xs font-semibold transition-all hover:scale-105"
-                              style={{
-                                background: '#1B1F2B',
-                                color: '#848E9C',
-                                whiteSpace: 'nowrap',
-                              }}
+                              className="px-3 py-2 rounded text-xs font-semibold transition-all hover:scale-105 bg-darkmoon-surface text-darkmoon-text-secondary whitespace-nowrap"
                             >
                               {t('secureInputClear', language)}
                             </button>
                           )}
                         </div>
                         {apiKey && (
-                          <div className="text-xs" style={{ color: '#848E9C' }}>
+                          <div className="text-xs text-darkmoon-text-secondary">
                             {t('secureInputHint', language)}
                           </div>
                         )}
                       </div>
                       <div
-                        className="text-xs mt-1"
-                        style={{ color: '#848E9C' }}
+                        className="text-xs mt-1 text-darkmoon-text-secondary"
                       >
                         {t('hyperliquidAgentPrivateKeyDesc', language)}
                       </div>
@@ -829,8 +719,7 @@ export function ExchangeConfigModal({
                     {/* Main Wallet Address 字段 */}
                     <div>
                       <label
-                        className="block text-sm font-semibold mb-2"
-                        style={{ color: '#EAECEF' }}
+                        className="block text-sm font-semibold mb-2 text-darkmoon-text-primary"
                       >
                         {t('hyperliquidMainWalletAddress', language)}
                       </label>
@@ -844,17 +733,11 @@ export function ExchangeConfigModal({
                           'enterHyperliquidMainWalletAddress',
                           language
                         )}
-                        className="w-full px-3 py-2 rounded"
-                        style={{
-                          background: '#0B0E11',
-                          border: '1px solid #2B3139',
-                          color: '#EAECEF',
-                        }}
+                        className="w-full px-3 py-2 rounded bg-darkmoon-surface-light border border-darkmoon-border text-darkmoon-text-primary focus:border-darkmoon-gold focus:outline-none placeholder-gray-600"
                         required
                       />
                       <div
-                        className="text-xs mt-1"
-                        style={{ color: '#848E9C' }}
+                        className="text-xs mt-1 text-darkmoon-text-secondary"
                       >
                         {t('hyperliquidMainWalletAddressDesc', language)}
                       </div>
@@ -868,8 +751,7 @@ export function ExchangeConfigModal({
                     {/* L1 Wallet Address */}
                     <div className="mb-4">
                       <label
-                        className="block text-sm font-semibold mb-2"
-                        style={{ color: '#EAECEF' }}
+                        className="block text-sm font-semibold mb-2 text-darkmoon-text-primary"
                       >
                         {t('lighterWalletAddress', language)}
                       </label>
@@ -878,15 +760,10 @@ export function ExchangeConfigModal({
                         value={lighterWalletAddr}
                         onChange={(e) => setLighterWalletAddr(e.target.value)}
                         placeholder={t('enterLighterWalletAddress', language)}
-                        className="w-full px-3 py-2 rounded"
-                        style={{
-                          background: '#0B0E11',
-                          border: '1px solid #2B3139',
-                          color: '#EAECEF',
-                        }}
+                        className="w-full px-3 py-2 rounded bg-darkmoon-surface-light border border-darkmoon-border text-darkmoon-text-primary focus:border-darkmoon-gold focus:outline-none placeholder-gray-600"
                         required
                       />
-                      <div className="text-xs mt-1" style={{ color: '#848E9C' }}>
+                      <div className="text-xs mt-1 text-darkmoon-text-secondary">
                         {t('lighterWalletAddressDesc', language)}
                       </div>
                     </div>
@@ -894,15 +771,13 @@ export function ExchangeConfigModal({
                     {/* L1 Private Key */}
                     <div className="mb-4">
                       <label
-                        className="block text-sm font-semibold mb-2"
-                        style={{ color: '#EAECEF' }}
+                        className="block text-sm font-semibold mb-2 text-darkmoon-text-primary"
                       >
                         {t('lighterPrivateKey', language)}
                         <button
                           type="button"
                           onClick={() => setSecureInputTarget('lighter')}
-                          className="ml-2 text-xs underline"
-                          style={{ color: '#F0B90B' }}
+                          className="ml-2 text-xs underline text-darkmoon-gold"
                         >
                           {t('secureInputButton', language)}
                         </button>
@@ -912,15 +787,10 @@ export function ExchangeConfigModal({
                         value={lighterPrivateKey}
                         onChange={(e) => setLighterPrivateKey(e.target.value)}
                         placeholder={t('enterLighterPrivateKey', language)}
-                        className="w-full px-3 py-2 rounded font-mono text-sm"
-                        style={{
-                          background: '#0B0E11',
-                          border: '1px solid #2B3139',
-                          color: '#EAECEF',
-                        }}
+                        className="w-full px-3 py-2 rounded font-mono text-sm bg-darkmoon-surface-light border border-darkmoon-border text-darkmoon-text-primary focus:border-darkmoon-gold focus:outline-none placeholder-gray-600"
                         required
                       />
-                      <div className="text-xs mt-1" style={{ color: '#848E9C' }}>
+                      <div className="text-xs mt-1 text-darkmoon-text-secondary">
                         {t('lighterPrivateKeyDesc', language)}
                       </div>
                     </div>
@@ -928,8 +798,7 @@ export function ExchangeConfigModal({
                     {/* API Key Private Key */}
                     <div className="mb-4">
                       <label
-                        className="block text-sm font-semibold mb-2"
-                        style={{ color: '#EAECEF' }}
+                        className="block text-sm font-semibold mb-2 text-darkmoon-text-primary"
                       >
                         {t('lighterApiKeyPrivateKey', language)} ⭐
                       </label>
@@ -938,38 +807,24 @@ export function ExchangeConfigModal({
                         value={lighterApiKeyPrivateKey}
                         onChange={(e) => setLighterApiKeyPrivateKey(e.target.value)}
                         placeholder={t('enterLighterApiKeyPrivateKey', language)}
-                        className="w-full px-3 py-2 rounded font-mono text-sm"
-                        style={{
-                          background: '#0B0E11',
-                          border: '1px solid #2B3139',
-                          color: '#EAECEF',
-                        }}
+                        className="w-full px-3 py-2 rounded font-mono text-sm bg-darkmoon-surface-light border border-darkmoon-border text-darkmoon-text-primary focus:border-darkmoon-gold focus:outline-none placeholder-gray-600"
                       />
-                      <div className="text-xs mt-1" style={{ color: '#848E9C' }}>
+                      <div className="text-xs mt-1 text-darkmoon-text-secondary">
                         {t('lighterApiKeyPrivateKeyDesc', language)}
                       </div>
-                      <div className="text-xs mt-2 p-2 rounded" style={{
-                        background: '#1E2329',
-                        border: '1px solid #2B3139',
-                        color: '#F0B90B'
-                      }}>
+                      <div className="text-xs mt-2 p-2 rounded bg-darkmoon-surface border border-darkmoon-border text-darkmoon-gold">
                         💡 {t('lighterApiKeyOptionalNote', language)}
                       </div>
                     </div>
 
                     {/* V1/V2 Status Display */}
-                    <div className="mb-4 p-3 rounded" style={{
-                      background: lighterApiKeyPrivateKey ? '#0F3F2E' : '#3F2E0F',
-                      border: '1px solid ' + (lighterApiKeyPrivateKey ? '#10B981' : '#F59E0B')
-                    }}>
+                    <div className={`mb-4 p-3 rounded border ${lighterApiKeyPrivateKey ? 'bg-[#0F3F2E] border-[#10B981]' : 'bg-[#3F2E0F] border-[#F59E0B]'}`}>
                       <div className="flex items-center gap-2">
-                        <div className="text-sm font-semibold" style={{
-                          color: lighterApiKeyPrivateKey ? '#10B981' : '#F59E0B'
-                        }}>
+                        <div className={`text-sm font-semibold ${lighterApiKeyPrivateKey ? 'text-[#10B981]' : 'text-[#F59E0B]'}`}>
                           {lighterApiKeyPrivateKey ? '✅ LIGHTER V2' : '⚠️ LIGHTER V1'}
                         </div>
                       </div>
-                      <div className="text-xs mt-1" style={{ color: '#848E9C' }}>
+                      <div className="text-xs mt-1 text-darkmoon-text-secondary">
                         {lighterApiKeyPrivateKey
                           ? t('lighterV2Description', language)
                           : t('lighterV1Description', language)
@@ -983,14 +838,12 @@ export function ExchangeConfigModal({
           </div>
 
           <div
-            className="flex gap-3 mt-6 pt-4 sticky bottom-0"
-            style={{ background: '#1E2329' }}
+            className="flex gap-3 mt-6 pt-4 sticky bottom-0 bg-darkmoon-surface border-t border-darkmoon-border"
           >
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-2 rounded text-sm font-semibold"
-              style={{ background: '#2B3139', color: '#848E9C' }}
+              className="flex-1 px-4 py-2 rounded text-sm font-semibold bg-darkmoon-surface-light text-darkmoon-text-secondary hover:bg-darkmoon-surface hover:text-darkmoon-text-primary transition-colors"
             >
               {t('cancel', language)}
             </button>
@@ -1020,8 +873,7 @@ export function ExchangeConfigModal({
                   selectedExchange.id !== 'okx' &&
                   (!apiKey.trim() || !secretKey.trim()))
               }
-              className="flex-1 px-4 py-2 rounded text-sm font-semibold disabled:opacity-50"
-              style={{ background: '#F0B90B', color: '#000' }}
+              className="flex-1 px-4 py-2 rounded text-sm font-semibold disabled:opacity-50 disabled:cursor-not-allowed bg-darkmoon-gold text-black hover:bg-darkmoon-gold-light transition-colors"
             >
               {t('saveConfig', language)}
             </button>
@@ -1032,26 +884,23 @@ export function ExchangeConfigModal({
       {/* Binance Setup Guide Modal */}
       {showGuide && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4"
+          className="fixed inset-0 bg-black/75 backdrop-blur-sm flex items-center justify-center z-50 p-4"
           onClick={() => setShowGuide(false)}
         >
           <div
-            className="bg-gray-800 rounded-lg p-6 w-full max-w-4xl relative"
-            style={{ background: '#1E2329' }}
+            className="bg-darkmoon-surface rounded-lg p-6 w-full max-w-4xl relative border border-darkmoon-border"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between mb-4">
               <h3
-                className="text-xl font-bold flex items-center gap-2"
-                style={{ color: '#EAECEF' }}
+                className="text-xl font-bold flex items-center gap-2 text-darkmoon-text-primary"
               >
-                <BookOpen className="w-6 h-6" style={{ color: '#F0B90B' }} />
+                <BookOpen className="w-6 h-6 text-darkmoon-gold" />
                 {t('binanceSetupGuide', language)}
               </h3>
               <button
                 onClick={() => setShowGuide(false)}
-                className="px-4 py-2 rounded text-sm font-semibold transition-all hover:scale-105"
-                style={{ background: '#2B3139', color: '#848E9C' }}
+                className="px-4 py-2 rounded text-sm font-semibold transition-all hover:scale-105 bg-darkmoon-surface-light text-darkmoon-text-secondary hover:text-darkmoon-text-primary"
               >
                 {t('closeGuide', language)}
               </button>

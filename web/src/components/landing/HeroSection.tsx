@@ -33,11 +33,14 @@ export default function HeroSection({ language }: HeroSectionProps) {
 
   return (
     <section className="relative pt-32 pb-20 px-4">
+      {/* Hero Background Effect */}
+      <div className="absolute top-0 right-0 -z-10 w-[600px] h-[600px] bg-darkmoon-gold/5 rounded-full blur-[120px]" />
+      
       <div className="max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
           <motion.div
-            className="space-y-6 relative z-10"
+            className="space-y-8 relative z-10"
             style={{ opacity, scale }}
             initial="initial"
             animate="animate"
@@ -45,37 +48,28 @@ export default function HeroSection({ language }: HeroSectionProps) {
           >
             <motion.div variants={fadeInUp}>
               <motion.div
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6"
-                style={{
-                  background: 'rgba(240, 185, 11, 0.1)',
-                  border: '1px solid rgba(240, 185, 11, 0.2)',
-                }}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-2 bg-darkmoon-surface border border-darkmoon-gold/20 backdrop-blur-sm"
                 whileHover={{
                   scale: 1.05,
-                  boxShadow: '0 0 20px rgba(240, 185, 11, 0.2)',
+                  borderColor: '#D4AF37',
+                  boxShadow: '0 0 20px rgba(212, 175, 55, 0.2)',
                 }}
               >
-                <Sparkles
-                  className="w-4 h-4"
-                  style={{ color: 'var(--brand-yellow)' }}
-                />
-                <span
-                  className="text-sm font-semibold"
-                  style={{ color: 'var(--brand-yellow)' }}
-                >
+                <Sparkles className="w-4 h-4 text-darkmoon-gold" />
+                <span className="text-sm font-semibold text-darkmoon-gold">
                   {isLoading ? (
                     t('githubStarsInDays', language)
                   ) : language === 'zh' ? (
                     <>
                       {daysOld} 天内{' '}
-                      <span className="inline-block tabular-nums">
+                      <span className="inline-block tabular-nums font-mono">
                         {(animatedStars / 1000).toFixed(1)}
                       </span>
                       K+ GitHub Stars
                     </>
                   ) : (
                     <>
-                      <span className="inline-block tabular-nums">
+                      <span className="inline-block tabular-nums font-mono">
                         {(animatedStars / 1000).toFixed(1)}
                       </span>
                       K+ GitHub Stars in {daysOld} days
@@ -85,20 +79,16 @@ export default function HeroSection({ language }: HeroSectionProps) {
               </motion.div>
             </motion.div>
 
-            <h1
-              className="text-5xl lg:text-7xl font-bold leading-tight"
-              style={{ color: 'var(--brand-light-gray)' }}
-            >
+            <h1 className="text-5xl lg:text-7xl font-bold leading-tight text-white">
               {t('heroTitle1', language)}
               <br />
-              <span style={{ color: 'var(--brand-yellow)' }}>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-darkmoon-gold to-[#F3CF55] drop-shadow-[0_0_15px_rgba(212,175,55,0.3)]">
                 {t('heroTitle2', language)}
               </span>
             </h1>
 
             <motion.p
-              className="text-xl leading-relaxed"
-              style={{ color: 'var(--text-secondary)' }}
+              className="text-xl leading-relaxed text-darkmoon-text-secondary max-w-xl"
               variants={fadeInUp}
             >
               {t('heroDescription', language)}
@@ -111,11 +101,12 @@ export default function HeroSection({ language }: HeroSectionProps) {
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: 'spring', stiffness: 400 }}
+                className="shadow-lg shadow-black/50"
               >
                 <img
-                  src="https://img.shields.io/github/stars/tinkle-community/nofx?style=for-the-badge&logo=github&logoColor=white&color=F0B90B&labelColor=0A0A0A"
+                  src="https://img.shields.io/github/stars/tinkle-community/nofx?style=for-the-badge&logo=github&logoColor=white&color=0B0B10&labelColor=1E1E2A"
                   alt="GitHub Stars"
-                  className="h-7"
+                  className="h-8 rounded"
                 />
               </motion.a>
               <motion.a
@@ -124,11 +115,12 @@ export default function HeroSection({ language }: HeroSectionProps) {
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: 'spring', stiffness: 400 }}
+                className="shadow-lg shadow-black/50"
               >
                 <img
-                  src="https://img.shields.io/github/forks/tinkle-community/nofx?style=for-the-badge&logo=github&logoColor=white&color=F0B90B&labelColor=0A0A0A"
+                  src="https://img.shields.io/github/forks/tinkle-community/nofx?style=for-the-badge&logo=github&logoColor=white&color=0B0B10&labelColor=1E1E2A"
                   alt="GitHub Forks"
-                  className="h-7"
+                  className="h-8 rounded"
                 />
               </motion.a>
               <motion.a
@@ -137,18 +129,18 @@ export default function HeroSection({ language }: HeroSectionProps) {
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: 'spring', stiffness: 400 }}
+                className="shadow-lg shadow-black/50"
               >
                 <img
-                  src="https://img.shields.io/github/contributors/tinkle-community/nofx?style=for-the-badge&logo=github&logoColor=white&color=F0B90B&labelColor=0A0A0A"
+                  src="https://img.shields.io/github/contributors/tinkle-community/nofx?style=for-the-badge&logo=github&logoColor=white&color=0B0B10&labelColor=1E1E2A"
                   alt="GitHub Contributors"
-                  className="h-7"
+                  className="h-8 rounded"
                 />
               </motion.a>
             </div>
 
             <motion.p
-              className="text-xs pt-4"
-              style={{ color: 'var(--text-tertiary)' }}
+              className="text-xs pt-4 text-darkmoon-text-muted font-mono"
               variants={fadeInUp}
             >
               {t('poweredBy', language)}
@@ -183,11 +175,14 @@ export default function HeroSection({ language }: HeroSectionProps) {
               })
             }}
           >
+            {/* Glow Effect */}
+            <div className="absolute inset-0 bg-darkmoon-gold/20 blur-[100px] rounded-full opacity-30 pointer-events-none"></div>
+            
             {/* Background Layer */}
             <motion.img
               src="/images/hand-bg.png"
               alt="NOFX Platform Background"
-              className="w-full opacity-90"
+              className="w-full opacity-90 drop-shadow-[0_0_30px_rgba(0,0,0,0.5)]"
               style={{ opacity, scale }}
               whileHover={{ scale: 1.02 }}
               transition={{ type: 'spring', stiffness: 300 }}
@@ -197,7 +192,7 @@ export default function HeroSection({ language }: HeroSectionProps) {
             <motion.img
               src="/images/hand.png"
               alt="Robot Hand"
-              className="absolute top-0 left-0 w-full"
+              className="absolute top-0 left-0 w-full drop-shadow-2xl"
               style={{ opacity }}
               animate={handControls}
               initial={{ y: 0, rotate: 0, x: 0 }}

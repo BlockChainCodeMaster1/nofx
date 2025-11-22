@@ -64,19 +64,17 @@ export function ModelConfigModal({
   const availableModels = allModels || []
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 overflow-y-auto">
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 overflow-y-auto">
       <div
-        className="bg-gray-800 rounded-lg w-full max-w-lg relative my-8"
+        className="bg-darkmoon-surface rounded-xl w-full max-w-lg relative my-8 border border-darkmoon-border shadow-2xl"
         style={{
-          background: '#1E2329',
           maxHeight: 'calc(100vh - 4rem)',
         }}
       >
         <div
-          className="flex items-center justify-between p-6 pb-4 sticky top-0 z-10"
-          style={{ background: '#1E2329' }}
+          className="flex items-center justify-between p-6 pb-4 sticky top-0 z-10 bg-darkmoon-surface rounded-t-xl border-b border-darkmoon-border"
         >
-          <h3 className="text-xl font-bold" style={{ color: '#EAECEF' }}>
+          <h3 className="text-xl font-bold text-darkmoon-text-primary">
             {editingModelId
               ? t('editAIModel', language)
               : t('addAIModel', language)}
@@ -85,8 +83,7 @@ export function ModelConfigModal({
             <button
               type="button"
               onClick={() => onDelete(editingModelId)}
-              className="p-2 rounded hover:bg-red-100 transition-colors"
-              style={{ background: 'rgba(246, 70, 93, 0.1)', color: '#F6465D' }}
+              className="p-2 rounded hover:bg-red-500/20 transition-colors bg-red-500/10 text-red-500"
               title={t('delete', language)}
             >
               <Trash2 className="w-4 h-4" />
@@ -94,28 +91,22 @@ export function ModelConfigModal({
           )}
         </div>
 
-        <form onSubmit={handleSubmit} className="px-6 pb-6">
+        <form onSubmit={handleSubmit} className="px-6 pb-6 pt-4">
           <div
-            className="space-y-4 overflow-y-auto"
+            className="space-y-4 overflow-y-auto custom-scrollbar pr-2"
             style={{ maxHeight: 'calc(100vh - 16rem)' }}
           >
             {!editingModelId && (
               <div>
                 <label
-                  className="block text-sm font-semibold mb-2"
-                  style={{ color: '#EAECEF' }}
+                  className="block text-sm font-semibold mb-2 text-darkmoon-text-primary"
                 >
                   {t('selectModel', language)}
                 </label>
                 <select
                   value={selectedModelId}
                   onChange={(e) => setSelectedModelId(e.target.value)}
-                  className="w-full px-3 py-2 rounded"
-                  style={{
-                    background: '#0B0E11',
-                    border: '1px solid #2B3139',
-                    color: '#EAECEF',
-                  }}
+                  className="w-full px-3 py-2 rounded bg-darkmoon-surface-light border border-darkmoon-border text-darkmoon-text-primary focus:border-darkmoon-gold focus:outline-none"
                   required
                 >
                   <option value="">{t('pleaseSelectModel', language)}</option>
@@ -130,34 +121,30 @@ export function ModelConfigModal({
 
             {selectedModel && (
               <div
-                className="p-4 rounded"
-                style={{ background: '#0B0E11', border: '1px solid #2B3139' }}
+                className="p-4 rounded bg-darkmoon-surface-light border border-darkmoon-border"
               >
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="w-8 h-8 flex items-center justify-center">
+                  <div className="w-8 h-8 flex items-center justify-center text-darkmoon-text-primary">
                     {getModelIcon(selectedModel.provider || selectedModel.id, {
                       width: 32,
                       height: 32,
                     }) || (
                       <div
-                        className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold"
-                        style={{
-                          background:
-                            selectedModel.id === 'deepseek'
-                              ? '#60a5fa'
-                              : '#c084fc',
-                          color: '#fff',
-                        }}
+                        className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold text-white ${
+                          selectedModel.id === 'deepseek'
+                            ? 'bg-blue-400'
+                            : 'bg-purple-400'
+                        }`}
                       >
                         {selectedModel.name[0]}
                       </div>
                     )}
                   </div>
                   <div>
-                    <div className="font-semibold" style={{ color: '#EAECEF' }}>
+                    <div className="font-semibold text-darkmoon-text-primary">
                       {getShortName(selectedModel.name)}
                     </div>
-                    <div className="text-xs" style={{ color: '#848E9C' }}>
+                    <div className="text-xs text-darkmoon-text-secondary">
                       {selectedModel.provider} • {selectedModel.id}
                     </div>
                   </div>
@@ -169,8 +156,7 @@ export function ModelConfigModal({
               <>
                 <div>
                   <label
-                    className="block text-sm font-semibold mb-2"
-                    style={{ color: '#EAECEF' }}
+                    className="block text-sm font-semibold mb-2 text-darkmoon-text-primary"
                   >
                     API Key
                   </label>
@@ -179,20 +165,14 @@ export function ModelConfigModal({
                     value={apiKey}
                     onChange={(e) => setApiKey(e.target.value)}
                     placeholder={t('enterAPIKey', language)}
-                    className="w-full px-3 py-2 rounded"
-                    style={{
-                      background: '#0B0E11',
-                      border: '1px solid #2B3139',
-                      color: '#EAECEF',
-                    }}
+                    className="w-full px-3 py-2 rounded bg-darkmoon-surface-light border border-darkmoon-border text-darkmoon-text-primary focus:border-darkmoon-gold focus:outline-none placeholder-gray-600"
                     required
                   />
                 </div>
 
                 <div>
                   <label
-                    className="block text-sm font-semibold mb-2"
-                    style={{ color: '#EAECEF' }}
+                    className="block text-sm font-semibold mb-2 text-darkmoon-text-primary"
                   >
                     {t('customBaseURL', language)}
                   </label>
@@ -201,22 +181,16 @@ export function ModelConfigModal({
                     value={baseUrl}
                     onChange={(e) => setBaseUrl(e.target.value)}
                     placeholder={t('customBaseURLPlaceholder', language)}
-                    className="w-full px-3 py-2 rounded"
-                    style={{
-                      background: '#0B0E11',
-                      border: '1px solid #2B3139',
-                      color: '#EAECEF',
-                    }}
+                    className="w-full px-3 py-2 rounded bg-darkmoon-surface-light border border-darkmoon-border text-darkmoon-text-primary focus:border-darkmoon-gold focus:outline-none placeholder-gray-600"
                   />
-                  <div className="text-xs mt-1" style={{ color: '#848E9C' }}>
+                  <div className="text-xs mt-1 text-darkmoon-text-secondary">
                     {t('leaveBlankForDefault', language)}
                   </div>
                 </div>
 
                 <div>
                   <label
-                    className="block text-sm font-semibold mb-2"
-                    style={{ color: '#EAECEF' }}
+                    className="block text-sm font-semibold mb-2 text-darkmoon-text-primary"
                   >
                     Model Name (可选)
                   </label>
@@ -225,34 +199,23 @@ export function ModelConfigModal({
                     value={modelName}
                     onChange={(e) => setModelName(e.target.value)}
                     placeholder="例如: deepseek-chat, qwen3-max, gpt-5"
-                    className="w-full px-3 py-2 rounded"
-                    style={{
-                      background: '#0B0E11',
-                      border: '1px solid #2B3139',
-                      color: '#EAECEF',
-                    }}
+                    className="w-full px-3 py-2 rounded bg-darkmoon-surface-light border border-darkmoon-border text-darkmoon-text-primary focus:border-darkmoon-gold focus:outline-none placeholder-gray-600"
                   />
-                  <div className="text-xs mt-1" style={{ color: '#848E9C' }}>
+                  <div className="text-xs mt-1 text-darkmoon-text-secondary">
                     留空使用默认模型名称
                   </div>
                 </div>
 
                 <div
-                  className="p-4 rounded"
-                  style={{
-                    background: 'rgba(240, 185, 11, 0.1)',
-                    border: '1px solid rgba(240, 185, 11, 0.2)',
-                  }}
+                  className="p-4 rounded bg-darkmoon-gold/10 border border-darkmoon-gold/20"
                 >
                   <div
-                    className="text-sm font-semibold mb-2"
-                    style={{ color: '#F0B90B' }}
+                    className="text-sm font-semibold mb-2 text-darkmoon-gold"
                   >
                     ℹ️ {t('information', language)}
                   </div>
                   <div
-                    className="text-xs space-y-1"
-                    style={{ color: '#848E9C' }}
+                    className="text-xs space-y-1 text-darkmoon-text-secondary"
                   >
                     <div>{t('modelConfigInfo1', language)}</div>
                     <div>{t('modelConfigInfo2', language)}</div>
@@ -264,22 +227,19 @@ export function ModelConfigModal({
           </div>
 
           <div
-            className="flex gap-3 mt-6 pt-4 sticky bottom-0"
-            style={{ background: '#1E2329' }}
+            className="flex gap-3 mt-6 pt-4 sticky bottom-0 bg-darkmoon-surface border-t border-darkmoon-border"
           >
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-2 rounded text-sm font-semibold"
-              style={{ background: '#2B3139', color: '#848E9C' }}
+              className="flex-1 px-4 py-2 rounded text-sm font-semibold bg-darkmoon-surface-light text-darkmoon-text-secondary hover:bg-darkmoon-surface hover:text-darkmoon-text-primary transition-colors"
             >
               {t('cancel', language)}
             </button>
             <button
               type="submit"
               disabled={!selectedModel || !apiKey.trim()}
-              className="flex-1 px-4 py-2 rounded text-sm font-semibold disabled:opacity-50"
-              style={{ background: '#F0B90B', color: '#000' }}
+              className="flex-1 px-4 py-2 rounded text-sm font-semibold disabled:opacity-50 disabled:cursor-not-allowed bg-darkmoon-gold text-black hover:bg-darkmoon-gold-light transition-colors"
             >
               {t('saveConfig', language)}
             </button>

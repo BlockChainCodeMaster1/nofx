@@ -44,15 +44,11 @@ export function TraderConfigViewModal({
   }) => (
     <button
       onClick={() => copyToClipboard(text, fieldName)}
-      className="ml-2 px-2 py-1 text-xs rounded transition-all duration-200 hover:scale-105"
-      style={{
-        background:
-          copiedField === fieldName
-            ? 'rgba(14, 203, 129, 0.1)'
-            : 'rgba(240, 185, 11, 0.1)',
-        color: copiedField === fieldName ? '#0ECB81' : '#F0B90B',
-        border: `1px solid ${copiedField === fieldName ? 'rgba(14, 203, 129, 0.3)' : 'rgba(240, 185, 11, 0.3)'}`,
-      }}
+      className={`ml-2 px-2 py-1 text-xs rounded transition-all duration-200 hover:scale-105 border ${
+        copiedField === fieldName
+          ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/30'
+          : 'bg-darkmoon-gold/10 text-darkmoon-gold border-darkmoon-gold/30'
+      }`}
     >
       {copiedField === fieldName ? '✓ 已复制' : '📋 复制'}
     </button>
@@ -69,10 +65,12 @@ export function TraderConfigViewModal({
     copyable?: boolean
     fieldName?: string
   }) => (
-    <div className="flex justify-between items-start py-2 border-b border-[#2B3139] last:border-b-0">
-      <span className="text-sm text-[#848E9C] font-medium">{label}</span>
+    <div className="flex justify-between items-start py-2 border-b border-darkmoon-border last:border-b-0">
+      <span className="text-sm text-darkmoon-text-secondary font-medium">
+        {label}
+      </span>
       <div className="flex items-center text-right">
-        <span className="text-sm text-[#EAECEF] font-mono">
+        <span className="text-sm text-darkmoon-text-primary font-mono">
           {typeof value === 'boolean' ? (value ? '是' : '否') : value}
         </span>
         {copyable && typeof value === 'string' && value && (
@@ -83,20 +81,22 @@ export function TraderConfigViewModal({
   )
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
       <div
-        className="bg-[#1E2329] border border-[#2B3139] rounded-xl shadow-2xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto"
+        className="bg-darkmoon-surface border border-darkmoon-border rounded-xl shadow-2xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-[#2B3139] bg-gradient-to-r from-[#1E2329] to-[#252B35]">
+        <div className="flex items-center justify-between p-6 border-b border-darkmoon-border bg-gradient-to-r from-darkmoon-surface to-darkmoon-surface-light">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#F0B90B] to-[#E1A706] flex items-center justify-center">
+            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-darkmoon-gold to-[#E1A706] flex items-center justify-center shadow-lg shadow-darkmoon-gold/20">
               <span className="text-lg">👁️</span>
             </div>
             <div>
-              <h2 className="text-xl font-bold text-[#EAECEF]">交易员配置</h2>
-              <p className="text-sm text-[#848E9C] mt-1">
+              <h2 className="text-xl font-bold text-darkmoon-text-primary">
+                交易员配置
+              </h2>
+              <p className="text-sm text-darkmoon-text-secondary mt-1">
                 {traderData.trader_name} 的配置信息
               </p>
             </div>
@@ -104,19 +104,18 @@ export function TraderConfigViewModal({
           <div className="flex items-center gap-2">
             {/* Running Status */}
             <div
-              className="px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1"
-              style={
+              className={`px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1 ${
                 traderData.is_running
-                  ? { background: 'rgba(14, 203, 129, 0.1)', color: '#0ECB81' }
-                  : { background: 'rgba(246, 70, 93, 0.1)', color: '#F6465D' }
-              }
+                  ? 'bg-emerald-500/10 text-emerald-500'
+                  : 'bg-red-500/10 text-red-500'
+              }`}
             >
               <span>{traderData.is_running ? '●' : '○'}</span>
               {traderData.is_running ? '运行中' : '已停止'}
             </div>
             <button
               onClick={onClose}
-              className="w-8 h-8 rounded-lg text-[#848E9C] hover:text-[#EAECEF] hover:bg-[#2B3139] transition-colors flex items-center justify-center"
+              className="w-8 h-8 rounded-lg text-darkmoon-text-secondary hover:text-darkmoon-text-primary hover:bg-darkmoon-surface-light transition-colors flex items-center justify-center"
             >
               ✕
             </button>
@@ -126,8 +125,8 @@ export function TraderConfigViewModal({
         {/* Content */}
         <div className="p-6 space-y-6">
           {/* Basic Info */}
-          <div className="bg-[#0B0E11] border border-[#2B3139] rounded-lg p-5">
-            <h3 className="text-lg font-semibold text-[#EAECEF] mb-4 flex items-center gap-2">
+          <div className="bg-darkmoon-surface-light border border-darkmoon-border rounded-lg p-5">
+            <h3 className="text-lg font-semibold text-darkmoon-text-primary mb-4 flex items-center gap-2">
               🤖 基础信息
             </h3>
             <div className="space-y-3">
@@ -159,8 +158,8 @@ export function TraderConfigViewModal({
           </div>
 
           {/* Trading Configuration */}
-          <div className="bg-[#0B0E11] border border-[#2B3139] rounded-lg p-5">
-            <h3 className="text-lg font-semibold text-[#EAECEF] mb-4 flex items-center gap-2">
+          <div className="bg-darkmoon-surface-light border border-darkmoon-border rounded-lg p-5">
+            <h3 className="text-lg font-semibold text-darkmoon-text-primary mb-4 flex items-center gap-2">
               ⚖️ 交易配置
             </h3>
             <div className="space-y-3">
@@ -186,8 +185,8 @@ export function TraderConfigViewModal({
           </div>
 
           {/* Signal Sources */}
-          <div className="bg-[#0B0E11] border border-[#2B3139] rounded-lg p-5">
-            <h3 className="text-lg font-semibold text-[#EAECEF] mb-4 flex items-center gap-2">
+          <div className="bg-darkmoon-surface-light border border-darkmoon-border rounded-lg p-5">
+            <h3 className="text-lg font-semibold text-darkmoon-text-primary mb-4 flex items-center gap-2">
               📡 信号源配置
             </h3>
             <div className="space-y-3">
@@ -200,9 +199,9 @@ export function TraderConfigViewModal({
           </div>
 
           {/* Custom Prompt */}
-          <div className="bg-[#0B0E11] border border-[#2B3139] rounded-lg p-5">
+          <div className="bg-darkmoon-surface-light border border-darkmoon-border rounded-lg p-5">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-[#EAECEF] flex items-center gap-2">
+              <h3 className="text-lg font-semibold text-darkmoon-text-primary flex items-center gap-2">
                 💬 交易策略提示词
               </h3>
               {traderData.custom_prompt && (
@@ -219,27 +218,21 @@ export function TraderConfigViewModal({
               />
               {traderData.custom_prompt ? (
                 <div>
-                  <div className="text-sm text-[#848E9C] mb-2">
+                  <div className="text-sm text-darkmoon-text-secondary mb-2">
                     {traderData.override_base_prompt
                       ? '自定义提示词'
                       : '附加提示词'}
                     ：
                   </div>
                   <div
-                    className="p-3 rounded border text-sm text-[#EAECEF] font-mono leading-relaxed max-h-48 overflow-y-auto"
-                    style={{
-                      background: '#0B0E11',
-                      border: '1px solid #2B3139',
-                      whiteSpace: 'pre-wrap',
-                    }}
+                    className="p-3 rounded border text-sm text-darkmoon-text-primary font-mono leading-relaxed max-h-48 overflow-y-auto bg-darkmoon-surface border-darkmoon-border whitespace-pre-wrap"
                   >
                     {traderData.custom_prompt}
                   </div>
                 </div>
               ) : (
                 <div
-                  className="text-sm text-[#848E9C] italic p-3 rounded border"
-                  style={{ border: '1px solid #2B3139' }}
+                  className="text-sm text-darkmoon-text-secondary italic p-3 rounded border border-darkmoon-border"
                 >
                   未设置自定义提示词，使用系统默认策略
                 </div>
@@ -249,10 +242,10 @@ export function TraderConfigViewModal({
         </div>
 
         {/* Footer */}
-        <div className="flex justify-end gap-3 p-6 border-t border-[#2B3139] bg-gradient-to-r from-[#1E2329] to-[#252B35]">
+        <div className="flex justify-end gap-3 p-6 border-t border-darkmoon-border bg-gradient-to-r from-darkmoon-surface to-darkmoon-surface-light">
           <button
             onClick={onClose}
-            className="px-6 py-3 bg-[#2B3139] text-[#EAECEF] rounded-lg hover:bg-[#404750] transition-all duration-200 border border-[#404750]"
+            className="px-6 py-3 bg-darkmoon-surface-light text-darkmoon-text-secondary rounded-lg hover:bg-darkmoon-surface hover:text-darkmoon-text-primary transition-all duration-200 border border-darkmoon-border hover:border-darkmoon-text-secondary"
           >
             关闭
           </button>
@@ -263,7 +256,7 @@ export function TraderConfigViewModal({
                 'full_config'
               )
             }
-            className="px-6 py-3 bg-gradient-to-r from-[#F0B90B] to-[#E1A706] text-black rounded-lg hover:from-[#E1A706] hover:to-[#D4951E] transition-all duration-200 font-medium shadow-lg"
+            className="px-6 py-3 bg-gradient-to-r from-darkmoon-gold to-[#E1A706] text-black rounded-lg hover:from-[#E1A706] hover:to-[#D4951E] transition-all duration-200 font-medium shadow-lg hover:shadow-darkmoon-gold/20"
           >
             {copiedField === 'full_config' ? '✓ 已复制配置' : '📋 复制完整配置'}
           </button>
