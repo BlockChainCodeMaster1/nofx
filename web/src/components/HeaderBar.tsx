@@ -63,14 +63,14 @@ export default function HeaderBar({
   const NavButton = ({ page, label, onClick }: { page: string, label: string, onClick: () => void }) => (
     <button
       onClick={onClick}
-      className={`text-sm font-bold transition-all duration-300 relative px-4 py-2 rounded-lg ${
+      className={`text-sm font-medium transition-all duration-300 relative px-4 py-2 rounded-lg ${
         currentPage === page
-          ? 'text-darkmoon-gold'
-          : 'text-darkmoon-text-secondary hover:text-darkmoon-text-primary'
+          ? 'text-white'
+          : 'text-[#888] hover:text-white'
       }`}
     >
       {currentPage === page && (
-        <span className="absolute inset-0 rounded-lg bg-darkmoon-gold/10 -z-10" />
+        <span className="absolute inset-0 rounded-lg bg-[#333] -z-10" />
       )}
       {label}
     </button>
@@ -79,33 +79,30 @@ export default function HeaderBar({
   const NavLink = ({ page, label, href }: { page: string, label: string, href: string }) => (
     <a
       href={href}
-      className={`text-sm font-bold transition-all duration-300 relative px-4 py-2 rounded-lg ${
+      className={`text-sm font-medium transition-all duration-300 relative px-4 py-2 rounded-lg ${
         currentPage === page
-          ? 'text-darkmoon-gold'
-          : 'text-darkmoon-text-secondary hover:text-darkmoon-text-primary'
+          ? 'text-white'
+          : 'text-[#888] hover:text-white'
       }`}
     >
       {currentPage === page && (
-        <span className="absolute inset-0 rounded-lg bg-darkmoon-gold/10 -z-10" />
+        <span className="absolute inset-0 rounded-lg bg-[#333] -z-10" />
       )}
       {label}
     </a>
   )
 
   return (
-    <nav className="fixed top-0 w-full z-50 bg-darkmoon-bg/80 backdrop-blur-md border-b border-darkmoon-border">
+    <nav className="fixed top-0 w-full z-50 bg-[#050505]/80 backdrop-blur-md border-b border-[#222]">
       <Container className="flex items-center justify-between h-16">
         {/* Logo */}
         <Link
           to="/"
           className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer group"
         >
-          <img src="/icons/nofx.svg" alt="DarkMoon Logo" className="w-8 h-8 transition-transform group-hover:scale-110" />
-          <span className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-darkmoon-gold to-[#F3CF55]">
+          <img src="/icons/nofx.svg" alt="DarkMoon Logo" className="w-8 h-8 invert" />
+          <span className="text-xl font-bold text-white tracking-tight">
             DarkMoon
-          </span>
-          <span className="text-xs hidden sm:block text-darkmoon-text-muted font-mono">
-            Agentic Trading OS
           </span>
         </Link>
 
@@ -164,10 +161,9 @@ export default function HeaderBar({
                   }
                   target={item.key === 'GitHub' || item.key === 'community' ? '_blank' : undefined}
                   rel={item.key === 'GitHub' || item.key === 'community' ? 'noopener noreferrer' : undefined}
-                  className="text-sm transition-colors relative group text-darkmoon-text-secondary hover:text-darkmoon-gold"
+                  className="text-sm transition-colors relative group text-[#888] hover:text-white"
                 >
                   {item.label}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-darkmoon-gold group-hover:w-full transition-all duration-300" />
                 </a>
               ))}
 
@@ -177,24 +173,24 @@ export default function HeaderBar({
                 <div className="relative" ref={userDropdownRef}>
                   <button
                     onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                    className="flex items-center gap-2 px-3 py-2 rounded-lg transition-colors bg-darkmoon-surface border border-darkmoon-border hover:bg-darkmoon-surface-hover"
+                    className="flex items-center gap-2 px-3 py-2 rounded-lg transition-colors bg-[#111] border border-[#333] hover:bg-[#222]"
                   >
-                    <div className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold bg-darkmoon-gold text-black">
+                    <div className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold bg-white text-black">
                       {user.email[0].toUpperCase()}
                     </div>
-                    <span className="text-sm text-darkmoon-text-primary">
+                    <span className="text-sm text-white">
                       {user.email}
                     </span>
-                    <ChevronDown className="w-4 h-4 text-darkmoon-text-muted" />
+                    <ChevronDown className="w-4 h-4 text-[#888]" />
                   </button>
 
                   {userDropdownOpen && (
-                    <div className="absolute right-0 top-full mt-2 w-48 rounded-lg shadow-xl overflow-hidden z-50 bg-darkmoon-surface border border-darkmoon-border">
-                      <div className="px-3 py-2 border-b border-darkmoon-border">
-                        <div className="text-xs text-darkmoon-text-muted">
+                    <div className="absolute right-0 top-full mt-2 w-48 rounded-lg shadow-xl overflow-hidden z-50 bg-[#1a1a1a] border border-[#333]">
+                      <div className="px-3 py-2 border-b border-[#333]">
+                        <div className="text-xs text-[#888]">
                           {t('loggedInAs', language)}
                         </div>
-                        <div className="text-sm font-medium text-darkmoon-text-primary truncate">
+                        <div className="text-sm font-medium text-white truncate">
                           {user.email}
                         </div>
                       </div>
@@ -204,7 +200,7 @@ export default function HeaderBar({
                             onLogout()
                             setUserDropdownOpen(false)
                           }}
-                          className="w-full px-3 py-2 text-sm font-semibold transition-colors hover:bg-darkmoon-surface-hover text-darkmoon-error text-center"
+                          className="w-full px-3 py-2 text-sm font-semibold transition-colors hover:bg-[#222] text-red-500 text-center"
                         >
                           {t('exitLogin', language)}
                         </button>
@@ -219,14 +215,14 @@ export default function HeaderBar({
                 <div className="flex items-center gap-3">
                   <a
                     href="/login"
-                    className="px-4 py-2 text-sm font-medium transition-colors rounded text-darkmoon-text-secondary hover:text-darkmoon-text-primary hover:bg-darkmoon-surface"
+                    className="px-4 py-2 text-sm font-medium transition-colors rounded text-[#888] hover:text-white hover:bg-[#1a1a1a]"
                   >
                     {t('signIn', language)}
                   </a>
                   {registrationEnabled && (
                     <a
                       href="/register"
-                      className="px-5 py-2 rounded font-bold text-sm transition-all bg-darkmoon-gold text-black hover:bg-[#F3CF55] shadow-lg hover:shadow-darkmoon-gold/20 hover:-translate-y-0.5"
+                      className="px-5 py-2 rounded-full font-bold text-sm transition-all bg-white text-black hover:bg-[#f2f2f2]"
                     >
                       {t('signUp', language)}
                     </a>
@@ -239,7 +235,7 @@ export default function HeaderBar({
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setLanguageDropdownOpen(!languageDropdownOpen)}
-                className="flex items-center gap-2 px-3 py-2 rounded-lg transition-colors text-darkmoon-text-secondary hover:text-darkmoon-text-primary hover:bg-darkmoon-surface"
+                className="flex items-center gap-2 px-3 py-2 rounded-lg transition-colors text-[#888] hover:text-white hover:bg-[#1a1a1a]"
               >
                 <span className="text-lg">
                   {language === 'zh' ? '🇨🇳' : '🇺🇸'}
@@ -248,7 +244,7 @@ export default function HeaderBar({
               </button>
 
               {languageDropdownOpen && (
-                <div className="absolute right-0 top-full mt-2 w-32 rounded-lg shadow-xl overflow-hidden z-50 bg-darkmoon-surface border border-darkmoon-border">
+                <div className="absolute right-0 top-full mt-2 w-32 rounded-lg shadow-xl overflow-hidden z-50 bg-[#1a1a1a] border border-[#333]">
                   <button
                     onClick={() => {
                       onLanguageChange?.('zh')
@@ -256,8 +252,8 @@ export default function HeaderBar({
                     }}
                     className={`w-full flex items-center gap-2 px-3 py-2 transition-colors ${
                       language === 'zh' 
-                        ? 'bg-darkmoon-gold/10 text-darkmoon-gold' 
-                        : 'text-darkmoon-text-secondary hover:bg-darkmoon-surface-hover'
+                        ? 'bg-[#333] text-white' 
+                        : 'text-[#888] hover:bg-[#222]'
                     }`}
                   >
                     <span className="text-base">🇨🇳</span>
@@ -270,8 +266,8 @@ export default function HeaderBar({
                     }}
                     className={`w-full flex items-center gap-2 px-3 py-2 transition-colors ${
                       language === 'en' 
-                        ? 'bg-darkmoon-gold/10 text-darkmoon-gold' 
-                        : 'text-darkmoon-text-secondary hover:bg-darkmoon-surface-hover'
+                        ? 'bg-[#333] text-white' 
+                        : 'text-[#888] hover:bg-[#222]'
                     }`}
                   >
                     <span className="text-base">🇺🇸</span>
@@ -286,7 +282,7 @@ export default function HeaderBar({
         {/* Mobile Menu Button */}
         <motion.button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden text-darkmoon-text-secondary"
+          className="md:hidden text-[#888]"
           whileTap={{ scale: 0.9 }}
         >
           {mobileMenuOpen ? (
@@ -306,7 +302,7 @@ export default function HeaderBar({
             : { height: 0, opacity: 0 }
         }
         transition={{ duration: 0.3 }}
-        className="md:hidden overflow-hidden bg-darkmoon-surface border-t border-darkmoon-gold/10"
+        className="md:hidden overflow-hidden bg-[#0a0a0a] border-t border-[#222]"
       >
         <div className="px-4 py-4 space-y-3">
           {isLoggedIn ? (
@@ -318,8 +314,8 @@ export default function HeaderBar({
                 }}
                 className={`block w-full text-left text-sm font-bold px-4 py-3 rounded-lg transition-colors ${
                   currentPage === 'competition'
-                  ? 'text-darkmoon-gold bg-darkmoon-gold/10'
-                  : 'text-darkmoon-text-secondary hover:text-darkmoon-text-primary'
+                  ? 'text-white bg-[#333]'
+                  : 'text-[#888] hover:text-white'
                 }`}
               >
                 {t('realtimeNav', language)}
@@ -332,8 +328,8 @@ export default function HeaderBar({
                 }}
                 className={`block w-full text-left text-sm font-bold px-4 py-3 rounded-lg transition-colors ${
                   currentPage === 'traders'
-                  ? 'text-darkmoon-gold bg-darkmoon-gold/10'
-                  : 'text-darkmoon-text-secondary hover:text-darkmoon-text-primary'
+                  ? 'text-white bg-[#333]'
+                  : 'text-[#888] hover:text-white'
                 }`}
               >
                 {t('configNav', language)}
@@ -346,8 +342,8 @@ export default function HeaderBar({
                 }}
                 className={`block w-full text-left text-sm font-bold px-4 py-3 rounded-lg transition-colors ${
                   currentPage === 'trader'
-                  ? 'text-darkmoon-gold bg-darkmoon-gold/10'
-                  : 'text-darkmoon-text-secondary hover:text-darkmoon-text-primary'
+                  ? 'text-white bg-[#333]'
+                  : 'text-[#888] hover:text-white'
                 }`}
               >
                 {t('dashboardNav', language)}
@@ -360,8 +356,8 @@ export default function HeaderBar({
                 }}
                 className={`block w-full text-left text-sm font-bold px-4 py-3 rounded-lg transition-colors ${
                   currentPage === 'faq'
-                  ? 'text-darkmoon-gold bg-darkmoon-gold/10'
-                  : 'text-darkmoon-text-secondary hover:text-darkmoon-text-primary'
+                  ? 'text-white bg-[#333]'
+                  : 'text-[#888] hover:text-white'
                 }`}
               >
                 {t('faqNav', language)}
@@ -373,8 +369,8 @@ export default function HeaderBar({
                 href="/competition"
                 className={`block w-full text-left text-sm font-bold px-4 py-3 rounded-lg transition-colors ${
                   currentPage === 'competition'
-                  ? 'text-darkmoon-gold bg-darkmoon-gold/10'
-                  : 'text-darkmoon-text-secondary hover:text-darkmoon-text-primary'
+                  ? 'text-white bg-[#333]'
+                  : 'text-[#888] hover:text-white'
                 }`}
               >
                 {t('realtimeNav', language)}
@@ -384,16 +380,16 @@ export default function HeaderBar({
 
           {/* User info and logout for mobile when logged in */}
           {isLoggedIn && user && (
-            <div className="mt-4 pt-4 border-t border-darkmoon-border">
-              <div className="flex items-center gap-2 px-3 py-2 mb-2 rounded bg-darkmoon-bg">
-                <div className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold bg-darkmoon-gold text-black">
+            <div className="mt-4 pt-4 border-t border-[#222]">
+              <div className="flex items-center gap-2 px-3 py-2 mb-2 rounded bg-[#111]">
+                <div className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold bg-white text-black">
                   {user.email[0].toUpperCase()}
                 </div>
                 <div>
-                  <div className="text-xs text-darkmoon-text-muted">
+                  <div className="text-xs text-[#888]">
                     {t('loggedInAs', language)}
                   </div>
-                  <div className="text-sm text-darkmoon-text-primary">
+                  <div className="text-sm text-white">
                     {user.email}
                   </div>
                 </div>
@@ -404,7 +400,7 @@ export default function HeaderBar({
                     onLogout()
                     setMobileMenuOpen(false)
                   }}
-                  className="w-full px-4 py-2 rounded text-sm font-semibold transition-colors text-center bg-darkmoon-error/10 text-darkmoon-error"
+                  className="w-full px-4 py-2 rounded text-sm font-semibold transition-colors text-center bg-red-500/10 text-red-500"
                 >
                   {t('exitLogin', language)}
                 </button>
@@ -418,7 +414,7 @@ export default function HeaderBar({
               <div className="space-y-2 mt-2">
                 <a
                   href="/login"
-                  className="block w-full px-4 py-2 rounded text-sm font-medium text-center transition-colors border border-darkmoon-border text-darkmoon-text-secondary hover:bg-darkmoon-surface"
+                  className="block w-full px-4 py-2 rounded text-sm font-medium text-center transition-colors border border-[#333] text-[#888] hover:bg-[#1a1a1a]"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   {t('signIn', language)}
@@ -426,7 +422,7 @@ export default function HeaderBar({
                 {registrationEnabled && (
                   <a
                     href="/register"
-                    className="block w-full px-4 py-2 rounded font-semibold text-sm text-center transition-colors bg-darkmoon-gold text-black"
+                    className="block w-full px-4 py-2 rounded-full font-semibold text-sm text-center transition-colors bg-white text-black"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {t('signUp', language)}

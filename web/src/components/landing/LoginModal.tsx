@@ -14,14 +14,14 @@ export default function LoginModal({ onClose, language }: LoginModalProps) {
 
   return (
     <motion.div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       onClick={onClose}
     >
       <motion.div
-        className="relative max-w-md w-full rounded-2xl p-8 bg-darkmoon-surface border border-darkmoon-gold/20 shadow-[0_0_50px_rgba(212,175,55,0.1)]"
+        className="relative max-w-md w-full p-12 bg-[#0a0a0a] border border-[#222]"
         initial={{ scale: 0.9, y: 50 }}
         animate={{ scale: 1, y: 0 }}
         exit={{ scale: 0.9, y: 50 }}
@@ -29,18 +29,19 @@ export default function LoginModal({ onClose, language }: LoginModalProps) {
       >
         <motion.button
           onClick={onClose}
-          className="absolute top-4 right-4 text-darkmoon-text-secondary hover:text-darkmoon-gold transition-colors"
-          whileHover={{ scale: 1.1, rotate: 90 }}
-          whileTap={{ scale: 0.9 }}
+          className="absolute top-6 right-6 text-[#666] hover:text-white transition-colors"
+          whileHover={{ rotate: 90 }}
         >
           <X className="w-6 h-6" />
         </motion.button>
-        <h2 className="text-2xl font-bold mb-2 text-white">
+        
+        <h2 className="text-3xl font-bold mb-4 text-white tracking-tight">
           {t('accessNofxPlatform', language)}
         </h2>
-        <p className="text-sm mb-8 text-darkmoon-text-secondary">
+        <p className="text-[#888] mb-12 font-light">
           {t('loginRegisterPrompt', language)}
         </p>
+        
         <div className="space-y-4">
           <motion.button
             onClick={() => {
@@ -48,15 +49,13 @@ export default function LoginModal({ onClose, language }: LoginModalProps) {
               window.dispatchEvent(new PopStateEvent('popstate'))
               onClose()
             }}
-            className="block w-full px-6 py-3.5 rounded-lg font-bold text-center bg-gradient-to-r from-darkmoon-gold to-[#F3CF55] text-black shadow-lg shadow-darkmoon-gold/20"
-            whileHover={{
-              scale: 1.02,
-              boxShadow: '0 0 20px rgba(212, 175, 55, 0.4)',
-            }}
+            className="block w-full px-8 py-4 font-bold text-center bg-white text-black hover:bg-[#f2f2f2] transition-all"
+            whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
             {t('signIn', language)}
           </motion.button>
+          
           {registrationEnabled && (
             <motion.button
               onClick={() => {
@@ -64,7 +63,7 @@ export default function LoginModal({ onClose, language }: LoginModalProps) {
                 window.dispatchEvent(new PopStateEvent('popstate'))
                 onClose()
               }}
-              className="block w-full px-6 py-3.5 rounded-lg font-semibold text-center bg-transparent text-darkmoon-text-primary border border-darkmoon-gold/30 hover:bg-darkmoon-gold/10 hover:border-darkmoon-gold transition-colors"
+              className="block w-full px-8 py-4 font-bold text-center bg-[#1a1a1a] text-white hover:bg-[#222] transition-all"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
