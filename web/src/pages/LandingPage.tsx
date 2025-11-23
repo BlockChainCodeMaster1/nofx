@@ -10,6 +10,7 @@ import CommunitySection from '../components/landing/CommunitySection'
 import AnimatedSection from '../components/landing/AnimatedSection'
 import LoginModal from '../components/landing/LoginModal'
 import FooterSection from '../components/landing/FooterSection'
+import BackgroundEffects from '../components/landing/BackgroundEffects'
 import { useAuth } from '../contexts/AuthContext'
 import { useLanguage } from '../contexts/LanguageContext'
 import { t } from '../i18n/translations'
@@ -53,11 +54,7 @@ export function LandingPage() {
       />
       
       <div className="min-h-screen bg-[#050505] text-[#e1e1e1] font-sans selection:bg-[#f2f2f2] selection:text-black overflow-x-hidden">
-        {/* Background */}
-        <div className="fixed inset-0 z-0 pointer-events-none">
-           <div className="absolute inset-0 bg-[#050505]"></div>
-           <div className="absolute top-[-50%] left-[-50%] w-[200%] h-[200%] bg-[radial-gradient(circle_at_center,_#1a1a1a_0%,_transparent_50%)] opacity-20"></div>
-        </div>
+        <BackgroundEffects />
 
         <div className="relative z-10 flex flex-col">
             <HeroSection language={language} />
