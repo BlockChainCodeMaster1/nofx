@@ -1,110 +1,123 @@
-import { motion } from 'framer-motion'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef } from 'react'
 
 export default function BackgroundEffects() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+
+    let width = window.innerWidth
+    let height = window.innerHeight
+    let mouseX = width / 2
+    let mouseY = height / 2
+    let targetMouseX = width / 2
+    let targetMouseY = height / 2
+    let time = 0
+
+    // Resize handler
+    const handleResize = () => {
+      width = window.innerWidth
+      height = window.innerHeight
+      canvas.width = width
+      canvas.height = height
+    }
+    window.addEventListener('resize', handleResize)
+    handleResize()
+
+    // Mouse handler
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({
-        x: e.clientX,
-        y: e.clientY
-      })
+      targetMouseX = e.clientX
+      targetMouseY = e.clientY
+    }
+    window.addEventListener('mousemove', handleMouseMove)
+
+    // Animation Loop
+    const animate = () => {
+      // Trails effect: clear with low opacity
+      ctx.fillStyle = 'rgba(5, 5, 5, 0.05)'
+      ctx.fillRect(0, 0, width, height)
+
+      // Smooth mouse follow
+      mouseX += (targetMouseX - mouseX) * 0.05
+      mouseY += (targetMouseY - mouseY) * 0.05
+
+      // Configuration
+      const spiralArms = 3
+      const particlesPerArm = 100
+      const maxRadius = Math.max(width, height) * 0.8
+
+      time += 0.02
+
+      ctx.save()
+      ctx.translate(mouseX, mouseY)
+      
+      // Draw Spiral
+      for (let i = 0; i < spiralArms; i++) {
+        const armAngleOffset = (Math.PI * 2 * i) / spiralArms
+        
+        ctx.beginPath()
+        for (let j = 0; j < particlesPerArm; j++) {
+          const progress = j / particlesPerArm
+          const radius = progress * maxRadius
+          
+          // Base spiral angle
+          let angle = progress * Math.PI * 10 + time * 0.5 + armAngleOffset
+          
+          // Ripple effect (Sine wave modulation on radius/angle)
+          // The frequency and amplitude change with time and mouse speed/position implicitly
+          const ripple = Math.sin(progress * 20 - time * 4) * 20
+          
+          // Mouse interaction: distort based on distance from center (which is mouse)
+          // Actually, we are already centered on mouse. Let's make the ripple more intense
+          // if mouse is moving (we could track velocity), but simpler is just continuous ripple.
+          
+          const x = (radius + ripple) * Math.cos(angle)
+          const y = (radius + ripple) * Math.sin(angle)
+          
+          if (j === 0) {
+            ctx.moveTo(x, y)
+          } else {
+            ctx.lineTo(x, y)
+          }
+        }
+        
+        // Colorful Stroke
+        // Color shifts based on arm index, time, and progress along the arm
+        const hue = (time * 50 + i * 100) % 360
+        ctx.strokeStyle = `hsla(${hue}, 80%, 60%, 0.5)`
+        ctx.lineWidth = 3
+        ctx.lineCap = 'round'
+        ctx.lineJoin = 'round'
+        ctx.stroke()
+
+        // Add a second layer for glow/water effect
+        ctx.strokeStyle = `hsla(${hue + 180}, 80%, 60%, 0.2)`
+        ctx.lineWidth = 10
+        ctx.stroke()
+      }
+      
+      ctx.restore()
+
+      requestAnimationFrame(animate)
     }
 
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
+    const animationId = requestAnimationFrame(animate)
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+      window.removeEventListener('mousemove', handleMouseMove)
+      cancelAnimationFrame(animationId)
+    }
   }, [])
 
   return (
-    <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-      {/* Base Background */}
-      <div className="absolute inset-0 bg-[#050505]" />
-
-      {/* Grid Pattern */}
-      <div 
-        className="absolute inset-0 opacity-[0.05]"
-        style={{
-          backgroundImage: `linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, transparent 1px)`,
-          backgroundSize: '40px 40px',
-          maskImage: 'radial-gradient(circle at center, black 40%, transparent 100%)'
-        }}
-      />
-
-      {/* Scanning Beam Animation */}
-      <motion.div
-        className="absolute inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent"
-        animate={{
-          top: ['0%', '100%'],
-          opacity: [0, 1, 0]
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "linear"
-        }}
-      />
-
-      {/* Floating Orbs - Left */}
-      <motion.div
-        className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-[120px]"
-        animate={{
-          x: [-50, 50, -50],
-          y: [-50, 50, -50],
-          opacity: [0.3, 0.5, 0.3],
-        }}
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-      />
-
-      {/* Floating Orbs - Right */}
-      <motion.div
-        className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-purple-500/5 rounded-full blur-[120px]"
-        animate={{
-          x: [50, -50, 50],
-          y: [50, -50, 50],
-          opacity: [0.2, 0.4, 0.2],
-        }}
-        transition={{
-          duration: 15,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-      />
-
-      {/* Mouse Follower Spotlight */}
-      <div 
-        className="absolute w-[800px] h-[800px] bg-white/[0.02] rounded-full blur-[80px] -translate-x-1/2 -translate-y-1/2 transition-transform duration-200 ease-out will-change-transform"
-        style={{
-          left: mousePosition.x,
-          top: mousePosition.y,
-        }}
-      />
-
-      {/* Floating Particles */}
-      {[...Array(20)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-1 h-1 bg-white/20 rounded-full"
-          initial={{
-            x: Math.random() * window.innerWidth,
-            y: Math.random() * window.innerHeight,
-          }}
-          animate={{
-            y: [null, Math.random() * -100],
-            opacity: [0, 0.5, 0]
-          }}
-          transition={{
-            duration: Math.random() * 5 + 5,
-            repeat: Infinity,
-            ease: "linear",
-            delay: Math.random() * 5
-          }}
-        />
-      ))}
-    </div>
+    <canvas 
+      ref={canvasRef} 
+      className="fixed inset-0 z-0 pointer-events-none bg-[#050505]"
+    />
   )
 }
