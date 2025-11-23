@@ -24,8 +24,8 @@ export default function BackgroundEffects() {
     const faces: number[][] = []
     const segments = 8
 
-    // 0. Bottom tip (Culet)
-    vertices.push({ x: 0, y: 1.6, z: 0 }) 
+    // 0. Bottom tip (Culet) - Make it deeper
+    vertices.push({ x: 0, y: 1.8, z: 0 }) 
 
     // 1-8. Girdle (Middle ring)
     for (let i = 0; i < segments; i++) {
@@ -41,14 +41,14 @@ export default function BackgroundEffects() {
     for (let i = 0; i < segments; i++) {
       const theta = (i / segments) * Math.PI * 2
       vertices.push({
-        x: Math.cos(theta) * 0.5,
-        y: -0.5,
-        z: Math.sin(theta) * 0.5
+        x: Math.cos(theta) * 0.6,
+        y: -0.6,
+        z: Math.sin(theta) * 0.6
       })
     }
 
     // 17. Top center (Table center)
-    vertices.push({ x: 0, y: -0.5, z: 0 })
+    vertices.push({ x: 0, y: -0.6, z: 0 })
 
     // Define Faces (Triangles)
     // Bottom Pavilion faces
@@ -92,7 +92,7 @@ export default function BackgroundEffects() {
     }
     window.addEventListener('mousemove', handleMouseMove)
 
-    // 3D Math Helpers
+    // 3D Helpers
     const rotateX = (p: {x:number, y:number, z:number}, angle: number) => {
       const c = Math.cos(angle)
       const s = Math.sin(angle)
@@ -136,36 +136,35 @@ export default function BackgroundEffects() {
       
       time += 0.01
 
-      // --- Draw Waves (Subtle Background) ---
-      const waveCount = 15
+      // --- Subtle Waves ---
+      const waveCount = 8
       for (let i = 0; i < waveCount; i++) {
         ctx.beginPath()
-        const hue = (time * 15 + i * 25) % 360
-        ctx.strokeStyle = `hsla(${hue}, 60%, 50%, 0.1)`
-        ctx.lineWidth = 2
-        for (let x = 0; x <= width; x += 30) {
-          const yOffset = height / 2 + (i - waveCount/2) * 50 
-          const y = yOffset + Math.sin(x * 0.002 + time * 0.5 + i) * 60
+        const hue = (time * 10 + i * 40) % 360
+        ctx.strokeStyle = `hsla(${hue}, 50%, 50%, 0.08)`
+        ctx.lineWidth = 1.5
+        for (let x = 0; x <= width; x += 40) {
+          const yOffset = height / 2 + (i - waveCount/2) * 60 
+          const y = yOffset + Math.sin(x * 0.002 + time * 0.4 + i) * 80
           if (x === 0) ctx.moveTo(x, y)
           else ctx.lineTo(x, y)
         }
         ctx.stroke()
       }
-
-      // --- Overlay Mask ---
+      
+      // Mask
       ctx.fillStyle = 'rgba(5, 5, 5, 0.7)' 
       ctx.fillRect(0, 0, width, height)
 
-      // --- Draw Ruby ---
+      // --- Ruby Glass Effect ---
       mouseX += (targetMouseX - mouseX) * 0.05
       mouseY += (targetMouseY - mouseY) * 0.05
       
-      // Auto rotation + Mouse influence
-      const rotY = time * 0.5 + (mouseX / width - 0.5) * 1.5
-      const rotX = Math.sin(time * 0.3) * 0.2 + (mouseY / height - 0.5) * 1.5
+      const rotY = time * 0.4 + (mouseX / width - 0.5) * 1.5
+      const rotX = Math.sin(time * 0.2) * 0.2 + (mouseY / height - 0.5) * 1.5
 
-      const lightDir = normalize({ x: 1, y: -1, z: -0.5 }) // Light from top-right-front
-      const viewDir = { x: 0, y: 0, z: -1 } // Viewing from front
+      const lightDir = normalize({ x: 0.8, y: -0.8, z: -0.8 }) 
+      const viewDir = { x: 0, y: 0, z: -1 }
 
       const projectedFaces = faces.map(faceIndices => {
         const v3d = faceIndices.map(i => {
@@ -175,36 +174,58 @@ export default function BackgroundEffects() {
           return v
         })
 
-        // Normal & Lighting
         const vA = subtract(v3d[1], v3d[0])
         const vB = subtract(v3d[2], v3d[0])
         let normal = normalize(cross(vA, vB))
         
-        // Ensure normal points outward relative to center (approx)
-        // Or just rely on CCW winding and Face area check later
-        
-        const center = {
-            x: (v3d[0].x + v3d[1].x + v3d[2].x) / 3,
-            y: (v3d[0].y + v3d[1].y + v3d[2].y) / 3,
-            z: (v3d[0].z + v3d[1].z + v3d[2].z) / 3
-        }
-        
-        // Intensity of diffuse light
         let intensity = dot(normal, lightDir)
-        
         const v2d = v3d.map(project)
         const avgZ = (v2d[0].z + v2d[1].z + v2d[2].z) / 3
 
-        return { v2d, avgZ, intensity, normal, center }
+        return { v2d, avgZ, intensity, normal }
       })
 
-      // Sort Back-to-Front
+      // Sort
       projectedFaces.sort((a, b) => b.avgZ - a.avgZ)
 
+      // 1. Draw Inner Glow (Backside refraction)
+      // Simulating light trapped inside
+      ctx.globalCompositeOperation = 'lighter'
       projectedFaces.forEach(face => {
         const { v2d, intensity, normal } = face
         
-        // Face orientation check
+        const x1 = v2d[1].x - v2d[0].x
+        const y1 = v2d[1].y - v2d[0].y
+        const x2 = v2d[2].x - v2d[0].x
+        const y2 = v2d[2].y - v2d[0].y
+        const area = x1 * y2 - x2 * y1
+        const isBack = area <= 0
+        
+        if (isBack) {
+            ctx.beginPath()
+            ctx.moveTo(v2d[0].x, v2d[0].y)
+            ctx.lineTo(v2d[1].x, v2d[1].y)
+            ctx.lineTo(v2d[2].x, v2d[2].y)
+            ctx.closePath()
+            
+            // Back faces glow deep red
+            const alpha = 0.05 + Math.max(0, -intensity) * 0.1
+            ctx.fillStyle = `rgba(220, 20, 60, ${alpha})`
+            ctx.fill()
+            
+            // Back edges
+            ctx.strokeStyle = `rgba(255, 50, 50, 0.1)`
+            ctx.lineWidth = 0.5
+            ctx.stroke()
+        }
+      })
+      ctx.globalCompositeOperation = 'source-over'
+
+
+      // 2. Draw Front Faces (Glass Shell)
+      projectedFaces.forEach(face => {
+        const { v2d, intensity, normal } = face
+        
         const x1 = v2d[1].x - v2d[0].x
         const y1 = v2d[1].y - v2d[0].y
         const x2 = v2d[2].x - v2d[0].x
@@ -212,79 +233,63 @@ export default function BackgroundEffects() {
         const area = x1 * y2 - x2 * y1
         const isFront = area > 0
 
-        // --- Ruby Material Shader ---
-        
-        // 1. Base Colors
-        // Deep Red for back faces (absorption)
-        // Brighter Red for front faces
-        const baseHue = 350
-        
-        // 2. Transparency
-        // Real glass/gems: Back faces are visible but dark/distorted.
-        // We simulate "thickness" by making back faces darker and lower alpha.
-        const baseAlpha = isFront ? 0.3 : 0.15
-        
-        // 3. Specular Highlight (The "Gloss")
-        // Sharp reflection of light source
-        // Reflection vector R = I - 2(N.I)N? Or just Blinn-Phong H
-        // Let's use simple dot(Normal, Light) power for now, but handle back-lighting
-        let specular = 0
         if (isFront) {
-            // Only front faces catch sharp specular highlights
-            specular = Math.pow(Math.max(0, intensity), 6)
-        }
+            ctx.beginPath()
+            ctx.moveTo(v2d[0].x, v2d[0].y)
+            ctx.lineTo(v2d[1].x, v2d[1].y)
+            ctx.lineTo(v2d[2].x, v2d[2].y)
+            ctx.closePath()
 
-        // 4. Fresnel Effect (The "Glass" edge look)
-        // Edges reflect more environment light
-        // Dot of Normal and ViewDir (0,0,-1). 
-        // We approximated ViewDir as -1 Z. Normal is transformed.
-        // dot(N, V). If close to 0, it's an edge -> High Fresnel.
-        const fresnel = 1 - Math.abs(dot(normal, viewDir))
-        const edgeGlow = Math.pow(fresnel, 3) * 0.8 // Boost edges
+            // Fresnel Effect (Edges are reflective)
+            const viewDot = Math.abs(dot(normal, viewDir))
+            const fresnel = Math.pow(1 - viewDot, 3) 
+            
+            // Specular Highlight
+            const specular = Math.pow(Math.max(0, intensity), 4)
 
-        ctx.beginPath()
-        ctx.moveTo(v2d[0].x, v2d[0].y)
-        ctx.lineTo(v2d[1].x, v2d[1].y)
-        ctx.lineTo(v2d[2].x, v2d[2].y)
-        ctx.closePath()
-
-        // FILL STYLE
-        // Mix: Deep Red Base + Highlight + Edge Glow
-        const lightness = isFront ? 30 + specular * 40 : 15
-        const finalAlpha = Math.min(0.9, baseAlpha + specular * 0.4 + edgeGlow * 0.2)
-        
-        ctx.fillStyle = `hsla(${baseHue}, 100%, ${lightness}%, ${finalAlpha})`
-        ctx.fill()
-        
-        // STROKE STYLE (Facets)
-        // White/Pink edges for "Cut" look
-        // Back faces get dim edges, Front faces get sharp edges
-        const strokeAlpha = isFront ? 0.4 : 0.1
-        const strokeL = isFront ? 80 : 30
-        ctx.strokeStyle = `hsla(${baseHue}, 80%, ${strokeL}%, ${strokeAlpha})`
-        ctx.lineWidth = 1
-        ctx.stroke()
-        
-        // EXTRA GLOSS OVERLAY
-        // If high specular, draw a white glint
-        if (specular > 0.8) {
-            ctx.fillStyle = `rgba(255, 255, 255, ${specular * 0.5})`
+            // Glass Material Strategy:
+            // - Fill: Almost transparent, slight tint
+            // - Reflection (Fresnel): White/Pink opacity
+            // - Specular: Bright White
+            
+            // Base Tint
+            ctx.fillStyle = `rgba(255, 20, 80, 0.05)` 
             ctx.fill()
+
+            // Reflection / Glint based on Fresnel
+            // Edges get white wash
+            if (fresnel > 0.1) {
+                ctx.fillStyle = `rgba(255, 200, 220, ${fresnel * 0.15})`
+                ctx.fill()
+            }
+
+            // Specular Flash
+            if (specular > 0.1) {
+                 ctx.fillStyle = `rgba(255, 255, 255, ${specular * 0.6})`
+                 ctx.globalCompositeOperation = 'lighter'
+                 ctx.fill()
+                 ctx.globalCompositeOperation = 'source-over'
+            }
+
+            // Edges
+            // Crisp, bright edges define glass
+            ctx.lineWidth = 1
+            const edgeAlpha = 0.2 + fresnel * 0.4 + specular * 0.4
+            ctx.strokeStyle = `rgba(255, 200, 220, ${edgeAlpha})`
+            ctx.stroke()
         }
       })
 
-      // Final post-processing glow (Bloom)
-      // Only draw if we want the whole gem to feel radiant
-      // Let's keep it subtle
-      const centerX = width/2
-      const centerY = height/2
-      const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, 400)
-      gradient.addColorStop(0, 'rgba(220, 20, 60, 0.15)') // Crimson glow
-      gradient.addColorStop(0.5, 'rgba(220, 20, 60, 0.05)')
+      // 3. Central Flare (Optional Bloom)
+      const cx = width / 2
+      const cy = height / 2
+      const gradient = ctx.createRadialGradient(cx, cy, 0, cx, cy, 300)
+      gradient.addColorStop(0, 'rgba(255, 0, 50, 0.15)')
       gradient.addColorStop(1, 'rgba(0,0,0,0)')
-      
+      ctx.globalCompositeOperation = 'screen'
       ctx.fillStyle = gradient
       ctx.fillRect(0, 0, width, height)
+      ctx.globalCompositeOperation = 'source-over'
 
       requestAnimationFrame(animate)
     }
