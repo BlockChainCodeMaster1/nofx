@@ -41,21 +41,21 @@ export default function BackgroundEffects() {
     for (let i = 0; i < segments; i++) {
       const theta = (i / segments) * Math.PI * 2
       vertices.push({
-        x: Math.cos(theta) * 0.6,
-        y: -0.5,
-        z: Math.sin(theta) * 0.6
+        x: Math.cos(theta) * 0.55, // Slightly tighter table
+        y: -0.45,
+        z: Math.sin(theta) * 0.55
       })
     }
 
     // 17. Top center (Table center)
-    vertices.push({ x: 0, y: -0.5, z: 0 })
+    vertices.push({ x: 0, y: -0.45, z: 0 })
 
     // Define Faces (Triangles)
     // Bottom Pavilion faces
     for (let i = 0; i < segments; i++) {
       const p1 = 1 + i
       const p2 = 1 + ((i + 1) % segments)
-      faces.push([0, p2, p1]) // Bottom tip -> ring points (CCW order for normal calculation)
+      faces.push([0, p2, p1]) 
     }
 
     // Girdle Facets (Trapezoids -> 2 Triangles each)
@@ -65,9 +65,7 @@ export default function BackgroundEffects() {
       const t1 = 9 + i
       const t2 = 9 + ((i + 1) % segments)
       
-      // Triangle 1
       faces.push([g1, g2, t2])
-      // Triangle 2
       faces.push([g1, t2, t1])
     }
 
@@ -111,16 +109,15 @@ export default function BackgroundEffects() {
     const project = (p: {x:number, y:number, z:number}) => {
       const fov = 1000
       const distance = 4
-      const scale = 180
+      const scale = 220 // Slightly larger
       const factor = fov / (fov + (p.z + distance) * 100)
       return {
         x: p.x * scale * factor + width / 2,
         y: p.y * scale * factor + height / 2,
-        z: p.z // Keep Z for sorting
+        z: p.z 
       }
     }
 
-    // Vector operations for lighting
     const subtract = (v1: any, v2: any) => ({ x: v1.x - v2.x, y: v1.y - v2.y, z: v1.z - v2.z })
     const cross = (v1: any, v2: any) => ({
       x: v1.y * v2.z - v1.z * v2.y,
@@ -134,62 +131,42 @@ export default function BackgroundEffects() {
     const dot = (v1: any, v2: any) => v1.x * v2.x + v1.y * v2.y + v1.z * v2.z
 
     const animate = () => {
+      // Clear with very slight fade for trail effect? No, clean clear for crisp gem
       ctx.fillStyle = '#050505'
       ctx.fillRect(0, 0, width, height)
       
-      time += 0.015
+      time += 0.01
 
-      // --- Draw Colorful Random Waves ---
-      const waveCount = 20 // Increased count
+      // --- Draw Waves (Subtle) ---
+      const waveCount = 15
       for (let i = 0; i < waveCount; i++) {
         ctx.beginPath()
-        
-        // Random cycling colors
-        // Hue shifts with time and wave index
-        const hue = (time * 20 + i * (360 / waveCount) + Math.sin(time) * 50) % 360
-        const saturation = 70 + Math.sin(i + time) * 30
-        const lightness = 50 + Math.cos(i - time) * 20
-        const alpha = 0.2 + Math.sin(time + i) * 0.1 // Varied opacity
-
-        ctx.strokeStyle = `hsla(${hue}, ${saturation}%, ${lightness}%, ${alpha})`
-        ctx.lineWidth = 2 + Math.sin(i) * 1
-        
-        // Wave shape
-        for (let x = 0; x <= width; x += 20) {
-          const yOffset = height / 2 + (i - waveCount/2) * 40 // Spread vertically
-          
-          // Complex sine wave combination for "random" look
-          const y = yOffset + 
-            Math.sin(x * 0.002 + time * 0.5 + i) * 80 + 
-            Math.sin(x * 0.01 - time * 0.8) * 30
-          
+        const hue = (time * 10 + i * 20) % 360
+        ctx.strokeStyle = `hsla(${hue}, 60%, 40%, 0.15)`
+        ctx.lineWidth = 2
+        for (let x = 0; x <= width; x += 30) {
+          const yOffset = height / 2 + (i - waveCount/2) * 50 
+          const y = yOffset + Math.sin(x * 0.002 + time * 0.5 + i) * 60
           if (x === 0) ctx.moveTo(x, y)
-          else {
-            // Bezier curve for smoothness could be better, but lineTo is faster
-            ctx.lineTo(x, y) 
-          }
+          else ctx.lineTo(x, y)
         }
         ctx.stroke()
       }
 
       // --- Overlay Mask ---
-      ctx.fillStyle = 'rgba(5, 5, 5, 0.65)' // Slightly less opaque to show waves better
+      ctx.fillStyle = 'rgba(5, 5, 5, 0.7)' 
       ctx.fillRect(0, 0, width, height)
 
-      // --- Draw Red Ruby/Diamond ---
+      // --- Draw Ruby ---
       mouseX += (targetMouseX - mouseX) * 0.05
       mouseY += (targetMouseY - mouseY) * 0.05
       
-      // Rotations
-      const rotY = time * 0.8 + (mouseX / width - 0.5) * 2
-      const rotX = Math.sin(time * 0.5) * 0.2 + (mouseY / height - 0.5) * 2
+      const rotY = time * 0.6 + (mouseX / width - 0.5) * 2
+      const rotX = Math.sin(time * 0.3) * 0.3 + (mouseY / height - 0.5) * 1.5
 
-      // Light source vector (fixed relative to camera)
-      const lightDir = normalize({ x: 0.5, y: -1, z: -1 })
+      const lightDir = normalize({ x: 0.5, y: -0.5, z: -1 }) // Light from top-right-front
 
-      // Transform and Sort Faces
       const projectedFaces = faces.map(faceIndices => {
-        // Get 3D vertices for this face
         const v3d = faceIndices.map(i => {
           let v = vertices[i]
           v = rotateX(v, rotX)
@@ -197,50 +174,34 @@ export default function BackgroundEffects() {
           return v
         })
 
-        // Calculate Normal and Lighting in 3D space
+        // Normal & Intensity
         const vA = subtract(v3d[1], v3d[0])
         const vB = subtract(v3d[2], v3d[0])
         let normal = normalize(cross(vA, vB))
-        
-        // Intensity
-        // We take absolute value or clamp dot product depending on if we want 2-sided lighting
-        // For a gem, we want 'shiny' reflections.
         let intensity = dot(normal, lightDir)
         
-        // Specular highlight approximation (shininess)
-        // If face is facing light, it gets brighter
-        // If normal creates a reflection vector pointing to camera (0,0,-1), it gleams white
-        
-        // Project to 2D
         const v2d = v3d.map(project)
-
-        // Calculate Average Z for sorting
         const avgZ = (v2d[0].z + v2d[1].z + v2d[2].z) / 3
 
-        return { v2d, avgZ, intensity }
+        return { v2d, avgZ, intensity, normal }
       })
 
-      // Painter's Algorithm: Sort by Z (furthest first)
+      // Sort: Draw back to front for transparency
       projectedFaces.sort((a, b) => b.avgZ - a.avgZ)
 
-      // Render Faces
+      // Use Additive Blending for "Glow" / Internal Refraction effect
+      ctx.globalCompositeOperation = 'lighter'
+
       projectedFaces.forEach(face => {
         const { v2d, intensity } = face
         
-        // Back-face culling (simple check if face is wound CCW or CW)
-        // Compute 2D signed area
+        // Face area check for front/back determination
         const x1 = v2d[1].x - v2d[0].x
         const y1 = v2d[1].y - v2d[0].y
         const x2 = v2d[2].x - v2d[0].x
         const y2 = v2d[2].y - v2d[0].y
         const area = x1 * y2 - x2 * y1
-        
-        // Only draw if facing camera (area > 0 or < 0 depending on coord system)
-        // Canvas Y is down, so standard CCW might be reversed.
-        // Let's draw everything for transparency effect or just front faces?
-        // Gem needs to look solid.
-        
-        if (area < 0) return; // Simple culling
+        const isFront = area > 0
 
         ctx.beginPath()
         ctx.moveTo(v2d[0].x, v2d[0].y)
@@ -248,45 +209,60 @@ export default function BackgroundEffects() {
         ctx.lineTo(v2d[2].x, v2d[2].y)
         ctx.closePath()
 
-        // --- Ruby Color Calculation ---
-        // Base Red: Hue 350-360 or 0-10
-        // Shadow side: Dark Red (L < 20%)
-        // Lit side: Bright Red (L ~ 50%)
-        // Specular: Pink/White (L > 80%)
+        // --- Ruby Material Simulation ---
         
-        // Map intensity (-1 to 1) to Lighting
-        // Normal range for dot is -1 to 1.
-        // We only care about front facing to light mostly for specular.
+        // 1. Specular Highlight (Sharp reflection)
+        const specular = Math.pow(Math.max(0, intensity), 8) 
         
-        const baseHue = 355 // Deep Red
-        let litIntensity = Math.max(0, intensity) // 0 to 1
+        // 2. Base Redness
+        // Back faces are darker/deeper red. Front faces are brighter.
+        const baseL = isFront ? 30 : 15
         
-        // Add ambient light
-        litIntensity = 0.2 + litIntensity * 0.8
+        // 3. Lighting influence
+        // Even back faces catch some internal light (simulated by ignoring negative intensity partially)
+        const lightInfluence = Math.abs(intensity) * 20
         
-        // Specular boost
-        // Use a power curve for sharpness
-        const specular = Math.pow(Math.max(0, intensity), 4) 
+        // 4. Combine
+        let l = baseL + lightInfluence + specular * 50
         
-        const l = 10 + litIntensity * 40 + specular * 50
-        const s = 100 - specular * 50 // Desaturate highlight
-        
-        ctx.fillStyle = `hsl(${baseHue}, ${s}%, ${l}%)`
+        // 5. Transparency (Alpha)
+        // High specular = more opaque (reflection)
+        // Back faces = more transparent (see through)
+        // Front faces = balanced
+        let alpha = isFront ? 0.35 : 0.15
+        alpha += specular * 0.4 // Highlights are solid
+
+        // Color
+        // Hue shifts slightly towards purple/pink in highlights
+        const h = 350 + specular * 10 
+        const s = 100
+
+        ctx.fillStyle = `hsla(${h}, ${s}%, ${l}%, ${alpha})`
         ctx.fill()
         
-        // Edge stroke for facet definition
-        ctx.strokeStyle = `hsla(${baseHue}, 100%, ${l + 20}%, 0.5)`
+        // Edges (Facets)
+        // Bright edges to define the shape clearly against dark bg
+        // Back face edges are dimmer
+        const edgeAlpha = isFront ? 0.3 : 0.1
+        ctx.strokeStyle = `hsla(${h}, 100%, ${l + 20}%, ${edgeAlpha})`
         ctx.lineWidth = 1
         ctx.stroke()
+        
+        // Sparkle point on vertices for extra bling?
+        // Maybe too much. The additive blending usually handles it.
       })
 
-      // Add a final glow for the gem
-      // We can fake it with a radial gradient at center
+      // Reset composite operation
+      ctx.globalCompositeOperation = 'source-over'
+
+      // Final Center Glow (Simulate light trapping in center)
       const centerX = width/2
       const centerY = height/2
-      const glow = ctx.createRadialGradient(centerX, centerY, 50, centerX, centerY, 200)
-      glow.addColorStop(0, 'rgba(255, 0, 50, 0.2)')
-      glow.addColorStop(1, 'rgba(255, 0, 0, 0)')
+      // Only draw if diamond is roughly center (it is)
+      const glow = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, 300)
+      glow.addColorStop(0, 'rgba(255, 0, 50, 0.15)')
+      glow.addColorStop(0.5, 'rgba(255, 0, 0, 0.05)')
+      glow.addColorStop(1, 'rgba(0, 0, 0, 0)')
       ctx.fillStyle = glow
       ctx.fillRect(0, 0, width, height)
 
