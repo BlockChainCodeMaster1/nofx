@@ -16,21 +16,16 @@ export function FAQSidebar({
 }: FAQSidebarProps) {
   return (
     <nav
-      className="sticky top-24 h-[calc(100vh-120px)] overflow-y-auto pr-4"
-      style={{
-        scrollbarWidth: 'thin',
-        scrollbarColor: '#2B3139 #1E2329',
-      }}
+      className="sticky top-24 h-[calc(100vh-120px)] overflow-y-auto pr-4 scrollbar-thin scrollbar-track-darkmoon-bg scrollbar-thumb-darkmoon-border"
     >
       <div className="space-y-6">
         {categories.map((category) => (
           <div key={category.id}>
             {/* Category Title */}
             <div className="flex items-center gap-2 mb-3 px-3">
-              <category.icon className="w-5 h-5" style={{ color: '#F0B90B' }} />
+              <category.icon className="w-5 h-5 text-darkmoon-gold" />
               <h3
-                className="text-sm font-bold uppercase tracking-wide"
-                style={{ color: '#F0B90B' }}
+                className="text-sm font-bold uppercase tracking-wide text-darkmoon-gold"
               >
                 {t(category.titleKey, language)}
               </h3>
@@ -44,30 +39,11 @@ export function FAQSidebar({
                   <li key={item.id}>
                     <button
                       onClick={() => onItemClick(category.id, item.id)}
-                      className="w-full text-left px-3 py-2 rounded-lg text-sm transition-all"
-                      style={{
-                        background: isActive
-                          ? 'rgba(240, 185, 11, 0.1)'
-                          : 'transparent',
-                        color: isActive ? '#F0B90B' : '#848E9C',
-                        borderLeft: isActive
-                          ? '3px solid #F0B90B'
-                          : '3px solid transparent',
-                        paddingLeft: isActive ? '9px' : '12px',
-                      }}
-                      onMouseEnter={(e) => {
-                        if (!isActive) {
-                          e.currentTarget.style.background =
-                            'rgba(240, 185, 11, 0.05)'
-                          e.currentTarget.style.color = '#EAECEF'
-                        }
-                      }}
-                      onMouseLeave={(e) => {
-                        if (!isActive) {
-                          e.currentTarget.style.background = 'transparent'
-                          e.currentTarget.style.color = '#848E9C'
-                        }
-                      }}
+                      className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-all border-l-2 ${
+                        isActive
+                          ? 'bg-darkmoon-gold/10 text-darkmoon-gold border-darkmoon-gold pl-[9px]'
+                          : 'bg-transparent text-darkmoon-text-secondary border-transparent hover:bg-darkmoon-gold/5 hover:text-darkmoon-text-primary pl-3'
+                      }`}
                     >
                       {t(item.questionKey, language)}
                     </button>

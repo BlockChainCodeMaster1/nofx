@@ -55,7 +55,7 @@ export function ResetPasswordPage() {
   }
 
   return (
-    <div className="min-h-screen" style={{ background: '#0B0E11' }}>
+    <div className="min-h-screen bg-darkmoon-bg">
       <Header simple />
 
       <div
@@ -69,8 +69,7 @@ export function ResetPasswordPage() {
               window.history.pushState({}, '', '/login')
               window.dispatchEvent(new PopStateEvent('popstate'))
             }}
-            className="flex items-center gap-2 mb-6 text-sm hover:text-[#F0B90B] transition-colors"
-            style={{ color: '#848E9C' }}
+            className="flex items-center gap-2 mb-6 text-sm hover:text-darkmoon-gold transition-colors text-darkmoon-text-secondary"
           >
             <ArrowLeft className="w-4 h-4" />
             {t('backToLogin', language)}
@@ -78,45 +77,33 @@ export function ResetPasswordPage() {
 
           {/* Logo */}
           <div className="text-center mb-8">
-            <div
-              className="w-16 h-16 mx-auto mb-4 flex items-center justify-center rounded-full"
-              style={{ background: 'rgba(240, 185, 11, 0.1)' }}
-            >
-              <KeyRound className="w-8 h-8" style={{ color: '#F0B90B' }} />
+            <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center rounded-full bg-darkmoon-gold/10 border border-darkmoon-gold/20">
+              <KeyRound className="w-8 h-8 text-darkmoon-gold" />
             </div>
-            <h1 className="text-2xl font-bold" style={{ color: '#EAECEF' }}>
+            <h1 className="text-2xl font-bold text-darkmoon-text-primary">
               {t('resetPasswordTitle', language)}
             </h1>
-            <p className="text-sm mt-2" style={{ color: '#848E9C' }}>
+            <p className="text-sm mt-2 text-darkmoon-text-secondary">
               使用邮箱和 Google Authenticator 重置密码
             </p>
           </div>
 
           {/* Reset Password Form */}
-          <div
-            className="rounded-lg p-6"
-            style={{ background: '#1E2329', border: '1px solid #2B3139' }}
-          >
+          <div className="rounded-xl p-8 bg-darkmoon-surface border border-darkmoon-border shadow-xl">
             {success ? (
               <div className="text-center py-8">
                 <div className="text-5xl mb-4">✅</div>
-                <p
-                  className="text-lg font-semibold mb-2"
-                  style={{ color: '#EAECEF' }}
-                >
+                <p className="text-lg font-semibold mb-2 text-darkmoon-text-primary">
                   {t('resetPasswordSuccess', language)}
                 </p>
-                <p className="text-sm" style={{ color: '#848E9C' }}>
+                <p className="text-sm text-darkmoon-text-secondary">
                   3秒后将自动跳转到登录页面...
                 </p>
               </div>
             ) : (
               <form onSubmit={handleResetPassword} className="space-y-4">
                 <div>
-                  <label
-                    className="block text-sm font-semibold mb-2"
-                    style={{ color: '#EAECEF' }}
-                  >
+                  <label className="block text-sm font-semibold mb-2 text-darkmoon-text-secondary">
                     {t('email', language)}
                   </label>
                   <Input
@@ -125,14 +112,12 @@ export function ResetPasswordPage() {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder={t('emailPlaceholder', language)}
                     required
+                    className="bg-darkmoon-bg border-darkmoon-border text-darkmoon-text-primary focus:border-darkmoon-gold"
                   />
                 </div>
 
                 <div>
-                  <label
-                    className="block text-sm font-semibold mb-2"
-                    style={{ color: '#EAECEF' }}
-                  >
+                  <label className="block text-sm font-semibold mb-2 text-darkmoon-text-secondary">
                     {t('newPassword', language)}
                   </label>
                   <div className="relative">
@@ -140,7 +125,7 @@ export function ResetPasswordPage() {
                       type={showPassword ? 'text' : 'password'}
                       value={newPassword}
                       onChange={(e) => setNewPassword(e.target.value)}
-                      className="pr-10"
+                      className="pr-10 bg-darkmoon-bg border-darkmoon-border text-darkmoon-text-primary focus:border-darkmoon-gold"
                       placeholder={t('newPasswordPlaceholder', language)}
                       required
                     />
@@ -148,8 +133,7 @@ export function ResetPasswordPage() {
                       type="button"
                       onMouseDown={(e) => e.preventDefault()}
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute inset-y-0 right-2 w-8 h-10 flex items-center justify-center btn-icon"
-                      style={{ color: 'var(--text-secondary)' }}
+                      className="absolute inset-y-0 right-2 w-8 h-10 flex items-center justify-center cursor-pointer text-darkmoon-text-secondary hover:text-darkmoon-text-primary"
                     >
                       {showPassword ? (
                         <EyeOff className="w-5 h-5" />
@@ -161,10 +145,7 @@ export function ResetPasswordPage() {
                 </div>
 
                 <div>
-                  <label
-                    className="block text-sm font-semibold mb-2"
-                    style={{ color: '#EAECEF' }}
-                  >
+                  <label className="block text-sm font-semibold mb-2 text-darkmoon-text-secondary">
                     {t('confirmPassword', language)}
                   </label>
                   <div className="relative">
@@ -172,7 +153,7 @@ export function ResetPasswordPage() {
                       type={showConfirmPassword ? 'text' : 'password'}
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
-                      className="pr-10"
+                      className="pr-10 bg-darkmoon-bg border-darkmoon-border text-darkmoon-text-primary focus:border-darkmoon-gold"
                       placeholder={t('confirmPasswordPlaceholder', language)}
                       required
                     />
@@ -182,8 +163,7 @@ export function ResetPasswordPage() {
                       onClick={() =>
                         setShowConfirmPassword(!showConfirmPassword)
                       }
-                      className="absolute inset-y-0 right-2 w-8 h-10 flex items-center justify-center btn-icon"
-                      style={{ color: 'var(--text-secondary)' }}
+                      className="absolute inset-y-0 right-2 w-8 h-10 flex items-center justify-center cursor-pointer text-darkmoon-text-secondary hover:text-darkmoon-text-primary"
                     >
                       {showConfirmPassword ? (
                         <EyeOff className="w-5 h-5" />
@@ -195,14 +175,8 @@ export function ResetPasswordPage() {
                 </div>
 
                 {/* 密码强度检查（必须通过才允许提交） */}
-                <div
-                  className="mt-1 text-xs"
-                  style={{ color: 'var(--text-secondary)' }}
-                >
-                  <div
-                    className="mb-1"
-                    style={{ color: 'var(--brand-light-gray)' }}
-                  >
+                <div className="mt-1 text-xs text-darkmoon-text-secondary">
+                  <div className="mb-1 text-darkmoon-text-muted">
                     {t('passwordRequirements', language)}
                   </div>
                   <PasswordChecklist
@@ -231,15 +205,12 @@ export function ResetPasswordPage() {
                 </div>
 
                 <div>
-                  <label
-                    className="block text-sm font-semibold mb-2"
-                    style={{ color: '#EAECEF' }}
-                  >
+                  <label className="block text-sm font-semibold mb-2 text-darkmoon-text-secondary">
                     {t('otpCode', language)}
                   </label>
                   <div className="text-center mb-3">
                     <div className="text-3xl">📱</div>
-                    <p className="text-xs mt-1" style={{ color: '#848E9C' }}>
+                    <p className="text-xs mt-1 text-darkmoon-text-muted">
                       打开 Google Authenticator 获取6位验证码
                     </p>
                   </div>
@@ -249,12 +220,7 @@ export function ResetPasswordPage() {
                     onChange={(e) =>
                       setOtpCode(e.target.value.replace(/\D/g, '').slice(0, 6))
                     }
-                    className="w-full px-3 py-2 rounded text-center text-2xl font-mono"
-                    style={{
-                      background: '#0B0E11',
-                      border: '1px solid #2B3139',
-                      color: '#EAECEF',
-                    }}
+                    className="w-full px-3 py-2 rounded text-center text-2xl font-mono bg-darkmoon-bg border border-darkmoon-border text-darkmoon-text-primary focus:border-darkmoon-gold outline-none"
                     placeholder={t('otpPlaceholder', language)}
                     maxLength={6}
                     required
@@ -262,13 +228,7 @@ export function ResetPasswordPage() {
                 </div>
 
                 {error && (
-                  <div
-                    className="text-sm px-3 py-2 rounded"
-                    style={{
-                      background: 'rgba(246, 70, 93, 0.1)',
-                      color: '#F6465D',
-                    }}
-                  >
+                  <div className="text-sm px-3 py-2 rounded bg-red-500/10 text-red-500 border border-red-500/20">
                     {error}
                   </div>
                 )}
@@ -276,8 +236,7 @@ export function ResetPasswordPage() {
                 <button
                   type="submit"
                   disabled={loading || otpCode.length !== 6 || !passwordValid}
-                  className="w-full px-4 py-2 rounded text-sm font-semibold transition-all hover:scale-105 disabled:opacity-50"
-                  style={{ background: '#F0B90B', color: '#000' }}
+                  className="w-full px-4 py-2 rounded-lg text-sm font-semibold transition-all hover:scale-105 disabled:opacity-50 bg-gradient-to-r from-darkmoon-gold to-[#F3CF55] text-black hover:shadow-darkmoon-gold/30"
                 >
                   {loading
                     ? t('loading', language)

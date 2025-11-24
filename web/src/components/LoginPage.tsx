@@ -47,7 +47,6 @@ export function LoginPage() {
       setError(msg)
       toast.error(msg)
     } else {
-      // Dismiss the "login expired" toast on successful login
       if (expiredToastId) {
         toast.dismiss(expiredToastId)
       }
@@ -67,7 +66,6 @@ export function LoginPage() {
         setUserID(result.userID)
         setStep('otp')
       } else {
-        // Dismiss the "login expired" toast on successful login (no OTP required)
         if (expiredToastId) {
           toast.dismiss(expiredToastId)
         }
@@ -93,12 +91,10 @@ export function LoginPage() {
       setError(msg)
       toast.error(msg)
     } else {
-      // Dismiss the "login expired" toast on successful OTP verification
       if (expiredToastId) {
         toast.dismiss(expiredToastId)
       }
     }
-    // 成功的话AuthContext会自动处理登录状态
 
     setLoading(false)
   }
@@ -114,64 +110,38 @@ export function LoginPage() {
           <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
             <img
               src="/icons/nofx.svg"
-              alt="NoFx Logo"
+              alt="DarkMoon Logo"
               className="w-16 h-16 object-contain"
             />
           </div>
-          <h1
-            className="text-2xl font-bold"
-            style={{ color: 'var(--brand-light-gray)' }}
-          >
-            登录 NOFX
+          <h1 className="text-2xl font-bold text-darkmoon-text-primary">
+            登录 DarkMoon
           </h1>
-          <p
-            className="text-sm mt-2"
-            style={{ color: 'var(--text-secondary)' }}
-          >
+          <p className="text-sm mt-2 text-darkmoon-text-secondary">
             {step === 'login' ? '请输入您的邮箱和密码' : '请输入两步验证码'}
           </p>
         </div>
 
         {/* Login Form */}
-        <div
-          className="rounded-lg p-6"
-          style={{
-            background: 'var(--panel-bg)',
-            border: '1px solid var(--panel-border)',
-          }}
-        >
+        <div className="rounded-xl p-8 bg-darkmoon-surface border border-darkmoon-border shadow-xl">
           {adminMode ? (
             <form onSubmit={handleAdminLogin} className="space-y-4">
               <div>
-                <label
-                  className="block text-sm font-semibold mb-2"
-                  style={{ color: 'var(--brand-light-gray)' }}
-                >
+                <label className="block text-sm font-semibold mb-2 text-darkmoon-text-secondary">
                   管理员密码
                 </label>
                 <input
                   type="password"
                   value={adminPassword}
                   onChange={(e) => setAdminPassword(e.target.value)}
-                  className="w-full px-3 py-2 rounded"
-                  style={{
-                    background: 'var(--brand-black)',
-                    border: '1px solid var(--panel-border)',
-                    color: 'var(--brand-light-gray)',
-                  }}
+                  className="w-full px-3 py-2 rounded bg-darkmoon-bg border border-darkmoon-border text-darkmoon-text-primary focus:border-darkmoon-gold outline-none"
                   placeholder="请输入管理员密码"
                   required
                 />
               </div>
 
               {error && (
-                <div
-                  className="text-sm px-3 py-2 rounded"
-                  style={{
-                    background: 'var(--binance-red-bg)',
-                    color: 'var(--binance-red)',
-                  }}
-                >
+                <div className="text-sm px-3 py-2 rounded bg-red-500/10 text-red-500 border border-red-500/20">
                   {error}
                 </div>
               )}
@@ -179,11 +149,7 @@ export function LoginPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full px-4 py-2 rounded text-sm font-semibold transition-all hover:scale-105 disabled:opacity-50"
-                style={{
-                  background: 'var(--brand-yellow)',
-                  color: 'var(--brand-black)',
-                }}
+                className="w-full px-4 py-2 rounded-lg text-sm font-semibold transition-all hover:scale-105 disabled:opacity-50 bg-gradient-to-r from-darkmoon-gold to-[#F3CF55] text-black hover:shadow-darkmoon-gold/30"
               >
                 {loading ? t('loading', language) : '登录'}
               </button>
@@ -191,10 +157,7 @@ export function LoginPage() {
           ) : step === 'login' ? (
             <form onSubmit={handleLogin} className="space-y-4">
               <div>
-                <label
-                  className="block text-sm font-semibold mb-2"
-                  style={{ color: 'var(--brand-light-gray)' }}
-                >
+                <label className="block text-sm font-semibold mb-2 text-darkmoon-text-secondary">
                   {t('email', language)}
                 </label>
                 <Input
@@ -203,14 +166,12 @@ export function LoginPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder={t('emailPlaceholder', language)}
                   required
+                  className="bg-darkmoon-bg border-darkmoon-border text-darkmoon-text-primary focus:border-darkmoon-gold"
                 />
               </div>
 
               <div>
-                <label
-                  className="block text-sm font-semibold mb-2"
-                  style={{ color: 'var(--brand-light-gray)' }}
-                >
+                <label className="block text-sm font-semibold mb-2 text-darkmoon-text-secondary">
                   {t('password', language)}
                 </label>
                 <div className="relative">
@@ -218,7 +179,7 @@ export function LoginPage() {
                     type={showPassword ? 'text' : 'password'}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="pr-10"
+                    className="pr-10 bg-darkmoon-bg border-darkmoon-border text-darkmoon-text-primary focus:border-darkmoon-gold"
                     placeholder={t('passwordPlaceholder', language)}
                     required
                   />
@@ -227,8 +188,7 @@ export function LoginPage() {
                     aria-label={showPassword ? '隐藏密码' : '显示密码'}
                     onMouseDown={(e) => e.preventDefault()}
                     onClick={() => setShowPassword((v) => !v)}
-                    className="absolute inset-y-0 right-2 w-8 h-10 flex items-center justify-center rounded bg-transparent p-0 m-0 border-0 outline-none focus:outline-none focus:ring-0 appearance-none cursor-pointer btn-icon"
-                    style={{ color: 'var(--text-secondary)' }}
+                    className="absolute inset-y-0 right-2 w-8 h-10 flex items-center justify-center rounded bg-transparent p-0 m-0 border-0 outline-none focus:outline-none focus:ring-0 appearance-none cursor-pointer text-darkmoon-text-secondary hover:text-darkmoon-text-primary"
                   >
                     {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
@@ -237,8 +197,7 @@ export function LoginPage() {
                   <button
                     type="button"
                     onClick={() => navigate('/reset-password')}
-                    className="text-xs hover:underline"
-                    style={{ color: '#F0B90B' }}
+                    className="text-xs hover:underline text-darkmoon-gold hover:text-[#F3CF55]"
                   >
                     {t('forgotPassword', language)}
                   </button>
@@ -246,13 +205,7 @@ export function LoginPage() {
               </div>
 
               {error && (
-                <div
-                  className="text-sm px-3 py-2 rounded"
-                  style={{
-                    background: 'var(--binance-red-bg)',
-                    color: 'var(--binance-red)',
-                  }}
-                >
+                <div className="text-sm px-3 py-2 rounded bg-red-500/10 text-red-500 border border-red-500/20">
                   {error}
                 </div>
               )}
@@ -260,11 +213,7 @@ export function LoginPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full px-4 py-2 rounded text-sm font-semibold transition-all hover:scale-105 disabled:opacity-50"
-                style={{
-                  background: 'var(--brand-yellow)',
-                  color: 'var(--brand-black)',
-                }}
+                className="w-full px-4 py-2 rounded-lg text-sm font-semibold transition-all hover:scale-105 disabled:opacity-50 bg-gradient-to-r from-darkmoon-gold to-[#F3CF55] text-black hover:shadow-darkmoon-gold/30"
               >
                 {loading ? t('loading', language) : t('loginButton', language)}
               </button>
@@ -273,7 +222,7 @@ export function LoginPage() {
             <form onSubmit={handleOTPVerify} className="space-y-4">
               <div className="text-center mb-4">
                 <div className="text-4xl mb-2">📱</div>
-                <p className="text-sm" style={{ color: '#848E9C' }}>
+                <p className="text-sm text-darkmoon-text-secondary">
                   {t('scanQRCodeInstructions', language)}
                   <br />
                   {t('enterOTPCode', language)}
@@ -281,10 +230,7 @@ export function LoginPage() {
               </div>
 
               <div>
-                <label
-                  className="block text-sm font-semibold mb-2"
-                  style={{ color: 'var(--brand-light-gray)' }}
-                >
+                <label className="block text-sm font-semibold mb-2 text-darkmoon-text-secondary">
                   {t('otpCode', language)}
                 </label>
                 <input
@@ -293,12 +239,7 @@ export function LoginPage() {
                   onChange={(e) =>
                     setOtpCode(e.target.value.replace(/\D/g, '').slice(0, 6))
                   }
-                  className="w-full px-3 py-2 rounded text-center text-2xl font-mono"
-                  style={{
-                    background: 'var(--brand-black)',
-                    border: '1px solid var(--panel-border)',
-                    color: 'var(--brand-light-gray)',
-                  }}
+                  className="w-full px-3 py-2 rounded text-center text-2xl font-mono bg-darkmoon-bg border border-darkmoon-border text-darkmoon-text-primary focus:border-darkmoon-gold outline-none"
                   placeholder={t('otpPlaceholder', language)}
                   maxLength={6}
                   required
@@ -306,13 +247,7 @@ export function LoginPage() {
               </div>
 
               {error && (
-                <div
-                  className="text-sm px-3 py-2 rounded"
-                  style={{
-                    background: 'var(--binance-red-bg)',
-                    color: 'var(--binance-red)',
-                  }}
-                >
+                <div className="text-sm px-3 py-2 rounded bg-red-500/10 text-red-500 border border-red-500/20">
                   {error}
                 </div>
               )}
@@ -321,19 +256,14 @@ export function LoginPage() {
                 <button
                   type="button"
                   onClick={() => setStep('login')}
-                  className="flex-1 px-4 py-2 rounded text-sm font-semibold"
-                  style={{
-                    background: 'var(--panel-bg-hover)',
-                    color: 'var(--text-secondary)',
-                  }}
+                  className="flex-1 px-4 py-2 rounded-lg text-sm font-semibold bg-darkmoon-surface-hover text-darkmoon-text-secondary hover:text-darkmoon-text-primary border border-darkmoon-border"
                 >
                   {t('back', language)}
                 </button>
                 <button
                   type="submit"
                   disabled={loading || otpCode.length !== 6}
-                  className="flex-1 px-4 py-2 rounded text-sm font-semibold transition-all hover:scale-105 disabled:opacity-50"
-                  style={{ background: '#F0B90B', color: '#000' }}
+                  className="flex-1 px-4 py-2 rounded-lg text-sm font-semibold transition-all hover:scale-105 disabled:opacity-50 bg-gradient-to-r from-darkmoon-gold to-[#F3CF55] text-black hover:shadow-darkmoon-gold/30"
                 >
                   {loading ? t('loading', language) : t('verifyOTP', language)}
                 </button>
@@ -345,12 +275,11 @@ export function LoginPage() {
         {/* Register Link */}
         {!adminMode && registrationEnabled && (
           <div className="text-center mt-6">
-            <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+            <p className="text-sm text-darkmoon-text-secondary">
               还没有账户？{' '}
               <button
                 onClick={() => navigate('/register')}
-                className="font-semibold hover:underline transition-colors"
-                style={{ color: 'var(--brand-yellow)' }}
+                className="font-semibold hover:underline transition-colors text-darkmoon-gold hover:text-[#F3CF55]"
               >
                 立即注册
               </button>

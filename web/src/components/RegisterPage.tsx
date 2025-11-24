@@ -35,7 +35,6 @@ export function RegisterPage() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
   useEffect(() => {
-    // 获取系统配置，检查是否开启内测模式和注册功能
     getSystemConfig()
       .then((config) => {
         setBetaMode(config.beta_mode || false)
@@ -46,7 +45,6 @@ export function RegisterPage() {
       })
   }, [])
 
-  // 如果注册功能被禁用，显示注册已关闭页面
   if (!registrationEnabled) {
     return <RegistrationDisabled />
   }
@@ -55,7 +53,6 @@ export function RegisterPage() {
     e.preventDefault()
     setError('')
 
-    // 使用 PasswordChecklist 的校验结果
     if (!passwordValid) {
       setError(t('passwordNotMeetRequirements', language))
       return
@@ -76,7 +73,6 @@ export function RegisterPage() {
       setQrCodeURL(result.qrCodeURL || '')
       setStep('setup-otp')
     } else {
-      // Only business errors reach here (system/network errors shown via toast)
       const msg = result.message || t('registrationFailed', language)
       setError(msg)
     }
@@ -100,7 +96,6 @@ export function RegisterPage() {
       setError(msg)
       toast.error(msg)
     }
-    // 成功的话AuthContext会自动处理登录状态
 
     setLoading(false)
   }
@@ -120,14 +115,14 @@ export function RegisterPage() {
           <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
             <img
               src="/icons/nofx.svg"
-              alt="NoFx Logo"
+              alt="DarkMoon Logo"
               className="w-16 h-16 object-contain"
             />
           </div>
-          <h1 className="text-2xl font-bold" style={{ color: '#EAECEF' }}>
+          <h1 className="text-2xl font-bold text-darkmoon-text-primary">
             {t('appTitle', language)}
           </h1>
-          <p className="text-sm mt-2" style={{ color: '#848E9C' }}>
+          <p className="text-sm mt-2 text-darkmoon-text-secondary">
             {step === 'register' && t('registerTitle', language)}
             {step === 'setup-otp' && t('setupTwoFactor', language)}
             {step === 'verify-otp' && t('verifyOTP', language)}
@@ -135,20 +130,11 @@ export function RegisterPage() {
         </div>
 
         {/* Registration Form */}
-        <div
-          className="rounded-lg p-6"
-          style={{
-            background: 'var(--panel-bg)',
-            border: '1px solid var(--panel-border)',
-          }}
-        >
+        <div className="rounded-xl p-8 bg-darkmoon-surface border border-darkmoon-border shadow-xl">
           {step === 'register' && (
             <form onSubmit={handleRegister} className="space-y-4">
               <div>
-                <label
-                  className="block text-sm font-semibold mb-2"
-                  style={{ color: 'var(--brand-light-gray)' }}
-                >
+                <label className="block text-sm font-semibold mb-2 text-darkmoon-text-secondary">
                   {t('email', language)}
                 </label>
                 <Input
@@ -157,14 +143,12 @@ export function RegisterPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder={t('emailPlaceholder', language)}
                   required
+                  className="bg-darkmoon-bg border-darkmoon-border text-darkmoon-text-primary focus:border-darkmoon-gold"
                 />
               </div>
 
               <div>
-                <label
-                  className="block text-sm font-semibold mb-2"
-                  style={{ color: 'var(--brand-light-gray)' }}
-                >
+                <label className="block text-sm font-semibold mb-2 text-darkmoon-text-secondary">
                   {t('password', language)}
                 </label>
                 <div className="relative">
@@ -172,7 +156,7 @@ export function RegisterPage() {
                     type={showPassword ? 'text' : 'password'}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="pr-10"
+                    className="pr-10 bg-darkmoon-bg border-darkmoon-border text-darkmoon-text-primary focus:border-darkmoon-gold"
                     placeholder={t('passwordPlaceholder', language)}
                     required
                   />
@@ -181,8 +165,7 @@ export function RegisterPage() {
                     aria-label={showPassword ? '隐藏密码' : '显示密码'}
                     onMouseDown={(e) => e.preventDefault()}
                     onClick={() => setShowPassword((v) => !v)}
-                    className="absolute inset-y-0 right-2 w-8 h-10 flex items-center justify-center rounded bg-transparent p-0 m-0 border-0 outline-none focus:outline-none focus:ring-0 appearance-none cursor-pointer btn-icon"
-                    style={{ color: 'var(--text-secondary)' }}
+                    className="absolute inset-y-0 right-2 w-8 h-10 flex items-center justify-center rounded bg-transparent p-0 m-0 border-0 outline-none focus:outline-none focus:ring-0 appearance-none cursor-pointer text-darkmoon-text-secondary hover:text-darkmoon-text-primary"
                   >
                     {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
@@ -190,10 +173,7 @@ export function RegisterPage() {
               </div>
 
               <div>
-                <label
-                  className="block text-sm font-semibold mb-2"
-                  style={{ color: 'var(--brand-light-gray)' }}
-                >
+                <label className="block text-sm font-semibold mb-2 text-darkmoon-text-secondary">
                   {t('confirmPassword', language)}
                 </label>
                 <div className="relative">
@@ -201,7 +181,7 @@ export function RegisterPage() {
                     type={showConfirmPassword ? 'text' : 'password'}
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="pr-10"
+                    className="pr-10 bg-darkmoon-bg border-darkmoon-border text-darkmoon-text-primary focus:border-darkmoon-gold"
                     placeholder={t('confirmPasswordPlaceholder', language)}
                     required
                   />
@@ -210,8 +190,7 @@ export function RegisterPage() {
                     aria-label={showConfirmPassword ? '隐藏密码' : '显示密码'}
                     onMouseDown={(e) => e.preventDefault()}
                     onClick={() => setShowConfirmPassword((v) => !v)}
-                    className="absolute inset-y-0 right-2 w-8 h-10 flex items-center justify-center rounded bg-transparent p-0 m-0 border-0 outline-none focus:outline-none focus:ring-0 appearance-none cursor-pointer btn-icon"
-                    style={{ color: 'var(--text-secondary)' }}
+                    className="absolute inset-y-0 right-2 w-8 h-10 flex items-center justify-center rounded bg-transparent p-0 m-0 border-0 outline-none focus:outline-none focus:ring-0 appearance-none cursor-pointer text-darkmoon-text-secondary hover:text-darkmoon-text-primary"
                   >
                     {showConfirmPassword ? (
                       <EyeOff size={18} />
@@ -222,15 +201,9 @@ export function RegisterPage() {
                 </div>
               </div>
 
-              {/* 密码规则清单（通过才允许提交） */}
-              <div
-                className="mt-1 text-xs"
-                style={{ color: 'var(--text-secondary)' }}
-              >
-                <div
-                  className="mb-1"
-                  style={{ color: 'var(--brand-light-gray)' }}
-                >
+              {/* 密码规则清单 */}
+              <div className="mt-1 text-xs text-darkmoon-text-secondary">
+                <div className="mb-1 text-darkmoon-text-muted">
                   {t('passwordRequirements', language)}
                 </div>
                 <PasswordChecklist
@@ -260,10 +233,7 @@ export function RegisterPage() {
 
               {betaMode && (
                 <div>
-                  <label
-                    className="block text-sm font-semibold mb-2"
-                    style={{ color: '#EAECEF' }}
-                  >
+                  <label className="block text-sm font-semibold mb-2 text-darkmoon-text-secondary">
                     内测码 *
                   </label>
                   <input
@@ -274,30 +244,19 @@ export function RegisterPage() {
                         e.target.value.replace(/[^a-z0-9]/gi, '').toLowerCase()
                       )
                     }
-                    className="w-full px-3 py-2 rounded font-mono"
-                    style={{
-                      background: '#0B0E11',
-                      border: '1px solid #2B3139',
-                      color: '#EAECEF',
-                    }}
+                    className="w-full px-3 py-2 rounded font-mono bg-darkmoon-bg border border-darkmoon-border text-darkmoon-text-primary focus:border-darkmoon-gold outline-none"
                     placeholder="请输入6位内测码"
                     maxLength={6}
                     required={betaMode}
                   />
-                  <p className="text-xs mt-1" style={{ color: '#848E9C' }}>
+                  <p className="text-xs mt-1 text-darkmoon-text-muted">
                     内测码由6位字母数字组成，区分大小写
                   </p>
                 </div>
               )}
 
               {error && (
-                <div
-                  className="text-sm px-3 py-2 rounded"
-                  style={{
-                    background: 'var(--binance-red-bg)',
-                    color: 'var(--binance-red)',
-                  }}
-                >
+                <div className="text-sm px-3 py-2 rounded bg-red-500/10 text-red-500 border border-red-500/20">
                   {error}
                 </div>
               )}
@@ -307,11 +266,7 @@ export function RegisterPage() {
                 disabled={
                   loading || (betaMode && !betaCode.trim()) || !passwordValid
                 }
-                className="w-full px-4 py-2 rounded text-sm font-semibold transition-all hover:scale-105 disabled:opacity-50"
-                style={{
-                  background: 'var(--brand-yellow)',
-                  color: 'var(--brand-black)',
-                }}
+                className="w-full px-4 py-2 rounded-lg text-sm font-semibold transition-all hover:scale-105 disabled:opacity-50 bg-gradient-to-r from-darkmoon-gold to-[#F3CF55] text-black hover:shadow-darkmoon-gold/30"
               >
                 {loading
                   ? t('loading', language)
@@ -324,62 +279,38 @@ export function RegisterPage() {
             <div className="space-y-4">
               <div className="text-center">
                 <div className="text-4xl mb-2">📱</div>
-                <h3
-                  className="text-lg font-semibold mb-2"
-                  style={{ color: '#EAECEF' }}
-                >
+                <h3 className="text-lg font-semibold mb-2 text-darkmoon-text-primary">
                   {t('setupTwoFactor', language)}
                 </h3>
-                <p className="text-sm" style={{ color: '#848E9C' }}>
+                <p className="text-sm text-darkmoon-text-secondary">
                   {t('setupTwoFactorDesc', language)}
                 </p>
               </div>
 
               <div className="space-y-3">
-                <div
-                  className="p-3 rounded"
-                  style={{
-                    background: 'var(--brand-black)',
-                    border: '1px solid var(--panel-border)',
-                  }}
-                >
-                  <p
-                    className="text-sm font-semibold mb-2"
-                    style={{ color: 'var(--brand-light-gray)' }}
-                  >
+                <div className="p-3 rounded bg-darkmoon-bg border border-darkmoon-border">
+                  <p className="text-sm font-semibold mb-2 text-darkmoon-text-primary">
                     {t('authStep1Title', language)}
                   </p>
-                  <p
-                    className="text-xs"
-                    style={{ color: 'var(--text-secondary)' }}
-                  >
+                  <p className="text-xs text-darkmoon-text-secondary">
                     {t('authStep1Desc', language)}
                   </p>
                 </div>
 
-                <div
-                  className="p-3 rounded"
-                  style={{
-                    background: 'var(--brand-black)',
-                    border: '1px solid var(--panel-border)',
-                  }}
-                >
-                  <p
-                    className="text-sm font-semibold mb-2"
-                    style={{ color: 'var(--brand-light-gray)' }}
-                  >
+                <div className="p-3 rounded bg-darkmoon-bg border border-darkmoon-border">
+                  <p className="text-sm font-semibold mb-2 text-darkmoon-text-primary">
                     {t('authStep2Title', language)}
                   </p>
-                  <p className="text-xs mb-2" style={{ color: '#848E9C' }}>
+                  <p className="text-xs mb-2 text-darkmoon-text-secondary">
                     {t('authStep2Desc', language)}
                   </p>
 
                   {qrCodeURL && (
                     <div className="mt-2">
-                      <p className="text-xs mb-2" style={{ color: '#848E9C' }}>
+                      <p className="text-xs mb-2 text-darkmoon-text-secondary">
                         {t('qrCodeHint', language)}
                       </p>
-                      <div className="bg-white p-2 rounded text-center">
+                      <div className="bg-white p-2 rounded text-center w-fit mx-auto">
                         <img
                           src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(qrCodeURL)}`}
                           alt="QR Code"
@@ -390,26 +321,16 @@ export function RegisterPage() {
                   )}
 
                   <div className="mt-2">
-                    <p className="text-xs mb-1" style={{ color: '#848E9C' }}>
+                    <p className="text-xs mb-1 text-darkmoon-text-secondary">
                       {t('otpSecret', language)}
                     </p>
                     <div className="flex items-center gap-2">
-                      <code
-                        className="flex-1 px-2 py-1 text-xs rounded font-mono"
-                        style={{
-                          background: 'var(--panel-bg-hover)',
-                          color: 'var(--brand-light-gray)',
-                        }}
-                      >
+                      <code className="flex-1 px-2 py-1 text-xs rounded font-mono bg-darkmoon-surface-hover text-darkmoon-text-primary border border-darkmoon-border">
                         {otpSecret}
                       </code>
                       <button
                         onClick={() => copyToClipboard(otpSecret)}
-                        className="px-2 py-1 text-xs rounded"
-                        style={{
-                          background: 'var(--brand-yellow)',
-                          color: 'var(--brand-black)',
-                        }}
+                        className="px-2 py-1 text-xs rounded bg-darkmoon-gold text-black hover:bg-[#F3CF55]"
                       >
                         {t('copy', language)}
                       </button>
@@ -417,23 +338,11 @@ export function RegisterPage() {
                   </div>
                 </div>
 
-                <div
-                  className="p-3 rounded"
-                  style={{
-                    background: 'var(--brand-black)',
-                    border: '1px solid var(--panel-border)',
-                  }}
-                >
-                  <p
-                    className="text-sm font-semibold mb-2"
-                    style={{ color: 'var(--brand-light-gray)' }}
-                  >
+                <div className="p-3 rounded bg-darkmoon-bg border border-darkmoon-border">
+                  <p className="text-sm font-semibold mb-2 text-darkmoon-text-primary">
                     {t('authStep3Title', language)}
                   </p>
-                  <p
-                    className="text-xs"
-                    style={{ color: 'var(--text-secondary)' }}
-                  >
+                  <p className="text-xs text-darkmoon-text-secondary">
                     {t('authStep3Desc', language)}
                   </p>
                 </div>
@@ -441,8 +350,7 @@ export function RegisterPage() {
 
               <button
                 onClick={handleSetupComplete}
-                className="w-full px-4 py-2 rounded text-sm font-semibold transition-all hover:scale-105"
-                style={{ background: '#F0B90B', color: '#000' }}
+                className="w-full px-4 py-2 rounded-lg text-sm font-semibold transition-all hover:scale-105 bg-gradient-to-r from-darkmoon-gold to-[#F3CF55] text-black hover:shadow-darkmoon-gold/30"
               >
                 {t('setupCompleteContinue', language)}
               </button>
@@ -453,7 +361,7 @@ export function RegisterPage() {
             <form onSubmit={handleOTPVerify} className="space-y-4">
               <div className="text-center mb-4">
                 <div className="text-4xl mb-2">🔐</div>
-                <p className="text-sm" style={{ color: '#848E9C' }}>
+                <p className="text-sm text-darkmoon-text-secondary">
                   {t('enterOTPCode', language)}
                   <br />
                   {t('completeRegistrationSubtitle', language)}
@@ -461,10 +369,7 @@ export function RegisterPage() {
               </div>
 
               <div>
-                <label
-                  className="block text-sm font-semibold mb-2"
-                  style={{ color: 'var(--brand-light-gray)' }}
-                >
+                <label className="block text-sm font-semibold mb-2 text-darkmoon-text-secondary">
                   {t('otpCode', language)}
                 </label>
                 <input
@@ -473,12 +378,7 @@ export function RegisterPage() {
                   onChange={(e) =>
                     setOtpCode(e.target.value.replace(/\D/g, '').slice(0, 6))
                   }
-                  className="w-full px-3 py-2 rounded text-center text-2xl font-mono"
-                  style={{
-                    background: 'var(--brand-black)',
-                    border: '1px solid var(--panel-border)',
-                    color: 'var(--brand-light-gray)',
-                  }}
+                  className="w-full px-3 py-2 rounded text-center text-2xl font-mono bg-darkmoon-bg border border-darkmoon-border text-darkmoon-text-primary focus:border-darkmoon-gold outline-none"
                   placeholder={t('otpPlaceholder', language)}
                   maxLength={6}
                   required
@@ -486,13 +386,7 @@ export function RegisterPage() {
               </div>
 
               {error && (
-                <div
-                  className="text-sm px-3 py-2 rounded"
-                  style={{
-                    background: 'var(--binance-red-bg)',
-                    color: 'var(--binance-red)',
-                  }}
-                >
+                <div className="text-sm px-3 py-2 rounded bg-red-500/10 text-red-500 border border-red-500/20">
                   {error}
                 </div>
               )}
@@ -501,19 +395,14 @@ export function RegisterPage() {
                 <button
                   type="button"
                   onClick={() => setStep('setup-otp')}
-                  className="flex-1 px-4 py-2 rounded text-sm font-semibold"
-                  style={{
-                    background: 'var(--panel-bg-hover)',
-                    color: 'var(--text-secondary)',
-                  }}
+                  className="flex-1 px-4 py-2 rounded-lg text-sm font-semibold bg-darkmoon-surface-hover text-darkmoon-text-secondary hover:text-darkmoon-text-primary border border-darkmoon-border"
                 >
                   {t('back', language)}
                 </button>
                 <button
                   type="submit"
                   disabled={loading || otpCode.length !== 6}
-                  className="flex-1 px-4 py-2 rounded text-sm font-semibold transition-all hover:scale-105 disabled:opacity-50"
-                  style={{ background: '#F0B90B', color: '#000' }}
+                  className="flex-1 px-4 py-2 rounded-lg text-sm font-semibold transition-all hover:scale-105 disabled:opacity-50 bg-gradient-to-r from-darkmoon-gold to-[#F3CF55] text-black hover:shadow-darkmoon-gold/30"
                 >
                   {loading
                     ? t('loading', language)
@@ -527,12 +416,11 @@ export function RegisterPage() {
         {/* Login Link */}
         {step === 'register' && (
           <div className="text-center mt-6">
-            <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+            <p className="text-sm text-darkmoon-text-secondary">
               已有账户？{' '}
               <button
                 onClick={() => navigate('/login')}
-                className="font-semibold hover:underline transition-colors"
-                style={{ color: 'var(--brand-yellow)' }}
+                className="font-semibold hover:underline transition-colors text-darkmoon-gold hover:text-[#F3CF55]"
               >
                 立即登录
               </button>

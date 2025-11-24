@@ -25,10 +25,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
   }
 
   return (
-    <div
-      className="min-h-screen"
-      style={{ background: '#0B0E11', color: '#EAECEF' }}
-    >
+    <div className="min-h-screen bg-darkmoon-bg text-darkmoon-text-primary font-sans selection:bg-darkmoon-gold selection:text-black">
       <HeaderBar
         isLoggedIn={!!user}
         currentPage={getCurrentPage()}
@@ -42,42 +39,21 @@ export default function MainLayout({ children }: MainLayoutProps) {
       />
 
       {/* Main Content */}
-      <Container as="main" className="py-6 pt-24">
+      <Container as="main" className="py-6 pt-24 min-h-[calc(100vh-200px)] relative z-10">
         {children || <Outlet />}
       </Container>
 
       {/* Footer */}
-      <footer
-        className="mt-16"
-        style={{ borderTop: '1px solid #2B3139', background: '#181A20' }}
-      >
-        <Container
-          className="py-6 text-center text-sm"
-          style={{ color: '#5E6673' }}
-        >
-          <p>{t('footerTitle', language)}</p>
-          <p className="mt-1">{t('footerWarning', language)}</p>
-          <div className="mt-4">
+      <footer className="mt-16 border-t border-darkmoon-border bg-darkmoon-surface py-12 relative z-10">
+        <Container className="text-center text-sm text-darkmoon-text-muted">
+          <p className="font-medium text-darkmoon-text-secondary mb-4">{t('footerTitle', language)}</p>
+          <p className="opacity-60 max-w-2xl mx-auto">{t('footerWarning', language)}</p>
+          <div className="mt-8 flex justify-center">
             <a
               href="https://github.com/tinkle-community/nofx"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-3 py-2 rounded text-sm font-semibold transition-all hover:scale-105"
-              style={{
-                background: '#1E2329',
-                color: '#848E9C',
-                border: '1px solid #2B3139',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = '#2B3139'
-                e.currentTarget.style.color = '#EAECEF'
-                e.currentTarget.style.borderColor = '#F0B90B'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = '#1E2329'
-                e.currentTarget.style.color = '#848E9C'
-                e.currentTarget.style.borderColor = '#2B3139'
-              }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all hover:scale-105 bg-darkmoon-bg border border-darkmoon-border hover:border-darkmoon-gold hover:text-darkmoon-gold hover:shadow-[0_0_15px_rgba(212,175,55,0.2)]"
             >
               <svg
                 width="18"

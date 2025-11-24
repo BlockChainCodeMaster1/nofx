@@ -11,25 +11,18 @@ export function SignalSourceWarning({
   onConfigure,
 }: SignalSourceWarningProps) {
   return (
-    <div
-      className="rounded-lg px-4 py-3 flex items-start gap-3 animate-slide-in"
-      style={{
-        background: 'rgba(246, 70, 93, 0.1)',
-        border: '1px solid rgba(246, 70, 93, 0.3)',
-      }}
-    >
+    <div className="rounded-xl px-4 py-3 flex items-start gap-3 animate-slide-in bg-red-500/10 border border-red-500/20 text-red-500 mb-4">
       <AlertTriangle
         size={20}
         className="flex-shrink-0 mt-0.5"
-        style={{ color: '#F6465D' }}
       />
       <div className="flex-1">
-        <div className="font-semibold mb-1" style={{ color: '#F6465D' }}>
+        <div className="font-semibold mb-1">
           ⚠️ {t('signalSourceNotConfigured', language)}
         </div>
-        <div className="text-sm" style={{ color: '#848E9C' }}>
+        <div className="text-sm text-red-400/80">
           <p className="mb-2">{t('signalSourceWarningMessage', language)}</p>
-          <p>
+          <p className="text-red-400 font-medium">
             <strong>{t('solutions', language)}</strong>
           </p>
           <ul className="list-disc list-inside space-y-1 ml-2 mt-1">
@@ -40,11 +33,7 @@ export function SignalSourceWarning({
         </div>
         <button
           onClick={onConfigure}
-          className="mt-3 px-3 py-1.5 rounded text-sm font-semibold transition-all hover:scale-105"
-          style={{
-            background: '#F0B90B',
-            color: '#000',
-          }}
+          className="mt-3 px-3 py-1.5 rounded text-sm font-semibold transition-all hover:scale-105 bg-red-500 text-white shadow-lg shadow-red-500/20"
         >
           {t('configureSignalSourceNow', language)}
         </button>

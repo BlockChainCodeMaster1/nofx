@@ -161,42 +161,18 @@ export default function TraderDashboard() {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="text-center max-w-md mx-auto px-6">
-          <div
-            className="w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center"
-            style={{
-              background: 'rgba(240, 185, 11, 0.1)',
-              border: '2px solid rgba(240, 185, 11, 0.3)',
-            }}
-          >
-            <svg
-              className="w-12 h-12"
-              style={{ color: '#F0B90B' }}
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-              />
-            </svg>
+          <div className="w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center bg-darkmoon-gold/10 border-2 border-darkmoon-gold/30">
+            <Bot className="w-12 h-12 text-darkmoon-gold" />
           </div>
-          <h2 className="text-2xl font-bold mb-3" style={{ color: '#EAECEF' }}>
+          <h2 className="text-2xl font-bold mb-3 text-darkmoon-text-primary">
             {t('dashboardEmptyTitle', language)}
           </h2>
-          <p className="text-base mb-6" style={{ color: '#848E9C' }}>
+          <p className="text-base mb-6 text-darkmoon-text-secondary">
             {t('dashboardEmptyDescription', language)}
           </p>
           <button
             onClick={() => navigate('/traders')}
-            className="px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105 active:scale-95"
-            style={{
-              background: 'linear-gradient(135deg, #F0B90B 0%, #FCD535 100%)',
-              color: '#0B0E11',
-              boxShadow: '0 4px 12px rgba(240, 185, 11, 0.3)',
-            }}
+            className="px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105 active:scale-95 bg-gradient-to-r from-darkmoon-gold to-[#F3CF55] text-black shadow-lg hover:shadow-darkmoon-gold/20"
           >
             {t('goToTradersPage', language)}
           </button>
@@ -210,42 +186,18 @@ export default function TraderDashboard() {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="text-center max-w-md mx-auto px-6">
-          <div
-            className="w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center"
-            style={{
-              background: 'rgba(240, 185, 11, 0.1)',
-              border: '2px solid rgba(240, 185, 11, 0.3)',
-            }}
-          >
-            <svg
-              className="w-12 h-12"
-              style={{ color: '#F0B90B' }}
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-              />
-            </svg>
+          <div className="w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center bg-darkmoon-gold/10 border-2 border-darkmoon-gold/30">
+            <Bot className="w-12 h-12 text-darkmoon-gold" />
           </div>
-          <h2 className="text-2xl font-bold mb-3" style={{ color: '#EAECEF' }}>
+          <h2 className="text-2xl font-bold mb-3 text-darkmoon-text-primary">
             {t('dashboardEmptyTitle', language)}
           </h2>
-          <p className="text-base mb-6" style={{ color: '#848E9C' }}>
+          <p className="text-base mb-6 text-darkmoon-text-secondary">
             {t('dashboardEmptyDescription', language)}
           </p>
           <button
             onClick={() => navigate('/traders')}
-            className="px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105 active:scale-95"
-            style={{
-              background: 'linear-gradient(135deg, #F0B90B 0%, #FCD535 100%)',
-              color: '#0B0E11',
-              boxShadow: '0 4px 12px rgba(240, 185, 11, 0.3)',
-            }}
+            className="px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105 active:scale-95 bg-gradient-to-r from-darkmoon-gold to-[#F3CF55] text-black shadow-lg hover:shadow-darkmoon-gold/20"
           >
             {t('goToTradersPage', language)}
           </button>
@@ -258,56 +210,38 @@ export default function TraderDashboard() {
   if (!selectedTrader) {
     return (
       <div className="space-y-6">
-        <div className="binance-card p-6 animate-pulse">
-          <div className="skeleton h-8 w-48 mb-3"></div>
+        <div className="bg-darkmoon-surface border border-darkmoon-border p-6 rounded-xl animate-pulse">
+          <div className="h-8 w-48 mb-3 bg-darkmoon-border rounded"></div>
           <div className="flex gap-4">
-            <div className="skeleton h-4 w-32"></div>
-            <div className="skeleton h-4 w-24"></div>
-            <div className="skeleton h-4 w-28"></div>
+            <div className="h-4 w-32 bg-darkmoon-border rounded"></div>
+            <div className="h-4 w-24 bg-darkmoon-border rounded"></div>
+            <div className="h-4 w-28 bg-darkmoon-border rounded"></div>
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           {[1, 2, 3, 4].map((i) => (
-            <div key={i} className="binance-card p-5 animate-pulse">
-              <div className="skeleton h-4 w-24 mb-3"></div>
-              <div className="skeleton h-8 w-32"></div>
+            <div key={i} className="bg-darkmoon-surface border border-darkmoon-border p-5 rounded-xl animate-pulse">
+              <div className="h-4 w-24 mb-3 bg-darkmoon-border rounded"></div>
+              <div className="h-8 w-32 bg-darkmoon-border rounded"></div>
             </div>
           ))}
         </div>
-        <div className="binance-card p-6 animate-pulse">
-          <div className="skeleton h-6 w-40 mb-4"></div>
-          <div className="skeleton h-64 w-full"></div>
+        <div className="bg-darkmoon-surface border border-darkmoon-border p-6 rounded-xl animate-pulse">
+          <div className="h-6 w-40 mb-4 bg-darkmoon-border rounded"></div>
+          <div className="h-64 w-full bg-darkmoon-border rounded"></div>
         </div>
       </div>
     )
   }
 
-  const highlightColor = '#60a5fa'
-
   return (
     <div>
       {/* Trader Header */}
-      <div
-        className="mb-6 rounded p-6 animate-scale-in"
-        style={{
-          background:
-            'linear-gradient(135deg, rgba(240, 185, 11, 0.15) 0%, rgba(252, 213, 53, 0.05) 100%)',
-          border: '1px solid rgba(240, 185, 11, 0.2)',
-          boxShadow: '0 0 30px rgba(240, 185, 11, 0.15)',
-        }}
-      >
+      <div className="mb-6 rounded-xl p-6 animate-scale-in bg-gradient-to-br from-darkmoon-gold/10 to-transparent border border-darkmoon-gold/20 shadow-glow">
         <div className="flex items-start justify-between mb-3">
-          <h2
-            className="text-2xl font-bold flex items-center gap-2"
-            style={{ color: '#EAECEF' }}
-          >
-            <span
-              className="w-10 h-10 rounded-full flex items-center justify-center"
-              style={{
-                background: 'linear-gradient(135deg, #F0B90B 0%, #FCD535 100%)',
-              }}
-            >
-              <Bot className="w-5 h-5" style={{ color: '#0B0E11' }} />
+          <h2 className="text-2xl font-bold flex items-center gap-2 text-darkmoon-text-primary">
+            <span className="w-10 h-10 rounded-full flex items-center justify-center bg-gradient-to-br from-darkmoon-gold to-[#F3CF55]">
+              <Bot className="w-5 h-5 text-black" />
             </span>
             {selectedTrader.trader_name}
           </h2>
@@ -315,18 +249,13 @@ export default function TraderDashboard() {
           {/* Trader Selector */}
           {traders && traders.length > 0 && (
             <div className="flex items-center gap-2">
-              <span className="text-sm" style={{ color: '#848E9C' }}>
+              <span className="text-sm text-darkmoon-text-secondary">
                 {t('switchTrader', language)}:
               </span>
               <select
                 value={selectedTraderId}
                 onChange={(e) => handleTraderSelect(e.target.value)}
-                className="rounded px-3 py-2 text-sm font-medium cursor-pointer transition-colors"
-                style={{
-                  background: '#1E2329',
-                  border: '1px solid #2B3139',
-                  color: '#EAECEF',
-                }}
+                className="rounded px-3 py-2 text-sm font-medium cursor-pointer transition-colors bg-darkmoon-surface border border-darkmoon-border text-darkmoon-text-primary focus:border-darkmoon-gold outline-none"
               >
                 {traders.map((trader) => (
                   <option key={trader.trader_id} value={trader.trader_id}>
@@ -337,35 +266,25 @@ export default function TraderDashboard() {
             </div>
           )}
         </div>
-        <div
-          className="flex items-center gap-4 text-sm"
-          style={{ color: '#848E9C' }}
-        >
+        <div className="flex items-center gap-4 text-sm text-darkmoon-text-secondary">
           <span>
             AI Model:{' '}
-            <span
-              className="font-semibold"
-              style={{
-                color: selectedTrader.ai_model.includes('qwen')
-                  ? '#c084fc'
-                  : highlightColor,
-              }}
-            >
+            <span className="font-semibold text-darkmoon-gold">
               {getModelDisplayName(
                 selectedTrader.ai_model.split('_').pop() ||
                   selectedTrader.ai_model
               )}
             </span>
           </span>
-          <span>•</span>
+          <span className="text-darkmoon-border">•</span>
           <span>
-            Prompt: <span className="font-semibold" style={{ color: highlightColor }}>{selectedTrader.system_prompt_template || '-'}</span>
+            Prompt: <span className="font-semibold text-darkmoon-gold">{selectedTrader.system_prompt_template || '-'}</span>
           </span>
           {status && (
             <>
-              <span>•</span>
+              <span className="text-darkmoon-border">•</span>
               <span>Cycles: {status.call_count}</span>
-              <span>•</span>
+              <span className="text-darkmoon-border">•</span>
               <span>Runtime: {status.runtime_minutes} min</span>
             </>
           )}
@@ -374,11 +293,8 @@ export default function TraderDashboard() {
 
       {/* Debug Info */}
       {account && (
-        <div
-          className="mb-4 p-3 rounded text-xs font-mono"
-          style={{ background: '#1E2329', border: '1px solid #2B3139' }}
-        >
-          <div style={{ color: '#848E9C' }}>
+        <div className="mb-4 p-3 rounded text-xs font-mono bg-darkmoon-surface border border-darkmoon-border text-darkmoon-text-muted">
+          <div>
             <RefreshCw className="inline w-4 h-4 mr-1 align-text-bottom" />
             Last Update: {lastUpdate} | Total Equity:{' '}
             {account?.total_equity?.toFixed(2) || '0.00'} | Available:{' '}
@@ -425,27 +341,14 @@ export default function TraderDashboard() {
           </div>
 
           {/* Current Positions */}
-          <div
-            className="binance-card p-6 animate-slide-in"
-            style={{ animationDelay: '0.15s' }}
-          >
+          <div className="bg-darkmoon-surface border border-darkmoon-border rounded-xl p-6 animate-slide-in" style={{ animationDelay: '0.15s' }}>
             <div className="flex items-center justify-between mb-5">
-              <h2
-                className="text-xl font-bold flex items-center gap-2"
-                style={{ color: '#EAECEF' }}
-              >
-                <TrendingUp className="w-5 h-5" style={{ color: '#F0B90B' }} />
+              <h2 className="text-xl font-bold flex items-center gap-2 text-darkmoon-text-primary">
+                <TrendingUp className="w-5 h-5 text-darkmoon-gold" />
                 {t('currentPositions', language)}
               </h2>
               {positions && positions.length > 0 && (
-                <div
-                  className="text-xs px-3 py-1 rounded"
-                  style={{
-                    background: 'rgba(240, 185, 11, 0.1)',
-                    color: '#F0B90B',
-                    border: '1px solid rgba(240, 185, 11, 0.2)',
-                  }}
-                >
+                <div className="text-xs px-3 py-1 rounded bg-darkmoon-gold/10 text-darkmoon-gold border border-darkmoon-gold/20">
                   {positions.length} {t('active', language)}
                 </div>
               )}
@@ -453,33 +356,33 @@ export default function TraderDashboard() {
             {positions && positions.length > 0 ? (
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
-                  <thead className="text-left border-b border-gray-800">
+                  <thead className="text-left border-b border-darkmoon-border">
                     <tr>
-                      <th className="pb-3 font-semibold text-gray-400">
+                      <th className="pb-3 font-semibold text-darkmoon-text-secondary">
                         {t('symbol', language)}
                       </th>
-                      <th className="pb-3 font-semibold text-gray-400">
+                      <th className="pb-3 font-semibold text-darkmoon-text-secondary">
                         {t('side', language)}
                       </th>
-                      <th className="pb-3 font-semibold text-gray-400">
+                      <th className="pb-3 font-semibold text-darkmoon-text-secondary">
                         {t('entryPrice', language)}
                       </th>
-                      <th className="pb-3 font-semibold text-gray-400">
+                      <th className="pb-3 font-semibold text-darkmoon-text-secondary">
                         {t('markPrice', language)}
                       </th>
-                      <th className="pb-3 font-semibold text-gray-400">
+                      <th className="pb-3 font-semibold text-darkmoon-text-secondary">
                         {t('quantity', language)}
                       </th>
-                      <th className="pb-3 font-semibold text-gray-400">
+                      <th className="pb-3 font-semibold text-darkmoon-text-secondary">
                         {t('positionValue', language)}
                       </th>
-                      <th className="pb-3 font-semibold text-gray-400">
+                      <th className="pb-3 font-semibold text-darkmoon-text-secondary">
                         {t('leverage', language)}
                       </th>
-                      <th className="pb-3 font-semibold text-gray-400">
+                      <th className="pb-3 font-semibold text-darkmoon-text-secondary">
                         {t('unrealizedPnL', language)}
                       </th>
-                      <th className="pb-3 font-semibold text-gray-400">
+                      <th className="pb-3 font-semibold text-darkmoon-text-secondary">
                         {t('liqPrice', language)}
                       </th>
                     </tr>
@@ -488,25 +391,18 @@ export default function TraderDashboard() {
                     {positions.map((pos, i) => (
                       <tr
                         key={i}
-                        className="border-b border-gray-800 last:border-0"
+                        className="border-b border-darkmoon-border last:border-0 hover:bg-darkmoon-surface-hover transition-colors"
                       >
-                        <td className="py-3 font-mono font-semibold">
+                        <td className="py-3 font-mono font-semibold text-darkmoon-text-primary">
                           {pos.symbol}
                         </td>
                         <td className="py-3">
                           <span
-                            className="px-2 py-1 rounded text-xs font-bold"
-                            style={
+                            className={`px-2 py-1 rounded text-xs font-bold ${
                               pos.side === 'long'
-                                ? {
-                                    background: 'rgba(14, 203, 129, 0.1)',
-                                    color: '#0ECB81',
-                                  }
-                                : {
-                                    background: 'rgba(246, 70, 93, 0.1)',
-                                    color: '#F6465D',
-                                  }
-                            }
+                                ? 'bg-green-500/10 text-green-500'
+                                : 'bg-red-500/10 text-red-500'
+                            }`}
                           >
                             {t(
                               pos.side === 'long' ? 'long' : 'short',
@@ -514,53 +410,33 @@ export default function TraderDashboard() {
                             )}
                           </span>
                         </td>
-                        <td
-                          className="py-3 font-mono"
-                          style={{ color: '#EAECEF' }}
-                        >
+                        <td className="py-3 font-mono text-darkmoon-text-primary">
                           {pos.entry_price.toFixed(4)}
                         </td>
-                        <td
-                          className="py-3 font-mono"
-                          style={{ color: '#EAECEF' }}
-                        >
+                        <td className="py-3 font-mono text-darkmoon-text-primary">
                           {pos.mark_price.toFixed(4)}
                         </td>
-                        <td
-                          className="py-3 font-mono"
-                          style={{ color: '#EAECEF' }}
-                        >
+                        <td className="py-3 font-mono text-darkmoon-text-primary">
                           {pos.quantity.toFixed(4)}
                         </td>
-                        <td
-                          className="py-3 font-mono font-bold"
-                          style={{ color: '#EAECEF' }}
-                        >
+                        <td className="py-3 font-mono font-bold text-darkmoon-text-primary">
                           {(pos.quantity * pos.mark_price).toFixed(2)} USDT
                         </td>
-                        <td
-                          className="py-3 font-mono"
-                          style={{ color: '#F0B90B' }}
-                        >
+                        <td className="py-3 font-mono text-darkmoon-gold">
                           {pos.leverage}x
                         </td>
                         <td className="py-3 font-mono">
                           <span
-                            style={{
-                              color:
-                                pos.unrealized_pnl >= 0 ? '#0ECB81' : '#F6465D',
-                              fontWeight: 'bold',
-                            }}
+                            className={
+                              pos.unrealized_pnl >= 0 ? 'text-green-500 font-bold' : 'text-red-500 font-bold'
+                            }
                           >
                             {pos.unrealized_pnl >= 0 ? '+' : ''}
                             {pos.unrealized_pnl.toFixed(2)} (
                             {pos.unrealized_pnl_pct.toFixed(2)}%)
                           </span>
                         </td>
-                        <td
-                          className="py-3 font-mono"
-                          style={{ color: '#848E9C' }}
-                        >
+                        <td className="py-3 font-mono text-darkmoon-text-secondary">
                           {pos.liquidation_price.toFixed(4)}
                         </td>
                       </tr>
@@ -569,7 +445,7 @@ export default function TraderDashboard() {
                 </table>
               </div>
             ) : (
-              <div className="text-center py-16" style={{ color: '#848E9C' }}>
+              <div className="text-center py-16 text-darkmoon-text-muted">
                 <div className="mb-4 opacity-50 flex justify-center">
                   <PieChart className="w-16 h-16" />
                 </div>
@@ -586,29 +462,20 @@ export default function TraderDashboard() {
 
         {/* 右侧：Recent Decisions */}
         <div
-          className="binance-card p-6 animate-slide-in h-fit lg:sticky lg:top-24 lg:max-h-[calc(100vh-120px)]"
+          className="bg-darkmoon-surface border border-darkmoon-border p-6 rounded-xl animate-slide-in h-fit lg:sticky lg:top-24 lg:max-h-[calc(100vh-120px)]"
           style={{ animationDelay: '0.2s' }}
         >
-          <div
-            className="flex items-center justify-between mb-5 pb-4 border-b"
-            style={{ borderColor: '#2B3139' }}
-          >
+          <div className="flex items-center justify-between mb-5 pb-4 border-b border-darkmoon-border">
             <div className="flex items-center gap-3">
-              <div
-                className="w-10 h-10 rounded-xl flex items-center justify-center"
-                style={{
-                  background: 'linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)',
-                  boxShadow: '0 4px 14px rgba(99, 102, 241, 0.4)',
-                }}
-              >
-                <Brain className="w-5 h-5" style={{ color: '#FFFFFF' }} />
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-br from-blue-500 to-violet-600 shadow-lg shadow-blue-500/20">
+                <Brain className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h2 className="text-xl font-bold" style={{ color: '#EAECEF' }}>
+                <h2 className="text-xl font-bold text-darkmoon-text-primary">
                   {t('recentDecisions', language)}
                 </h2>
                 {decisions && decisions.length > 0 && (
-                  <div className="text-xs" style={{ color: '#848E9C' }}>
+                  <div className="text-xs text-darkmoon-text-secondary">
                     {t('lastCycles', language, { count: decisions.length })}
                   </div>
                 )}
@@ -617,25 +484,20 @@ export default function TraderDashboard() {
 
             {/* 显示数量选择器 */}
             <div className="flex items-center gap-2">
-              <span className="text-xs" style={{ color: '#848E9C' }}>
+              <span className="text-xs text-darkmoon-text-secondary">
                 {language === 'zh' ? '显示' : 'Show'}:
               </span>
               <select
                 value={decisionLimit}
                 onChange={(e) => handleLimitChange(parseInt(e.target.value, 10))}
-                className="rounded px-2 py-1 text-xs font-medium cursor-pointer transition-colors"
-                style={{
-                  background: '#1E2329',
-                  border: '1px solid #2B3139',
-                  color: '#EAECEF',
-                }}
+                className="rounded px-2 py-1 text-xs font-medium cursor-pointer transition-colors bg-darkmoon-bg border border-darkmoon-border text-darkmoon-text-primary outline-none focus:border-darkmoon-gold"
               >
                 <option value={5}>5</option>
                 <option value={10}>10</option>
                 <option value={20}>20</option>
                 <option value={50}>50</option>
               </select>
-              <span className="text-xs" style={{ color: '#848E9C' }}>
+              <span className="text-xs text-darkmoon-text-secondary">
                 {language === 'zh' ? '条' : ''}
               </span>
             </div>
@@ -650,17 +512,14 @@ export default function TraderDashboard() {
                 <DecisionCard key={i} decision={decision} language={language} />
               ))
             ) : (
-              <div className="py-16 text-center">
+              <div className="py-16 text-center text-darkmoon-text-muted">
                 <div className="mb-4 opacity-30 flex justify-center">
                   <Brain className="w-16 h-16" />
                 </div>
-                <div
-                  className="text-lg font-semibold mb-2"
-                  style={{ color: '#EAECEF' }}
-                >
+                <div className="text-lg font-semibold mb-2 text-darkmoon-text-primary">
                   {t('noDecisionsYet', language)}
                 </div>
-                <div className="text-sm" style={{ color: '#848E9C' }}>
+                <div className="text-sm">
                   {t('aiDecisionsWillAppear', language)}
                 </div>
               </div>
@@ -692,24 +551,19 @@ function StatCard({
   subtitle?: string
 }) {
   return (
-    <div className="stat-card animate-fade-in">
-      <div
-        className="text-xs mb-2 mono uppercase tracking-wider"
-        style={{ color: '#848E9C' }}
-      >
+    <div className="bg-darkmoon-surface border border-darkmoon-border p-5 rounded-xl transition-all duration-300 hover:-translate-y-1 hover:border-darkmoon-gold/30 hover:shadow-glow">
+      <div className="text-xs mb-2 font-mono uppercase tracking-wider text-darkmoon-text-secondary">
         {title}
       </div>
-      <div
-        className="text-2xl font-bold mb-1 mono"
-        style={{ color: '#EAECEF' }}
-      >
+      <div className="text-2xl font-bold mb-1 font-mono text-darkmoon-text-primary">
         {value}
       </div>
       {change !== undefined && (
         <div className="flex items-center gap-1">
           <div
-            className="text-sm mono font-bold"
-            style={{ color: positive ? '#0ECB81' : '#F6465D' }}
+            className={`text-sm font-mono font-bold ${
+              positive ? 'text-green-500' : 'text-red-500'
+            }`}
           >
             {positive ? '▲' : '▼'} {positive ? '+' : ''}
             {change.toFixed(2)}%
@@ -717,7 +571,7 @@ function StatCard({
         </div>
       )}
       {subtitle && (
-        <div className="text-xs mt-2 mono" style={{ color: '#848E9C' }}>
+        <div className="text-xs mt-2 font-mono text-darkmoon-text-muted">
           {subtitle}
         </div>
       )}
@@ -737,31 +591,23 @@ function DecisionCard({
   const [showCoT, setShowCoT] = useState(false)
 
   return (
-    <div
-      className="rounded p-5 transition-all duration-300 hover:translate-y-[-2px]"
-      style={{
-        border: '1px solid #2B3139',
-        background: '#1E2329',
-        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)',
-      }}
-    >
+    <div className="bg-darkmoon-bg border border-darkmoon-border p-5 rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
       {/* Header */}
       <div className="flex items-start justify-between mb-3">
         <div>
-          <div className="font-semibold" style={{ color: '#EAECEF' }}>
+          <div className="font-semibold text-darkmoon-text-primary">
             {t('cycle', language)} #{decision.cycle_number}
           </div>
-          <div className="text-xs" style={{ color: '#848E9C' }}>
+          <div className="text-xs text-darkmoon-text-secondary">
             {new Date(decision.timestamp).toLocaleString()}
           </div>
         </div>
         <div
-          className="px-3 py-1 rounded text-xs font-bold"
-          style={
+          className={`px-3 py-1 rounded text-xs font-bold ${
             decision.success
-              ? { background: 'rgba(14, 203, 129, 0.1)', color: '#0ECB81' }
-              : { background: 'rgba(246, 70, 93, 0.1)', color: '#F6465D' }
-          }
+              ? 'bg-green-500/10 text-green-500'
+              : 'bg-red-500/10 text-red-500'
+          }`}
         >
           {t(decision.success ? 'success' : 'failed', language)}
         </div>
@@ -772,8 +618,7 @@ function DecisionCard({
         <div className="mb-3">
           <button
             onClick={() => setShowInputPrompt(!showInputPrompt)}
-            className="flex items-center gap-2 text-sm transition-colors"
-            style={{ color: '#60a5fa' }}
+            className="flex items-center gap-2 text-sm transition-colors text-blue-400 hover:text-blue-300"
           >
             <span className="font-semibold flex items-center gap-2">
               <Inbox className="w-4 h-4" /> {t('inputPrompt', language)}
@@ -785,14 +630,7 @@ function DecisionCard({
             </span>
           </button>
           {showInputPrompt && (
-            <div
-              className="mt-2 rounded p-4 text-sm font-mono whitespace-pre-wrap max-h-96 overflow-y-auto"
-              style={{
-                background: '#0B0E11',
-                border: '1px solid #2B3139',
-                color: '#EAECEF',
-              }}
-            >
+            <div className="mt-2 rounded p-4 text-sm font-mono whitespace-pre-wrap max-h-96 overflow-y-auto bg-black/30 border border-darkmoon-border text-darkmoon-text-secondary">
               {decision.input_prompt}
             </div>
           )}
@@ -804,8 +642,7 @@ function DecisionCard({
         <div className="mb-3">
           <button
             onClick={() => setShowCoT(!showCoT)}
-            className="flex items-center gap-2 text-sm transition-colors"
-            style={{ color: '#F0B90B' }}
+            className="flex items-center gap-2 text-sm transition-colors text-darkmoon-gold hover:text-[#F3CF55]"
           >
             <span className="font-semibold flex items-center gap-2">
               <Send className="w-4 h-4" />{' '}
@@ -816,14 +653,7 @@ function DecisionCard({
             </span>
           </button>
           {showCoT && (
-            <div
-              className="mt-2 rounded p-4 text-sm font-mono whitespace-pre-wrap max-h-96 overflow-y-auto"
-              style={{
-                background: '#0B0E11',
-                border: '1px solid #2B3139',
-                color: '#EAECEF',
-              }}
-            >
+            <div className="mt-2 rounded p-4 text-sm font-mono whitespace-pre-wrap max-h-96 overflow-y-auto bg-black/30 border border-darkmoon-border text-darkmoon-text-secondary">
               {decision.cot_trace}
             </div>
           )}
@@ -836,43 +666,29 @@ function DecisionCard({
           {decision.decisions.map((action, j) => (
             <div
               key={j}
-              className="flex items-center gap-2 text-sm rounded px-3 py-2"
-              style={{ background: '#0B0E11' }}
+              className="flex items-center gap-2 text-sm rounded px-3 py-2 bg-black/20"
             >
-              <span
-                className="font-mono font-bold"
-                style={{ color: '#EAECEF' }}
-              >
+              <span className="font-mono font-bold text-darkmoon-text-primary">
                 {action.symbol}
               </span>
               <span
-                className="px-2 py-0.5 rounded text-xs font-bold"
-                style={
+                className={`px-2 py-0.5 rounded text-xs font-bold ${
                   action.action.includes('open')
-                    ? {
-                        background: 'rgba(96, 165, 250, 0.1)',
-                        color: '#60a5fa',
-                      }
-                    : {
-                        background: 'rgba(240, 185, 11, 0.1)',
-                        color: '#F0B90B',
-                      }
-                }
+                    ? 'bg-blue-500/10 text-blue-400'
+                    : 'bg-darkmoon-gold/10 text-darkmoon-gold'
+                }`}
               >
                 {action.action}
               </span>
               {action.leverage > 0 && (
-                <span style={{ color: '#F0B90B' }}>{action.leverage}x</span>
+                <span className="text-darkmoon-gold">{action.leverage}x</span>
               )}
               {action.price > 0 && (
-                <span
-                  className="font-mono text-xs"
-                  style={{ color: '#848E9C' }}
-                >
+                <span className="font-mono text-xs text-darkmoon-text-secondary">
                   @{action.price.toFixed(4)}
                 </span>
               )}
-              <span style={{ color: action.success ? '#0ECB81' : '#F6465D' }}>
+              <span className={action.success ? 'text-green-500' : 'text-red-500'}>
                 {action.success ? (
                   <Check className="w-3 h-3 inline" />
                 ) : (
@@ -880,7 +696,7 @@ function DecisionCard({
                 )}
               </span>
               {action.error && (
-                <span className="text-xs ml-2" style={{ color: '#F6465D' }}>
+                <span className="text-xs ml-2 text-red-500">
                   {action.error}
                 </span>
               )}
@@ -891,10 +707,7 @@ function DecisionCard({
 
       {/* Account State Summary */}
       {decision.account_state && (
-        <div
-          className="flex gap-4 text-xs mb-3 rounded px-3 py-2"
-          style={{ background: '#0B0E11', color: '#848E9C' }}
-        >
+        <div className="flex gap-4 text-xs mb-3 rounded px-3 py-2 bg-black/20 text-darkmoon-text-secondary">
           <span>
             净值: {decision.account_state.total_balance.toFixed(2)} USDT
           </span>
@@ -906,13 +719,12 @@ function DecisionCard({
           </span>
           <span>持仓: {decision.account_state.position_count}</span>
           <span
-            style={{
-              color:
-                decision.candidate_coins &&
-                decision.candidate_coins.length === 0
-                  ? '#F6465D'
-                  : '#848E9C',
-            }}
+            className={
+              decision.candidate_coins &&
+              decision.candidate_coins.length === 0
+                ? 'text-red-500'
+                : 'text-darkmoon-text-secondary'
+            }
           >
             {t('candidateCoins', language)}:{' '}
             {decision.candidate_coins?.length || 0}
@@ -922,20 +734,13 @@ function DecisionCard({
 
       {/* Candidate Coins Warning */}
       {decision.candidate_coins && decision.candidate_coins.length === 0 && (
-        <div
-          className="text-sm rounded px-4 py-3 mb-3 flex items-start gap-3"
-          style={{
-            background: 'rgba(246, 70, 93, 0.1)',
-            border: '1px solid rgba(246, 70, 93, 0.3)',
-            color: '#F6465D',
-          }}
-        >
+        <div className="text-sm rounded px-4 py-3 mb-3 flex items-start gap-3 bg-red-500/10 border border-red-500/20 text-red-500">
           <AlertTriangle size={16} className="flex-shrink-0 mt-0.5" />
           <div className="flex-1">
             <div className="font-semibold mb-1">
               {t('candidateCoinsZeroWarning', language)}
             </div>
-            <div className="text-xs space-y-1" style={{ color: '#848E9C' }}>
+            <div className="text-xs space-y-1 text-darkmoon-text-secondary">
               <div>{t('possibleReasons', language)}</div>
               <ul className="list-disc list-inside space-y-0.5 ml-2">
                 <li>{t('coinPoolApiNotConfigured', language)}</li>
@@ -961,13 +766,11 @@ function DecisionCard({
           {decision.execution_log.map((log, k) => (
             <div
               key={k}
-              className="text-xs font-mono"
-              style={{
-                color:
-                  log.includes('✓') || log.includes('成功')
-                    ? '#0ECB81'
-                    : '#F6465D',
-              }}
+              className={`text-xs font-mono ${
+                log.includes('✓') || log.includes('成功')
+                  ? 'text-green-500'
+                  : 'text-red-500'
+              }`}
             >
               {log}
             </div>
@@ -977,10 +780,7 @@ function DecisionCard({
 
       {/* Error Message */}
       {decision.error_message && (
-        <div
-          className="text-sm rounded px-3 py-2 mt-3 flex items-center gap-2"
-          style={{ color: '#F6465D', background: 'rgba(246, 70, 93, 0.1)' }}
-        >
+        <div className="text-sm rounded px-3 py-2 mt-3 flex items-center gap-2 text-red-500 bg-red-500/10">
           <XCircle className="w-4 h-4" /> {decision.error_message}
         </div>
       )}
