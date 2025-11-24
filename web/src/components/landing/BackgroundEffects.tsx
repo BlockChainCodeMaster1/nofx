@@ -24,8 +24,8 @@ export default function BackgroundEffects() {
     const faces: number[][] = []
     const segments = 8
 
-    // 0. Bottom tip (Culet) - Make it deeper
-    vertices.push({ x: 0, y: 1.8, z: 0 }) 
+    // 0. Bottom tip (Culet) - Shortened
+    vertices.push({ x: 0, y: 1.2, z: 0 }) 
 
     // 1-8. Girdle (Middle ring)
     for (let i = 0; i < segments; i++) {
@@ -42,13 +42,13 @@ export default function BackgroundEffects() {
       const theta = (i / segments) * Math.PI * 2
       vertices.push({
         x: Math.cos(theta) * 0.6,
-        y: -0.6,
+        y: -0.5,
         z: Math.sin(theta) * 0.6
       })
     }
 
     // 17. Top center (Table center)
-    vertices.push({ x: 0, y: -0.6, z: 0 })
+    vertices.push({ x: 0, y: -0.5, z: 0 })
 
     // Define Faces (Triangles)
     // Bottom Pavilion faces
