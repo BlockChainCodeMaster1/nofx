@@ -131,30 +131,40 @@ export default function BackgroundEffects() {
 
     const animate = () => {
       ctx.clearRect(0, 0, width, height)
+      
+      // Background - Dark
       ctx.fillStyle = '#050505'
       ctx.fillRect(0, 0, width, height)
       
       time += 0.01
 
-      // --- Subtle Waves ---
-      const waveCount = 8
+      // --- Enhanced Colorful Waves ---
+      const waveCount = 12
       for (let i = 0; i < waveCount; i++) {
         ctx.beginPath()
-        const hue = (time * 10 + i * 40) % 360
-        ctx.strokeStyle = `hsla(${hue}, 50%, 50%, 0.08)`
-        ctx.lineWidth = 1.5
-        for (let x = 0; x <= width; x += 40) {
-          const yOffset = height / 2 + (i - waveCount/2) * 60 
-          const y = yOffset + Math.sin(x * 0.002 + time * 0.4 + i) * 80
+        // Dynamic Rainbow Colors
+        const hue = (time * 15 + i * (360 / waveCount)) % 360
+        
+        // Increased Opacity for Visibility
+        ctx.strokeStyle = `hsla(${hue}, 60%, 60%, 0.3)`
+        ctx.lineWidth = 2
+        
+        // Wave logic
+        const yCenter = height / 2 + (i - waveCount/2) * 50
+        
+        for (let x = 0; x <= width; x += 30) {
+          // Complex sine for "water" feel
+          const y = yCenter + 
+            Math.sin(x * 0.003 + time * 0.5 + i) * 60 +
+            Math.sin(x * 0.01 - time) * 20
+            
           if (x === 0) ctx.moveTo(x, y)
           else ctx.lineTo(x, y)
         }
         ctx.stroke()
       }
       
-      // Mask
-      ctx.fillStyle = 'rgba(5, 5, 5, 0.7)' 
-      ctx.fillRect(0, 0, width, height)
+      // Removed the heavy overlay mask that was hiding the waves!
 
       // --- Ruby Glass Effect ---
       mouseX += (targetMouseX - mouseX) * 0.05
@@ -189,7 +199,6 @@ export default function BackgroundEffects() {
       projectedFaces.sort((a, b) => b.avgZ - a.avgZ)
 
       // 1. Draw Inner Glow (Backside refraction)
-      // Simulating light trapped inside
       ctx.globalCompositeOperation = 'lighter'
       projectedFaces.forEach(face => {
         const { v2d, intensity, normal } = face
@@ -208,7 +217,7 @@ export default function BackgroundEffects() {
             ctx.lineTo(v2d[2].x, v2d[2].y)
             ctx.closePath()
             
-            // Back faces glow deep red - BOOSTED
+            // Back faces glow deep red
             const alpha = 0.2 + Math.max(0, -intensity) * 0.3
             ctx.fillStyle = `rgba(255, 10, 50, ${alpha})`
             ctx.fill()
@@ -240,16 +249,10 @@ export default function BackgroundEffects() {
             ctx.lineTo(v2d[2].x, v2d[2].y)
             ctx.closePath()
 
-            // Fresnel Effect (Edges are reflective)
             const viewDot = Math.abs(dot(normal, viewDir))
             const fresnel = Math.pow(1 - viewDot, 3) 
-            
-            // Specular Highlight
             const specular = Math.pow(Math.max(0, intensity), 4)
 
-            // Glass Material Strategy:
-            // - Fill: More visible RED tint
-            
             // Base Tint - BOOSTED RED
             ctx.fillStyle = `rgba(255, 0, 40, 0.25)` 
             ctx.fill()
@@ -276,7 +279,7 @@ export default function BackgroundEffects() {
         }
       })
 
-      // 3. Central Flare (Bloom) - More Red
+      // 3. Central Flare (Bloom) - Behind text but visible
       const cx = width / 2
       const cy = height / 2
       const gradient = ctx.createRadialGradient(cx, cy, 0, cx, cy, 350)
