@@ -208,14 +208,14 @@ export default function BackgroundEffects() {
             ctx.lineTo(v2d[2].x, v2d[2].y)
             ctx.closePath()
             
-            // Back faces glow deep red
-            const alpha = 0.05 + Math.max(0, -intensity) * 0.1
-            ctx.fillStyle = `rgba(220, 20, 60, ${alpha})`
+            // Back faces glow deep red - BOOSTED
+            const alpha = 0.2 + Math.max(0, -intensity) * 0.3
+            ctx.fillStyle = `rgba(255, 10, 50, ${alpha})`
             ctx.fill()
             
             // Back edges
-            ctx.strokeStyle = `rgba(255, 50, 50, 0.1)`
-            ctx.lineWidth = 0.5
+            ctx.strokeStyle = `rgba(255, 0, 40, 0.3)`
+            ctx.lineWidth = 1
             ctx.stroke()
         }
       })
@@ -248,43 +248,40 @@ export default function BackgroundEffects() {
             const specular = Math.pow(Math.max(0, intensity), 4)
 
             // Glass Material Strategy:
-            // - Fill: Almost transparent, slight tint
-            // - Reflection (Fresnel): White/Pink opacity
-            // - Specular: Bright White
+            // - Fill: More visible RED tint
             
-            // Base Tint
-            ctx.fillStyle = `rgba(255, 20, 80, 0.05)` 
+            // Base Tint - BOOSTED RED
+            ctx.fillStyle = `rgba(255, 0, 40, 0.25)` 
             ctx.fill()
 
             // Reflection / Glint based on Fresnel
-            // Edges get white wash
             if (fresnel > 0.1) {
-                ctx.fillStyle = `rgba(255, 200, 220, ${fresnel * 0.15})`
+                ctx.fillStyle = `rgba(255, 150, 150, ${fresnel * 0.2})`
                 ctx.fill()
             }
 
             // Specular Flash
             if (specular > 0.1) {
-                 ctx.fillStyle = `rgba(255, 255, 255, ${specular * 0.6})`
+                 ctx.fillStyle = `rgba(255, 255, 255, ${specular * 0.7})`
                  ctx.globalCompositeOperation = 'lighter'
                  ctx.fill()
                  ctx.globalCompositeOperation = 'source-over'
             }
 
-            // Edges
-            // Crisp, bright edges define glass
-            ctx.lineWidth = 1
-            const edgeAlpha = 0.2 + fresnel * 0.4 + specular * 0.4
-            ctx.strokeStyle = `rgba(255, 200, 220, ${edgeAlpha})`
+            // Edges - Brighter Red/Pink
+            ctx.lineWidth = 1.5
+            const edgeAlpha = 0.4 + fresnel * 0.5 + specular * 0.5
+            ctx.strokeStyle = `rgba(255, 100, 120, ${edgeAlpha})`
             ctx.stroke()
         }
       })
 
-      // 3. Central Flare (Optional Bloom)
+      // 3. Central Flare (Bloom) - More Red
       const cx = width / 2
       const cy = height / 2
-      const gradient = ctx.createRadialGradient(cx, cy, 0, cx, cy, 300)
-      gradient.addColorStop(0, 'rgba(255, 0, 50, 0.15)')
+      const gradient = ctx.createRadialGradient(cx, cy, 0, cx, cy, 350)
+      gradient.addColorStop(0, 'rgba(255, 0, 20, 0.3)') // Stronger core glow
+      gradient.addColorStop(0.4, 'rgba(255, 0, 20, 0.1)')
       gradient.addColorStop(1, 'rgba(0,0,0,0)')
       ctx.globalCompositeOperation = 'screen'
       ctx.fillStyle = gradient
